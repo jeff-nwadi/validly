@@ -1,16 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Cal_Sans, Inter, Geist } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/frontpage/Header";
+import Footer from "@/components/frontpage/Footer";
+import { cn } from "@/lib/utils";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-});
+  variable: "--font-ibm-plex-mono",
+  weight: "400",
+})
+
+const calSans = Cal_Sans({
+  subsets: ["latin"],
+  variable: "--font-cal-sans",
+  weight: "400",
+})
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: "400",
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,9 +38,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", ibmPlexMono.variable, calSans.variable, inter.variable, "font-sans", geist.variable)}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Header/>
+        {children}
+        <Footer/>
+      </body>
     </html>
   );
 }
