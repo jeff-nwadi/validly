@@ -74,7 +74,7 @@ const Pricing = () => {
                   ? 'bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-[0_0_15px_rgba(124,58,237,0.4)]' 
                   : 'bg-transparent border border-[#2C2C2C] text-[#F8F8F8] hover:border-[#F8F8F8]'
               }`}>
-                {tier.buttonText}
+                <Link href="/register">{tier.buttonText}</Link>
               </button>
 
               <ul className='space-y-4'>

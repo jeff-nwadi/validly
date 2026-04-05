@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Cal_Sans, Inter, Geist } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/frontpage/Header";
-import Footer from "@/components/frontpage/Footer";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -42,11 +40,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <Header/>
-        <main className="pt-16 md:pt-20">
-          {children}
-        </main>
-        <Footer/>
+        {children}
       </body>
     </html>
   );

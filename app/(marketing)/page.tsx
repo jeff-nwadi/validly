@@ -1,7 +1,15 @@
-import React from 'react'
+import Hero from "@/components/frontpage/Hero";
+import Howitworks from "@/components/frontpage/Howitworks";
+import AnalysisPreview from "@/components/frontpage/AnalysisPreview";
+import Pricing from "@/components/frontpage/Pricing";
 
-export default function page() {
+export default function Home() {
   return (
-    <div>page</div>
-  )
+    <div >
+      <Hero />
+      <Howitworks />
+      <AnalysisPreview />
+      <Pricing />
+    </div>
+  );
 }

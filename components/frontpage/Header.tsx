@@ -20,14 +20,12 @@ export default function Header() {
             <Link href="#how-it-works" className='hover:text-[#F8F8F8] transition-colors'>How it works</Link>
             <Link href="#features" className='hover:text-[#F8F8F8] transition-colors'>Features</Link>
             <Link href="#pricing" className='hover:text-[#F8F8F8] transition-colors'>Pricing</Link>
-            <Link href="#" className='hover:text-[#F8F8F8] transition-colors'>Wall of love</Link>
           </ul>
 
-          {/* Desktop Actions */}
           <div className='hidden lg:flex sub-text font-normal text-[14px] gap-6 items-center uppercase tracking-widest'>
-            <Link href="#" className='hover:text-[#F8F8F8] transition-colors'>Login</Link>
+            <Link href="/login" className='hover:text-[#F8F8F8] transition-colors'>Login</Link>
             <button className='bg-[#7C3AED] hover:bg-[#6D28D9] text-[#F8F8F8] px-6 py-2.5 rounded-[6px] font-medium transition-all'>
-              <Link href="#" >Get started</Link>
+              <Link href="/register" >Get started</Link>
             </button>
           </div>
 
@@ -55,9 +53,9 @@ export default function Header() {
             <div className="w-full h-px bg-[#1F1F1F] max-w-[200px]" />
             
             <div className='flex flex-col items-center gap-6 w-full max-w-[280px]'>
-              <Link href="#" onClick={() => setIsOpen(false)} className='text-[#9A9A9A] uppercase tracking-widest text-[14px]'>Login</Link>
+              <Link href="/login" onClick={() => setIsOpen(false)} className='text-[#9A9A9A] uppercase tracking-widest text-[14px]'>Login</Link>
               <button className='w-full bg-[#7C3AED] text-[#F8F8F8] py-4 rounded-[6px] font-semibold text-[16px]'>
-                <Link href="#" onClick={() => setIsOpen(false)} >Get started</Link>
+                <Link href="/register" onClick={() => setIsOpen(false)} >Get started</Link>
               </button>
             </div>
           </nav>
