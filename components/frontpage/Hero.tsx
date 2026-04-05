@@ -30,15 +30,15 @@ const Hero = () => {
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-4 px-28'>
                     <div className='flex flex-col items-center text-center space-y-3'>
                         <Globe className='w-5 h-5 text-[#7C3AED]' />
-                        <p className='text-[#F8F8F8] text-[13px] font-bold header uppercase tracking-[0.2em]'>Market Intelligence</p>
+                        <p className='text-[#F8F8F8] text-[13px] font-semibold header uppercase tracking-[0.2em]'>Market Intelligence</p>
                     </div>
                     <div className='flex flex-col items-center text-center space-y-3'>
                         <Target className='w-5 h-5 text-[#7C3AED]' />
-                        <p className='text-[#F8F8F8] text-[13px] font-bold header uppercase tracking-[0.2em]'>Viability Scoring</p>
+                        <p className='text-[#F8F8F8] text-[13px] font-semibold header uppercase tracking-[0.2em]'>Viability Scoring</p>
                     </div>
                     <div className='flex flex-col items-center text-center space-y-3'>
                         <Rocket className='w-5 h-5 text-[#7C3AED]' />
-                        <p className='text-[#F8F8F8] text-[13px] font-bold header uppercase tracking-[0.2em]'>MVP Roadmap</p>
+                        <p className='text-[#F8F8F8] text-[13px] font-semibold header uppercase tracking-[0.2em]'>MVP Roadmap</p>
                     </div>
             </div>
             </div>
