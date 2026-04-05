@@ -49,7 +49,7 @@ const Pricing = () => {
           {tiers.map((tier, index) => (
             <div 
               key={index} 
-              className={`relative bg-[#111111] border border-[#1F1F1F] rounded-2xl p-8 transition-all duration-300 hover:border-[#2C2C2C] ${
+              className={`relative bg-[#111111] border border-[#1F1F1F] rounded-[6px] p-8 transition-all duration-300 hover:border-[#2C2C2C] ${
                 tier.featured ? 'border-[#7C3AED] shadow-[0_0_20px_-5px_rgba(124,58,237,0.3)] lg:scale-105 z-10' : ''
               }`}
             >
@@ -69,7 +69,7 @@ const Pricing = () => {
                 <span className='text-[#9A9A9A] text-[16px]'>{tier.period}</span>
               </div>
 
-              <button className={`w-full py-3 rounded-xl font-semibold mb-8 transition-all duration-300 ${
+              <button className={`w-full py-3 rounded-[6px] font-semibold mb-8 transition-all duration-300 ${
                 tier.buttonVariant === 'solid' 
                   ? 'bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-[0_0_15px_rgba(124,58,237,0.4)]' 
                   : 'bg-transparent border border-[#2C2C2C] text-[#F8F8F8] hover:border-[#F8F8F8]'

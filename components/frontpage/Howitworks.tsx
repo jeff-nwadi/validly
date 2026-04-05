@@ -33,23 +33,21 @@ export default function Howitworks() {
           </p>
         </div>
         
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-0'>
           {steps.map((step, index) => (
-            <div key={index} className='relative bg-[#111111] border border-[#1F1F1F] rounded-2xl p-8 hover:border-[#2C2C2C] transition-all duration-300 group overflow-hidden'>
-              {/* Background Step Number */}
-              <span className='absolute top-4 right-8 text-[64px] font-bold text-[#1A1A1A] select-none header opacity-50 group-hover:opacity-100 transition-opacity'>
+            <div key={index} className='flex flex-col space-y-6 md:px-12 first:md:pl-0 last:md:pr-0 border-[#1F1F1F] md:border-r last:border-none'>
+              {/* Step Number */}
+              <span className='text-[48px] font-bold text-[#2C2C2C] select-none sub-text leading-none'>
                 {step.number}
               </span>
               
-              {/* Icon Container */}
-              <div className='w-12 h-12 bg-[#1C1333] border border-[#2D1B4D] rounded-xl flex items-center justify-center mb-8'>
-                {step.icon}
-              </div>
-              
               {/* Content */}
-              <div className='relative z-10'>
-                <h3 className='text-[#F8F8F8] text-[22px] font-semibold header mb-4 tracking-wider'>{step.title}</h3>
-                <p className='text-[#9A9A9A] text-[15px] font-normal leading-relaxed'>
+              <div className='flex flex-col space-y-4'>
+                <div className='text-[#7C3AED]'>
+                  {step.icon}
+                </div>
+                <h3 className='text-[#F8F8F8] text-[22px] font-semibold header tracking-wider'>{step.title}</h3>
+                <p className='text-[#9A9A9A] text-[15px] font-normal leading-relaxed max-w-[320px]'>
                   {step.description}
                 </p>
               </div>
