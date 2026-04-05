@@ -36,11 +36,11 @@ const Pricing = () => {
   ]
 
   return (
-    <section className='flex justify-center items-center px-6 md:px-10 py-24'>
+    <section id="pricing" className='flex justify-center items-center px-6 md:px-10 py-24'>
       <div className='max-w-7xl w-full'>
         <div className='mb-16 text-center'>
-          <h2 className='text-[#F8F8F8] text-4xl md:text-[48px] font-bold header mb-4 tracking-wider'>Simple, transparent pricing</h2>
-          <p className='text-[#9A9A9A] text-[18px] font-normal max-w-lg mx-auto leading-relaxed'>
+          <h2 className='text-[#F8F8F8] text-3xl md:text-[40px] font-bold header mb-4 tracking-wider'>Simple, Transparent Pricing</h2>
+          <p className='text-[#9A9A9A] text-[14px] md:text-[16px] font-normal leading-relaxed'>
             Validate one idea for free, or upgrade for unlimited power.
           </p>
         </div>

@@ -4,11 +4,11 @@ import { cn } from '@/lib/utils'
 
 export default function AnalysisPreview() {
   return (
-    <section className='flex justify-center items-center px-6 md:px-10 bg-[#111111]'>
+    <section id="features" className='flex justify-center items-center px-1 md:px-10 bg-[#111111]'>
       <div className='py-16 md:py-24 max-w-7xl w-full'>
         <div className='mb-12 md:mb-16'>
-          <h2 className='text-[#F8F8F8] text-3xl md:text-[40px] font-bold header text-center mb-4 tracking-wider leading-tight'>Data-driven decisions</h2>
-          <p className='text-[#9A9A9A] text-[16px] md:text-[18px] font-normal max-w-2xl mx-auto text-center leading-relaxed'>
+          <h2 className='text-[#F8F8F8] text-2xl md:text-[40px] font-bold header text-center mb-4 tracking-wider leading-tight'>Data-driven decisions</h2>
+          <p className='text-[#9A9A9A] text-[14px] md:text-[16px] font-normal w-md mx-auto text-center leading-relaxed'>
             Stop relying on gut feeling. Get a comprehensive breakdown of why your idea will or won't work.
           </p>
         </div>
@@ -20,7 +20,7 @@ export default function AnalysisPreview() {
           <div className='flex flex-col md:flex-row justify-between items-start gap-8 mb-10 md:mb-12'>
             <div>
               <p className='text-[#9A9A9A] text-[11px] md:text-[12px] font-medium uppercase tracking-wide mb-2 md:mb-3'>Analysis Complete</p>
-              <h3 className='text-[#F8F8F8] text-[28px] md:text-[40px] font-bold header tracking-wider leading-tight'>CRM for Local Bakeries</h3>
+              <h3 className='text-[#F8F8F8] text-[18px] md:text-[24px] font-bold header tracking-wider leading-tight'>CRM for Local Bakeries</h3>
             </div>
             
             <div className='flex items-center gap-6 w-full md:w-auto justify-between md:justify-end'>

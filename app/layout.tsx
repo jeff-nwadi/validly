@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", "dark", ibmPlexMono.variable, calSans.variable, inter.variable, "font-sans", geist.variable)}
+      className={cn("h-full", "antialiased", "dark", "scroll-smooth", ibmPlexMono.variable, calSans.variable, inter.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

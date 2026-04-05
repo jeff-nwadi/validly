@@ -17,9 +17,9 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <ul className='hidden lg:flex gap-8 sub-text font-normal text-[12px] text-[#9A9A9A] uppercase tracking-widest'>
-            <Link href="#" className='hover:text-[#F8F8F8] transition-colors'>How it works</Link>
-            <Link href="#" className='hover:text-[#F8F8F8] transition-colors'>Features</Link>
-            <Link href="#" className='hover:text-[#F8F8F8] transition-colors'>Pricing</Link>
+            <Link href="#how-it-works" className='hover:text-[#F8F8F8] transition-colors'>How it works</Link>
+            <Link href="#features" className='hover:text-[#F8F8F8] transition-colors'>Features</Link>
+            <Link href="#pricing" className='hover:text-[#F8F8F8] transition-colors'>Pricing</Link>
             <Link href="#" className='hover:text-[#F8F8F8] transition-colors'>Wall of love</Link>
           </ul>
 
@@ -46,9 +46,9 @@ export default function Header() {
         <div className="fixed inset-0 top-[65px] bg-[#0A0A0A] z-40 lg:hidden animate-in fade-in slide-in-from-top-4 duration-300">
           <nav className="flex flex-col items-center justify-center h-full gap-8 p-6">
             <ul className='flex flex-col items-center gap-8 sub-text font-medium text-[16px] text-[#9A9A9A] uppercase tracking-[0.2em]'>
-              <Link href="#" onClick={() => setIsOpen(false)} className='hover:text-[#F8F8F8]'>How it works</Link>
-              <Link href="#" onClick={() => setIsOpen(false)} className='hover:text-[#F8F8F8]'>Features</Link>
-              <Link href="#" onClick={() => setIsOpen(false)} className='hover:text-[#F8F8F8]'>Pricing</Link>
+              <Link href="#how-it-works" onClick={() => setIsOpen(false)} className='hover:text-[#F8F8F8]'>How it works</Link>
+              <Link href="#features" onClick={() => setIsOpen(false)} className='hover:text-[#F8F8F8]'>Features</Link>
+              <Link href="#pricing" onClick={() => setIsOpen(false)} className='hover:text-[#F8F8F8]'>Pricing</Link>
               <Link href="#" onClick={() => setIsOpen(false)} className='hover:text-[#F8F8F8]'>Wall of love</Link>
             </ul>
             
