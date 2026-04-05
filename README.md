@@ -78,7 +78,7 @@ Each report generated contains:
 
 - Node.js 18+
 - A [Neon](https://neon.tech) database
-- [Anthropic API](https://console.anthropic.com) key
+- [Gemini API](https://aistudio.google.com/app/apikey) key
 - [Tavily API](https://tavily.com) key
 - [Stripe](https://stripe.com) account
 - [Resend](https://resend.com) account

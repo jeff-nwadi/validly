@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 
 import { aj } from "@/lib/arcjet";
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
     // Arcjet Rate Limiting
     const decision = await aj.protect(request);
     
