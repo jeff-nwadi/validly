@@ -6,11 +6,11 @@ const Hero = () => {
   return (
     <section className='flex justify-center items-center px-6 md:px-10'>
         <div className='py-20 md:py-34 w-full'>
-            <h1 className='flex flex-col leading-[1.2] header font-bold text-4xl md:text-[64px] tracking-wider text-center'>
+            <h1 className='flex flex-col leading-[1.2] header font-bold text-3xl md:text-[64px] tracking-wider text-center'>
                <span> Validate Your SaaS </span> 
                <span className=''>Idea in <span className='text-[#7C3AED]'>30 Seconds</span></span>
             </h1>
-            <p className='font-normal text-[15px] md:text-[16px] text-[#9A9A9A] text-center mt-5 max-w-2xl mx-auto'>Stop guessing. Use AI to analyze your market, competitors, and viability before writing a single line of code.</p>
+            <p className='font-normal text-[15px] md:text-[16px] text-[#9A9A9A] text-center mt-5 max-w-2xl lg:w-[40%] mx-auto'>Stop guessing. Use AI to analyze your market, competitors, and viability before writing a single line of code.</p>
             <div className='flex justify-center items-center mt-10'>
                 <div className='flex flex-col md:flex-row items-center gap-4 md:gap-18 border-2 border-[#2C2C2C] rounded-[8px] p-4 md:p-3 w-full md:w-auto'>
                     <span className='text-[#9A9A9A] font-normal w-full md:w-auto text-center md:text-left'>
