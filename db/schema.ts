@@ -60,6 +60,7 @@ export const validations = pgTable("validations", {
     .references(() => user.id),
   ideaTitle: text("idea_title").notNull(),
   ideaDescription: text("idea_description").notNull(),
+  industry: text("industry"),
   targetMarket: text("target_market"),
   report: text("report").notNull(), // JSON stringify of the Claude/Gemini report
   viabilityScore: integer("viability_score").notNull(),
