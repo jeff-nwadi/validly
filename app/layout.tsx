@@ -1,22 +1,6 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Inter, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  variable: "--font-ibm-plex-mono",
-  weight: "400",
-})
-
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: "400",
-})
 
 export const metadata: Metadata = {
   title: "Validly",
@@ -34,7 +18,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", "scroll-smooth", ibmPlexMono.variable, inter.variable, "font-sans", geist.variable)}
+      className={cn("h-full", "antialiased", "scroll-smooth", "font-sans")}
       suppressHydrationWarning
     >
       <body className={cn("min-h-full flex flex-col bg-white text-black")}>

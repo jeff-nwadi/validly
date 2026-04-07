@@ -155,7 +155,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                'flex items-center gap-3 rounded-lg bg-neutral-50 p-3 transition-all duration-300 border border-neutral-200',
                isCollapsed && !isSidebarOpen ? 'justify-center p-2' : ''
             )}>
-              <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-black text-sm font-bold text-white overflow-hidden'>
+              <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-black text-sm font-bold text-white overflow-hidden'>
                  {session?.user?.image ? (
                     <img src={session.user.image} alt={session.user.name} className="w-full h-full object-cover" />
                  ) : (
