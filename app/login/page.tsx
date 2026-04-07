@@ -10,11 +10,18 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, LoginInput } from '@/lib/validations/auth-schemas'
 import { signIn } from '@/lib/auth-client'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
-export default function LoginPage() {
+function LoginContent() {
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const idea = searchParams.get("idea")
+  
+  const callbackURL = idea 
+    ? `/dashboard?idea=${encodeURIComponent(idea)}` 
+    : "/dashboard"
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema)
@@ -25,12 +32,12 @@ export default function LoginPage() {
       const { error } = await signIn.email({
         email: data.email,
         password: data.password,
-        callbackURL: "/dashboard"
+        callbackURL
       })
       if (error) throw new Error(error.message || "Failed to sign in")
     },
     onSuccess: () => {
-      router.push("/dashboard")
+      router.push(callbackURL)
       router.refresh()
     }
   })
@@ -42,7 +49,7 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     await signIn.social({
       provider: "google",
-      callbackURL: "/dashboard"
+      callbackURL
     })
   }
 
@@ -53,14 +60,14 @@ export default function LoginPage() {
     >
       <div className='flex flex-col gap-6 w-full'>
         {/* Toggle Controls */}
-        <div className='grid grid-cols-2 p-1.5 bg-neutral-100 border border-neutral-200 rounded-[12px] mb-4'>
+        <div className='grid grid-cols-2 p-1.5 bg-neutral-100 border border-neutral-200 rounded-xl mb-4'>
            <button 
              onClick={() => router.push('/register')} 
-             className='text-neutral-500 hover:text-black transition-colors py-2.5 rounded-[8px] font-medium text-[14px]'
+             className='text-neutral-500 hover:text-black transition-colors py-2.5 rounded-lg font-medium text-[14px]'
            >
              Register
            </button>
-           <button className='bg-white border border-neutral-200 text-black py-2.5 rounded-[8px] font-semibold text-[14px] shadow-sm'>
+           <button className='bg-white border border-neutral-200 text-black py-2.5 rounded-lg font-semibold text-[14px] shadow-sm'>
              Login
            </button>
         </div>
@@ -133,5 +140,19 @@ export default function LoginPage() {
         </form>
       </div>
     </AuthLayout>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <AuthLayout title="Loading..." subtitle="Please wait while we prepare your login.">
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-10 h-10 animate-spin text-black" />
+        </div>
+      </AuthLayout>
+    }>
+      <LoginContent />
+    </Suspense>
   )
 }

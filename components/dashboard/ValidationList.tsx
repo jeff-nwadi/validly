@@ -51,7 +51,7 @@ const dotColors: Record<string, string> = {
 export default function ValidationList({ validations, onDelete }: ValidationListProps) {
   if (validations.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-20 text-center bg-white border border-neutral-200 rounded-[8px] mt-8 shadow-sm">
+      <div className="flex flex-col items-center justify-center p-20 text-center bg-white border border-neutral-200 rounded-lg mt-8 shadow-sm">
         <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mb-6">
           <Search className="w-8 h-8 text-black" />
         </div>
@@ -59,7 +59,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
         <p className="text-neutral-500 max-w-sm mx-auto mb-8 text-[14px] font-normal leading-relaxed">
           You haven't validated any SaaS ideas yet. Enter your first idea to get an AI-powered viability report.
         </p>
-        <Button asChild className="bg-black hover:bg-neutral-800 text-white px-8 py-6 rounded-[6px] font-semibold flex items-center gap-2">
+        <Button asChild className="bg-black hover:bg-neutral-800 text-white px-8 py-6 rounded-md font-semibold flex items-center gap-2">
           <Link href="/validate">
              <Plus className="w-4 h-4" />
              New Validation
@@ -72,7 +72,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
   return (
     <div className="mt-8 space-y-4">
       {/* Desktop Table View */}
-      <Card className="hidden md:block bg-white border-neutral-200 overflow-hidden rounded-[8px] shadow-sm">
+      <Card className="hidden md:block bg-white border-neutral-200 overflow-hidden rounded-lg shadow-sm">
         <table className="w-full text-left border-collapse">
            <thead>
               <tr className="border-b border-neutral-100 text-[10px] font-bold text-neutral-400 uppercase bg-neutral-50">
@@ -90,7 +90,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                      <tr key={val.id} className="group hover:bg-neutral-50 transition-colors">
                         <td className="px-6 py-5">
                            <div className="flex items-center gap-4">
-                              <div className="w-9 h-9 bg-neutral-50 border border-neutral-200 rounded-[6px] flex items-center justify-center text-neutral-400 group-hover:text-black transition-colors">
+                              <div className="w-9 h-9 bg-neutral-50 border border-neutral-200 rounded-md flex items-center justify-center text-neutral-400 group-hover:text-black transition-colors">
                                  <Lightbulb className="w-4 h-4" />
                               </div>
                               <span className="text-[14px] font-semibold text-black">{val.ideaTitle}</span>
@@ -151,7 +151,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                            <Lightbulb className="w-5 h-5" />
                         </div>
                         <div className="space-y-0.5">
-                           <h3 className="text-[14px] font-semibold text-black line-clamp-1">{val.ideaTitle}</h3>
+                           <h3 className="text-[14px] font-semibold text-black line-clamp-1 tracking-tight">{val.ideaTitle}</h3>
                            <div className="flex items-center gap-2 text-[10px] text-neutral-400 font-bold uppercase">
                               <Calendar className="w-3 h-3" />
                               <span>{format(new Date(val.createdAt), 'MMM d, yyyy')}</span>
@@ -171,7 +171,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                      </div>
                      
                      <div className="flex items-center gap-2">
-                        <Button asChild variant="outline" size="sm" className="h-9 rounded-[6px] bg-white border-neutral-200 text-neutral-500 hover:text-black text-[10px] font-bold uppercase px-4">
+                        <Button asChild variant="outline" size="sm" className="h-9 rounded-md bg-white border-neutral-200 text-neutral-500 hover:text-black text-[10px] font-bold uppercase px-4">
                            <Link href={`/report/${val.id}`}>
                               <Eye className="w-3.5 h-3.5 mr-2" />
                               View
@@ -180,7 +180,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                         <Button 
                            variant="outline" 
                            size="icon" 
-                           className="h-9 w-9 rounded-[6px] bg-white border-neutral-200 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 transition-all font-bold"
+                           className="h-9 w-9 rounded-md bg-white border-neutral-200 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 transition-all font-bold"
                            onClick={() => onDelete?.(val.id)}
                         >
                            <Trash2 className="w-4 h-4" />

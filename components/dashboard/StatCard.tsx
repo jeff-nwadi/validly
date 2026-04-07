@@ -12,9 +12,9 @@ interface StatCardProps {
 
 export default function StatCard({ label, value, icon: Icon, description, trend }: StatCardProps) {
   return (
-    <div className='p-6 rounded-[8px] bg-white border border-neutral-200 transition-all duration-300 group shadow-sm'>
+    <div className='p-6 rounded-lg bg-white border border-neutral-200 transition-all duration-300 group shadow-sm'>
        <div className='flex items-center justify-between mb-6'>
-           <div className='p-2 bg-neutral-50 border border-neutral-100 rounded-[6px] transition-all duration-300 group-hover:bg-neutral-100'>
+           <div className='p-2 bg-neutral-50 border border-neutral-100 rounded-md transition-all duration-300 group-hover:bg-neutral-100'>
                <Icon className='w-4 h-4 text-black' />
            </div>
            {trend && (

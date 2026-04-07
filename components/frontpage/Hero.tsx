@@ -5,9 +5,9 @@ const Hero = () => {
   return (
     <section className='flex justify-center items-center px-6 md:px-24 bg-white text-black'>
         <div className='py-20 md:py-34 w-full'>
-            <h1 className='flex flex-col text-[24px] md:text-[36px] lg:text-[40px] font-semibold text-black text-center'>
+            <h1 className='flex flex-col text-[24px] md:text-[36px] lg:text-[48px] font-bold text-black text-center leading-[1.15] tracking-tight'>
                <span> Validate Your SaaS Idea </span> 
-               <span className=''>in <span className='text-black underline'>30 Seconds</span></span>
+               <span className=''>in <span className='text-black underline decoration-2 underline-offset-8'>30 Seconds</span></span>
             </h1>
             <p className='text-[14px] font-normal text-neutral-500 text-center mt-5 max-w-xl mx-auto'>Stop guessing. Use AI to analyze your market, competitors, and viability before writing a single line of code.</p>
             <div className='flex justify-center items-center mt-10'>

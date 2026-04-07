@@ -10,11 +10,18 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { registerSchema, RegisterInput } from '@/lib/validations/auth-schemas'
 import { signUp, signIn } from '@/lib/auth-client'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
-export default function RegisterPage() {
+function RegisterContent() {
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const idea = searchParams.get("idea")
+  
+  const callbackURL = idea 
+    ? `/dashboard?idea=${encodeURIComponent(idea)}` 
+    : "/dashboard"
   
   const { register, handleSubmit, formState: { errors } } = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema)
@@ -26,12 +33,12 @@ export default function RegisterPage() {
         email: data.email,
         password: data.password,
         name: data.name,
-        callbackURL: "/dashboard"
+        callbackURL
       })
       if (error) throw new Error(error.message || "Failed to create account")
     },
     onSuccess: () => {
-      router.push("/dashboard")
+      router.push(callbackURL)
     }
   })
 
@@ -42,7 +49,7 @@ export default function RegisterPage() {
   const handleGoogleSignIn = async () => {
     await signIn.social({
       provider: "google",
-      callbackURL: "/dashboard"
+      callbackURL
     })
   }
 
@@ -53,13 +60,13 @@ export default function RegisterPage() {
     >
       <div className='flex flex-col gap-6 w-full'>
         {/* Toggle Controls */}
-        <div className='grid grid-cols-2 p-1.5 bg-neutral-100 border border-neutral-200 rounded-[12px] mb-4'>
-           <button className='bg-white border border-neutral-200 text-black py-2.5 rounded-[8px] font-semibold text-[14px] shadow-sm'>
+        <div className='grid grid-cols-2 p-1.5 bg-neutral-100 border border-neutral-200 rounded-xl mb-4'>
+           <button className='bg-white border border-neutral-200 text-black py-2.5 rounded-lg font-semibold text-[14px] shadow-sm'>
              Register
            </button>
            <button 
              onClick={() => router.push('/login')} 
-             className='text-neutral-500 hover:text-black transition-colors py-2.5 rounded-[8px] font-medium text-[14px]'
+             className='text-neutral-500 hover:text-black transition-colors py-2.5 rounded-lg font-medium text-[14px]'
            >
              Login
            </button>
@@ -68,7 +75,7 @@ export default function RegisterPage() {
         {/* Social Auth */}
         <button 
           onClick={handleGoogleSignIn}
-          className='w-full flex items-center justify-center gap-3 bg-white border border-neutral-200 text-black py-3.5 rounded-[12px] hover:bg-neutral-50 transition-all group'
+          className='w-full flex items-center justify-center gap-3 bg-white border border-neutral-200 text-black py-3.5 rounded-xl hover:bg-neutral-50 transition-all group'
         >
           <GoogleIcon className='w-5 h-5 group-hover:scale-110 transition-transform' />
           <span className='font-medium text-[15px]'>Continue with Google</span>
@@ -89,7 +96,7 @@ export default function RegisterPage() {
               {...register("name")}
               type="text" 
               placeholder="Alex Johnson" 
-              className='bg-white border border-neutral-200 text-black p-4 rounded-[12px] focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
+              className='bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
             />
             {errors.name && <span className='text-rose-500 text-xs'>{errors.name.message}</span>}
           </div>
@@ -100,7 +107,7 @@ export default function RegisterPage() {
               {...register("email")}
               type="email" 
               placeholder="alex@example.com" 
-              className='bg-white border border-neutral-200 text-black p-4 rounded-[12px] focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
+              className='bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
             />
             {errors.email && <span className='text-rose-500 text-xs'>{errors.email.message}</span>}
           </div>
@@ -112,7 +119,7 @@ export default function RegisterPage() {
                 {...register("password")}
                 type={showPassword ? "text" : "password"} 
                 placeholder="••••••••" 
-                className='w-full bg-white border border-neutral-200 text-black p-4 rounded-[12px] focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
+                className='w-full bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
               />
               <button 
                 type="button"
@@ -127,7 +134,7 @@ export default function RegisterPage() {
           </div>
 
           {registrationMutation.isError && (
-            <div className='p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-[12px]'>
+            <div className='p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-xl'>
               {registrationMutation.error.message}
             </div>
           )}
@@ -135,12 +142,26 @@ export default function RegisterPage() {
           <button 
             type="submit"
             disabled={registrationMutation.isPending}
-            className='w-full bg-black hover:bg-neutral-800 text-white py-4 rounded-[12px] font-bold text-[16px] shadow-lg shadow-black/5 transition-all flex items-center justify-center gap-2'
+            className='w-full bg-black hover:bg-neutral-800 text-white py-4 rounded-xl font-bold text-[16px] shadow-lg shadow-black/5 transition-all flex items-center justify-center gap-2'
           >
             {registrationMutation.isPending ? <Loader2 className='w-5 h-5 animate-spin' /> : 'Create Account'}
           </button>
         </form>
       </div>
     </AuthLayout>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={
+      <AuthLayout title="Loading..." subtitle="Please wait while we prepare your registration.">
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-10 h-10 animate-spin text-black" />
+        </div>
+      </AuthLayout>
+    }>
+      <RegisterContent />
+    </Suspense>
   )
 }

@@ -15,6 +15,8 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { VercelV0Chat } from '@/components/ui/v0-ai-chat'
+import { PendingValidationTrigger } from '@/components/dashboard/PendingValidationTrigger'
+import { Suspense } from 'react'
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({
@@ -36,13 +38,16 @@ export default async function DashboardPage() {
 
   return (
     <div className='flex-1 overflow-y-auto p-4 md:p-8 space-y-10 bg-white'>
+      <Suspense fallback={null}>
+        <PendingValidationTrigger />
+      </Suspense>
       {/* Header & Stats Bar */}
       <div className='flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-neutral-100'>
         <div className='space-y-1'>
           <h1 className='text-[18px] font-semibold text-black'>
             Dashboard
           </h1>
-          <p className='text-neutral-400 text-[10px] font-bold uppercase'>Intelligence Workspace</p>
+          <p className='text-neutral-400 text-[10px] font-bold'>Intelligence Workspace</p>
         </div>
 
         {/* Compact Stats Grid */}

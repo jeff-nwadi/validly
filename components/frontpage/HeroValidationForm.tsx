@@ -3,16 +3,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Loader2, Sparkles, CheckCircle2, TrendingUp, BarChart3, Users } from 'lucide-react';
+import { ArrowRight, Loader2, Sparkles, CheckCircle2, TrendingUp, BarChart3, Users, Clock, Globe, Shield, Rocket } from 'lucide-react';
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 const STAGES = [
-  "Analyzing market trends...",
-  "Scanning direct competitors...",
-  "Calculating viability score...",
-  "Identifying potential risks...",
-  "Finalizing your report..."
+  { id: 1, label: "Researching market data...", icon: Globe },
+  { id: 2, label: "Analyzing competitors...", icon: Users },
+  { id: 3, label: "Evaluating industry trends...", icon: TrendingUp },
+  { id: 4, label: "AI processing insights...", icon: Sparkles },
+  { id: 5, label: "Calculating success score...", icon: BarChart3 },
+  { id: 6, label: "Generating report...", icon: Shield }
 ];
 
 export default function HeroValidationForm() {
@@ -36,17 +38,18 @@ export default function HeroValidationForm() {
     if (!idea.trim() || isAnalyzing) return;
 
     if (isMobile) {
-      // Direct redirect for mobile as requested
+      toast.info("Preparing your analysis...", {
+        description: "Redirecting to secure your report."
+      });
       router.push(`/register?idea=${encodeURIComponent(idea)}`);
       return;
     }
 
-    // Start simulation for Desktop/Tablet
     setIsAnalyzing(true);
     setProgress(0);
     setStageIndex(0);
 
-    const duration = 3500; // 3.5 seconds
+    const duration = 4500; // Increased to 4.5s for Checklist readability
     const interval = 100;
     const step = 100 / (duration / interval);
 
@@ -58,11 +61,14 @@ export default function HeroValidationForm() {
           setTimeout(() => {
             setIsAnalyzing(false);
             setShowModal(true);
-          }, 500);
+            toast.success("Analysis Complete!", {
+               description: "Log in or create an account to view your full report.",
+               duration: 5000,
+            });
+          }, 800);
           return 100;
         }
         
-        // Update stage based on progress
         const stage = Math.floor((next / 100) * STAGES.length);
         if (stage !== stageIndex && stage < STAGES.length) {
           setStageIndex(stage);
@@ -76,8 +82,8 @@ export default function HeroValidationForm() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div className={cn(
-        "relative flex flex-col md:flex-row items-center gap-4 md:gap-6 border border-neutral-200 rounded-xl p-4 md:p-3 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-black/5 transition-all duration-500",
-        isAnalyzing && "scale-[1.02] border-black/10"
+        "relative flex flex-col md:flex-row items-center gap-4 md:gap-6 border border-neutral-200 rounded-xl p-4 md:p-3 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500",
+        isAnalyzing && "scale-[1.01] border-black/10"
       )}>
         <div className="flex-1 w-full">
           <h2 className="text-[10px] uppercase font-bold text-neutral-400 mb-1 px-3">your idea</h2>
@@ -87,7 +93,7 @@ export default function HeroValidationForm() {
             onChange={(e) => setIdea(e.target.value)}
             disabled={isAnalyzing}
             placeholder="A CRM for local bakeries to manage custom cake orders..."
-            className="w-full text-[14px] text-black bg-transparent border-none focus:ring-0 resize-none min-h-[40px] px-3 py-1 placeholder:text-neutral-300"
+            className="w-full text-[14px] text-black bg-transparent border-none focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none focus-within:ring-0 resize-none min-h-[40px] px-3 py-1 placeholder:text-neutral-300"
             rows={1}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -119,23 +125,93 @@ export default function HeroValidationForm() {
           )}
         </button>
 
-        {/* Progress Overlay */}
+        {/* Progress Checklist Overlay */}
         <AnimatePresence>
           {isAnalyzing && (
             <motion.div 
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="absolute -bottom-20 left-0 right-0 p-4 bg-white border border-neutral-100 rounded-xl shadow-xl z-20"
+              exit={{ opacity: 0, y: -20 }}
+              className="absolute -bottom-[290px] left-0 right-0 p-6 bg-white border border-neutral-100 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] z-30"
             >
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-[12px] font-medium text-black flex items-center gap-2">
-                   <Sparkles className="w-3 h-3 text-purple-500 animate-pulse" />
-                   {STAGES[stageIndex]}
-                </span>
-                <span className="text-[12px] font-bold text-neutral-400">{Math.round(progress)}%</span>
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-col">
+                    <span className="text-[15px] font-bold text-black">Validating your idea...</span>
+                    <span className="text-[11px] text-neutral-400 uppercase tracking-widest font-semibold">AI Processors Engaged</span>
+                </div>
+                <span className="text-[18px] font-black text-black">{Math.round(progress)}%</span>
               </div>
-              <Progress value={progress} className="h-1.5 bg-neutral-50" />
+              
+              <Progress value={progress} className="h-2 bg-neutral-50 mb-6" />
+
+              <div className="space-y-3">
+                {STAGES.map((stage, idx) => {
+                  const Icon = stage.icon;
+                  const isCompleted = idx < stageIndex;
+                  const isActive = idx === stageIndex;
+
+                  return (
+                    <motion.div 
+                        key={stage.id}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: (isCompleted || isActive) ? 1 : 0.4, x: 0 }}
+                        className={cn(
+                            "flex items-center justify-between text-[13px] transition-all duration-300",
+                            isActive ? "text-black font-semibold" : "text-neutral-400"
+                        )}
+                    >
+                        <div className="flex items-center gap-3">
+                            {isCompleted ? (
+                                <CheckCircle2 className="w-4 h-4 text-green-500" />
+                            ) : isActive ? (
+                                <Loader2 className="w-4 h-4 text-black animate-spin" />
+                            ) : (
+                                <Icon className="w-4 h-4" />
+                            )}
+                            <span>{stage.label}</span>
+                        </div>
+                        {isCompleted && (
+                            <motion.span 
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-[10px] text-green-500 font-bold uppercase"
+                            >
+                                Done
+                            </motion.span>
+                        )}
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Subtle brand touch from reference image */}
+              <div className="mt-8 pt-6 border-t border-neutral-100">
+                <div className="flex items-center gap-2 mb-4">
+                    <Sparkles className="w-3 h-3 text-purple-600" />
+                    <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-widest">Explore while you wait</span>
+                </div>
+                
+                <div className="grid grid-cols-1 gap-3">
+                    {[
+                        { icon: BarChart3, title: "Market Size Calculator", sub: "Estimate your TAM, SAM, SOM" },
+                        { icon: Rocket, title: "Startup Cost Calculator", sub: "Plan your launch budget" },
+                        { icon: Users, title: "CAC Calculator", sub: "Customer acquisition costs" }
+                    ].map((item, i) => (
+                        <div key={i} className="flex items-center justify-between p-3 bg-neutral-50/50 rounded-xl border border-neutral-100 group hover:border-black/5 transition-colors">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-lg bg-white border border-neutral-100 flex items-center justify-center shadow-sm">
+                                    <item.icon className="w-4 h-4 text-black" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[12px] font-bold text-black leading-none">{item.title}</span>
+                                    <span className="text-[10px] text-neutral-400">{item.sub}</span>
+                                </div>
+                            </div>
+                            <ArrowRight className="w-3 h-3 text-neutral-300 group-hover:text-black transition-colors" />
+                        </div>
+                    ))}
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -185,7 +261,10 @@ export default function HeroValidationForm() {
 
                 <div className="mt-8 flex flex-col gap-3">
                     <button 
-                        onClick={() => router.push(`/register?idea=${encodeURIComponent(idea)}`)}
+                        onClick={() => {
+                            localStorage.setItem('pending_idea', idea);
+                            router.push(`/register?idea=${encodeURIComponent(idea)}`);
+                        }}
                         className="w-full bg-black text-white py-4 rounded-xl font-bold text-[16px] hover:bg-neutral-800 transition-all shadow-lg shadow-black/10 flex items-center justify-center gap-2"
                     >
                         View Full Analysis

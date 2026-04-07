@@ -127,7 +127,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
                             onKeyDown={handleKeyDown}
                             placeholder="Describe your SaaS idea here..."
                             className={cn(
-                                "w-full px-6 py-4",
+                                "w-full px-6 py-6",
                                 "resize-none",
                                 "bg-transparent",
                                 "border-none",
@@ -135,7 +135,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
                                 "focus:outline-none",
                                 "focus-visible:ring-0 focus-visible:ring-offset-0",
                                 "placeholder:text-neutral-500 placeholder:text-lg",
-                                "min-h-[60px]"
+                                "min-h-[70px]"
                             )}
                             style={{
                                 overflow: "hidden",

@@ -24,7 +24,7 @@ const steps = [
 
 export default function Howitworks() {
   return (
-    <section id="how-it-works" className='flex justify-center items-center px-6 md:px-10 py-24 bg-white text-black'>
+    <section id="how-it-works" className='flex justify-center items-center px-6 md:px-10 py-14 bg-white text-black'>
       <div className='py-16 md:py-24 max-w-7xl w-full'>
         <div className='mb-12 md:mb-16'>
           <h2 className='text-black text-[18px] font-semibold text-center mb-4 leading-tight uppercase'>How it works</h2>

@@ -33,7 +33,7 @@ const Footer = () => {
             <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
               <Lightbulb className="w-6 h-6 text-white fill-white" />
             </div>
-            <p className='font-bold text-[22px] text-black'>Validly</p>
+            <p className='font-bold text-[18px] md:text-[30px] text-black tracking-tighter'>Validly</p>
           </div>
           <p className="text-neutral-500 text-[15px] leading-relaxed">
             Validate your SaaS ideas instantly with AI-powered market and competitor analysis.

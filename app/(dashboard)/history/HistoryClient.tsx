@@ -72,7 +72,7 @@ export default function HistoryClient({ initialValidations }: HistoryClientProps
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
                 <Input
                    placeholder="Search validations by name..."
-                   className="pl-10 bg-white border-neutral-200 text-black placeholder:text-neutral-400 h-10 rounded-[6px] focus-visible:ring-black/5"
+                   className="pl-10 bg-white border-neutral-200 text-black placeholder:text-neutral-400 h-10 rounded-md focus-visible:ring-black/5"
                    value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}
                 />

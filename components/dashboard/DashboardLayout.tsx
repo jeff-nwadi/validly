@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { 
   Home, 
-  CheckCircle, 
+  Lightbulb, 
   History, 
   Settings, 
   ChevronLeft, 
@@ -65,10 +65,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className='flex h-16 items-center justify-between border-b border-neutral-200 px-4'>
            {(!isCollapsed || isSidebarOpen) && (
               <div className='flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300'>
-                 <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-black'>
-                    <CheckCircle className='h-5 w-5 text-white' />
+                 <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-black'>
+                    <Lightbulb className='h-5 w-5 text-white fill-white' />
                  </div>
-                 <span className='text-[18px] font-semibold text-black  uppercase'>Validly</span>
+                 <span className='text-[18px] font-bold text-black tracking-tighter'>Validly</span>
               </div>
            )}
            <Button
