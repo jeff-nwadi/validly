@@ -5,38 +5,48 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { 
-  LayoutDashboard, 
-  PlusCircle, 
+  Home, 
+  CheckCircle, 
   History, 
   Settings, 
-  CreditCard,
-  LogOut,
-  User as UserIcon,
+  ChevronLeft, 
   Menu,
-  X,
+  LogOut,
   Sparkles
 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { useSession, signOut } from '@/lib/auth-client'
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'New Validation', href: '/validate', icon: PlusCircle },
-  { name: 'History', href: '/history', icon: History },
-  { name: 'Settings', href: '/settings', icon: Settings },
+interface NavItem {
+  title: string;
+  icon: React.ElementType;
+  href: string;
+  badge?: number;
+}
+
+const navigation: NavItem[] = [
+  { title: 'Dashboard', icon: Home, href: '/dashboard' },
+  { title: 'History', icon: History, href: '/history' },
+  { title: 'Settings', icon: Settings, href: '/settings' },
 ]
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const { data: session } = useSession()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   // Auto-close sidebar on mobile when navigating
   useEffect(() => {
     setIsSidebarOpen(false)
   }, [pathname])
 
+  const userInitials = session?.user?.name 
+    ? session.user.name.split(' ').map(n => n[0]).join('').toUpperCase() 
+    : 'AM';
+
   return (
-    <div className='flex h-screen bg-[#0A0A0A] overflow-hidden text-[#9A9A9A]'>
+    <div className='flex h-screen bg-background overflow-hidden text-[#9A9A9A]'>
       {/* Mobile Backdrop */}
       {isSidebarOpen && (
         <div 
@@ -47,102 +57,142 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Sidebar */}
       <aside className={cn(
-        'fixed inset-y-0 left-0 z-50 w-64 border-r border-[#1F1F1F] bg-[#0A0A0A] flex flex-col shrink-0 transition-transform duration-300 ease-in-out lg:z-0 lg:static lg:translate-x-0',
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        'fixed inset-y-0 left-0 z-50 flex flex-col border-r border-border bg-card transition-all duration-300 ease-in-out lg:z-0 lg:static lg:translate-x-0',
+        isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0',
+        isCollapsed ? 'lg:w-16' : 'lg:w-64'
       )}>
         {/* Sidebar Header */}
-        <div className='flex items-center justify-between p-6 lg:pb-4'>
-           <div className='flex items-center gap-2'>
-              <div className='w-8 h-8 bg-white/5 border border-white/10 rounded-[6px] flex items-center justify-center font-bold text-white'>
-                V
+        <div className='flex h-16 items-center justify-between border-b border-border px-4'>
+           {(!isCollapsed || isSidebarOpen) && (
+              <div className='flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300'>
+                 <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary'>
+                    <CheckCircle className='h-5 w-5 text-primary-foreground' />
+                 </div>
+                 <span className='text-lg font-bold header text-foreground tracking-wider uppercase'>Validly</span>
               </div>
-              <span className='font-bold text-lg header text-[#F8F8F8] tracking-widest uppercase'>Validly</span>
-           </div>
-           {/* Mobile Close Button */}
-           <button 
-             onClick={() => setIsSidebarOpen(false)}
-             className='p-2 text-[#4A4A4A] hover:bg-[#111111] rounded-[6px] lg:hidden'
+           )}
+           <Button
+             variant="ghost"
+             size="icon"
+             onClick={() => {
+                if (window.innerWidth < 1024) {
+                   setIsSidebarOpen(false);
+                } else {
+                   setIsCollapsed(!isCollapsed);
+                }
+             }}
+             className={cn(
+                'h-8 w-8 transition-transform duration-300',
+                isCollapsed && !isSidebarOpen && 'mx-auto rotate-180'
+             )}
            >
-             <X className='w-4 h-4' />
-           </button>
+              <ChevronLeft className='h-4 w-4' />
+           </Button>
         </div>
 
         {/* Navigation */}
-        <nav className='flex-1 px-4 space-y-1 overflow-y-auto mt-8'>
+        <nav className='flex-1 space-y-1 p-3 overflow-y-auto mt-4'>
            {navigation.map((item) => {
-              const isActive = pathname === item.href
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              const isDesktopCollapsed = isCollapsed && !isSidebarOpen;
+
               return (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-2.5 rounded-[6px] transition-all duration-200 group',
+                    'group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                     isActive 
-                      ? 'bg-white/5 text-white border-l border-white/40' 
-                      : 'text-[#9A9A9A] hover:bg-[#111111] hover:text-[#F8F8F8]'
+                      ? 'bg-primary text-primary-foreground shadow-sm' 
+                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                    isDesktopCollapsed && 'justify-center px-0'
                   )}
                 >
-                  <item.icon className={cn(
-                    'w-4 h-4',
-                    isActive ? 'text-white' : 'text-[#4A4A4A] group-hover:text-[#9A9A9A]'
+                  <Icon className={cn(
+                     'h-5 w-5 shrink-0',
+                     isActive && 'animate-in zoom-in-50 duration-200'
                   )} />
-                  <span className='text-sm tracking-wide'>{item.name}</span>
+                  {(!isDesktopCollapsed) && (
+                    <>
+                       <span className='flex-1 text-left truncate'>{item.title}</span>
+                       {item.badge && (
+                          <span className={cn(
+                             'flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-bold',
+                             isActive ? 'bg-primary-foreground text-primary' : 'bg-primary text-primary-foreground'
+                          )}>
+                             {item.badge}
+                          </span>
+                       )}
+                    </>
+                  )}
+                  {isDesktopCollapsed && item.badge && (
+                    <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground border border-background">
+                       {item.badge}
+                    </span>
+                  )}
                 </Link>
               )
            })}
         </nav>
 
-        {/* Profile Card / Plan Status */}
-        <div className='p-4 border-t border-[#1F1F1F] mt-auto'>
-           {/* Plan Badge (Refined) */}
-           <div className='mb-4 p-4 rounded-[6px] bg-[#111111] border border-[#1F1F1F] shadow-sm'>
-              <div className='flex items-center gap-3 mb-2'>
-                 <Sparkles className='w-4 h-4 text-white/40' />
-                 <span className='text-[12px] font-bold text-white tracking-wide uppercase'>Pro Plan Active</span>
+        {/* Pro Plan Status (Refined for collapsed state) */}
+        {!isCollapsed && (
+           <div className='px-3 mb-2 animate-in fade-in slide-in-from-bottom-2 duration-300'>
+              <div className='p-3 rounded-lg bg-primary/5 border border-primary/10'>
+                 <div className='flex items-center gap-2 mb-1'>
+                    <Sparkles className='w-3.5 h-3.5 text-primary' />
+                    <span className='text-[11px] font-bold text-foreground tracking-wide uppercase'>Pro Plan</span>
+                 </div>
+                 <p className='text-[10px] text-muted-foreground leading-snug'>Unlimited validations enabled.</p>
               </div>
-              <p className='text-[11px] text-[#4A4A4A] mb-3 leading-relaxed'>Unlimited validations enabled.</p>
-              <Link href='/settings/billing' className='text-[10px] font-bold text-white/60 hover:text-white flex items-center gap-1 transition-colors uppercase tracking-widest'>
-                 Billing Support →
-              </Link>
            </div>
+        )}
 
-           {/* User Info */}
-           <div className='flex items-center justify-between gap-3 px-2 py-1'>
-              <div className='flex items-center gap-3 min-w-0'>
-                <div className='w-9 h-9 rounded-[6px] bg-[#111111] border border-[#1F1F1F] flex items-center justify-center overflow-hidden shrink-0'>
-                   {session?.user?.image ? (
-                     <img src={session.user.image} alt={session.user.name} />
-                   ) : (
-                     <UserIcon className='w-4 h-4 text-[#4A4A4A]' />
-                   )}
-                </div>
-                <div className='flex flex-col min-w-0'>
-                   <p className='text-xs font-bold text-[#F8F8F8] truncate'>{session?.user?.name || 'Alex Mercer'}</p>
-                </div>
+        {/* User Card */}
+        <div className='border-t border-border p-3'>
+           <div className={cn(
+              'flex items-center gap-3 rounded-lg bg-muted p-3 transition-all duration-300',
+              isCollapsed && !isSidebarOpen ? 'justify-center p-2' : ''
+           )}>
+              <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-primary text-sm font-bold text-primary-foreground overflow-hidden'>
+                 {session?.user?.image ? (
+                    <img src={session.user.image} alt={session.user.name} className="w-full h-full object-cover" />
+                 ) : (
+                    userInitials
+                 )}
               </div>
-              <button 
-                onClick={() => signOut()}
-                className='p-2 hover:bg-white/5 rounded-[6px] text-[#4A4A4A] hover:text-white transition-colors'
-              >
-                <LogOut className='w-4 h-4' />
-              </button>
+              {(!isCollapsed || isSidebarOpen) && (
+                 <div className='flex-1 overflow-hidden animate-in fade-in slide-in-from-left-2 duration-300'>
+                    <p className='truncate text-sm font-bold text-foreground leading-tight'>{session?.user?.name || 'Alex Mercer'}</p>
+                    <p className='truncate text-[11px] text-muted-foreground'>{session?.user?.email || 'alex@example.com'}</p>
+                 </div>
+              )}
+              {(!isCollapsed || isSidebarOpen) && (
+                 <button 
+                   onClick={() => signOut()}
+                   className='p-1.5 hover:bg-black/5 rounded-md text-muted-foreground hover:text-foreground transition-colors'
+                 >
+                    <LogOut className='w-4 h-4' />
+                 </button>
+              )}
            </div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className='flex-1 flex flex-col overflow-hidden bg-[#0A0A0A]'>
+      <main className='flex-1 flex flex-col overflow-hidden bg-background relative'>
         {/* Mobile Header (Only visible on small screens) */}
-        <header className='flex items-center justify-between px-6 py-4 border-b border-[#1F1F1F] lg:hidden'>
+        <header className='flex items-center justify-between px-6 py-4 border-b border-border lg:hidden'>
            <div className='flex items-center gap-2'>
-              <div className='w-7 h-7 bg-white/5 border border-white/10 rounded-[6px] flex items-center justify-center font-extrabold text-white text-xs'>
+              <div className='w-7 h-7 bg-primary rounded-lg flex items-center justify-center font-extrabold text-primary-foreground text-xs'>
                 V
               </div>
-              <span className='font-bold text-sm header text-[#F8F8F8] tracking-widest uppercase'>Validly</span>
+              <span className='font-bold text-sm header text-foreground tracking-wider uppercase'>Validly</span>
            </div>
            <button 
              onClick={() => setIsSidebarOpen(true)}
-             className='p-2 text-[#F8F8F8] hover:bg-[#111111] rounded-[6px]'
+             className='p-2 text-foreground hover:bg-muted rounded-lg'
            >
               <Menu className='w-5 h-5' />
            </button>

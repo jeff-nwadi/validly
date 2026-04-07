@@ -78,7 +78,7 @@ Each report generated contains:
 
 - Node.js 18+
 - A [Neon](https://neon.tech) database
-- [Gemini API](https://aistudio.google.com/app/apikey) key
+- [Claude API](https://claude.com/docs/build-with-claude/api-keys) key
 - [Tavily API](https://tavily.com) key
 - [Stripe](https://stripe.com) account
 - [Resend](https://resend.com) account

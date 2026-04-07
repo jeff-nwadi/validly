@@ -73,7 +73,7 @@ function useAutoResizeTextarea({
     return { textareaRef, adjustHeight };
 }
 
-export function VercelV0Chat() {
+export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
     const [value, setValue] = useState("");
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
@@ -108,12 +108,14 @@ export function VercelV0Chat() {
 
     return (
         <div className="flex flex-col items-center w-full max-w-4xl mx-auto p-4 space-y-8">
-            <h1 className="text-4xl font-bold text-black dark:text-white header tracking-wider text-center">
-                What idea are we validating today?
-            </h1>
+            {showTitle && (
+                <h1 className="text-2xl md:text-4xl font-bold text-black dark:text-white header tracking-wider text-center">
+                    What idea are we validating today?
+                </h1>
+            )}
 
             <div className="w-full">
-                <div className="relative bg-neutral-900 rounded-[6px] border border-neutral-800 p-2">
+                <div className="relative bg-neutral-900 rounded-[12px] border border-neutral-800 p-2">
                     <div className="overflow-y-auto">
                         <Textarea
                             ref={textareaRef}
@@ -211,7 +213,7 @@ export function VercelV0Chat() {
             </div>
 
             <div className="max-w-md">
-                 <p className='text-[10px] text-[#2C2C2C] text-center leading-relaxed tracking-wide'>
+                 <p className='text-[14px] text-[#2C2C2C] text-center leading-relaxed tracking-wide'>
                     AI validation takes ~30 seconds. The report will include viability score, market size, and MVP features.
                  </p>
             </div>
