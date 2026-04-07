@@ -76,7 +76,7 @@ export default function ValidationForm() {
                 type="button"
                 onClick={() => setShowTargetInput(!showTargetInput)}
                 className={cn(
-                    'flex items-center gap-2 text-[13px] font-bold transition-all uppercase tracking-wider',
+                    'flex items-center gap-2 text-[13px] font-bold transition-all uppercase ',
                     showTargetInput ? 'text-white' : 'text-[#4A4A4A] hover:text-[#9A9A9A]'
                 )}
               >
@@ -87,7 +87,7 @@ export default function ValidationForm() {
                 type="button"
                 onClick={() => setShowIndustryInput(!showIndustryInput)}
                 className={cn(
-                    'flex items-center gap-2 text-[13px] font-bold transition-all uppercase tracking-wider',
+                    'flex items-center gap-2 text-[13px] font-bold transition-all uppercase ',
                     showIndustryInput ? 'text-white' : 'text-[#4A4A4A] hover:text-[#9A9A9A]'
                 )}
               >

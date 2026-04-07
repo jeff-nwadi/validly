@@ -44,7 +44,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
     <div className="flex-1 overflow-y-auto bg-black text-white">
       {/* Header */}
       <div className="border-b border-zinc-800 px-6 py-8 md:px-8 md:py-10">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 tracking-wider header">Settings</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2  header">Settings</h1>
         <p className="text-zinc-400 text-xs md:text-sm">
           Manage your account, billing, and system preferences.
         </p>
@@ -90,7 +90,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           {activeTab === "profile" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-2 tracking-wider header">Profile</h2>
+                <h2 className="text-2xl font-bold mb-2  header">Profile</h2>
                 <p className="text-zinc-400 text-sm">
                   Update your personal information and avatar.
                 </p>
@@ -127,7 +127,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 {/* Form Fields */}
                 <div className="space-y-6">
                   <div>
-                    <Label htmlFor="name" className="text-white mb-2 block font-bold uppercase tracking-widest text-[10px]">
+                    <Label htmlFor="name" className="text-white mb-2 block font-bold uppercase  text-[10px]">
                       Full Name
                     </Label>
                     <Input
@@ -138,7 +138,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                   </div>
 
                   <div>
-                    <Label htmlFor="email" className="text-white mb-2 block font-bold uppercase tracking-widest text-[10px]">
+                    <Label htmlFor="email" className="text-white mb-2 block font-bold uppercase  text-[10px]">
                       Email Address
                     </Label>
                     <Input
@@ -150,7 +150,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                   </div>
 
                   <div className="flex justify-end pt-4">
-                    <Button className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white px-8 rounded-[6px] font-bold uppercase tracking-widest text-xs h-11 w-full sm:w-auto">
+                    <Button className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white px-8 rounded-[6px] font-bold uppercase  text-xs h-11 w-full sm:w-auto">
                       Save Changes
                     </Button>
                   </div>
@@ -162,7 +162,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           {activeTab === "billing" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-2 tracking-wider header">Billing & Usage</h2>
+                <h2 className="text-2xl font-bold mb-2  header">Billing & Usage</h2>
                 <p className="text-zinc-400 text-sm">
                   Manage your subscription plan and view usage limits.
                 </p>
@@ -173,7 +173,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 <div className="bg-[#0D0D0D] rounded-xl p-6 border border-zinc-800 shadow-sm">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-lg font-bold tracking-wide uppercase text-white/90">{user.plan} Plan</h3>
+                      <h3 className="text-lg font-bold  uppercase text-white/90">{user.plan} Plan</h3>
                       <Badge className="bg-violet-600 text-white hover:bg-violet-600 rounded-full px-3">
                         Active
                       </Badge>
@@ -194,7 +194,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 {/* Usage */}
                 <div className="bg-[#0D0D0D] rounded-xl p-6 border border-zinc-800 shadow-sm">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-zinc-400">Monthly Validations Used</h3>
+                    <h3 className="text-sm font-bold uppercase  text-zinc-400">Monthly Validations Used</h3>
                     <span className="text-white font-bold text-sm">
                        {user.validationsUsed} / {user.plan === 'pro' ? '∞' : validationLimit}
                     </span>
@@ -217,12 +217,12 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                       <div>
                         <div className="flex items-center gap-2 mb-3">
                           <span className="text-2xl">🚀</span>
-                          <h3 className="text-xl font-bold tracking-wider header text-white">Upgrade to Lifetime</h3>
+                          <h3 className="text-xl font-bold  header text-white">Upgrade to Lifetime</h3>
                         </div>
                         <p className="text-zinc-300 text-sm mb-4 max-w-md leading-relaxed">
                           Get unlimited AI validations forever with a single payment. No monthly fees, no limits.
                         </p>
-                        <p className="text-white text-2xl font-black tracking-tighter">$49</p>
+                        <p className="text-white text-2xl font-black er">$49</p>
                       </div>
                       <Button className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white px-6 rounded-[6px] font-bold shadow-lg shadow-violet-500/20 w-full sm:w-auto">
                         Upgrade Now
@@ -244,7 +244,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           {activeTab === "notifications" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-2 tracking-wider header">Notifications</h2>
+                <h2 className="text-2xl font-bold mb-2  header">Notifications</h2>
                 <p className="text-zinc-400 text-sm">
                   Choose what updates you want to receive.
                 </p>
@@ -254,7 +254,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 <div className="space-y-6">
                   <div className="flex items-center justify-between pb-6 border-b border-zinc-800">
                     <div>
-                      <h3 className="font-bold text-white mb-1 tracking-wide">Validation Reports</h3>
+                      <h3 className="font-bold text-white mb-1 ">Validation Reports</h3>
                       <p className="text-zinc-500 text-sm">
                         Receive an email when your AI report is ready.
                       </p>
@@ -269,7 +269,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
                   <div className="flex items-center justify-between pb-6 border-b border-zinc-800">
                     <div>
-                      <h3 className="font-bold text-white mb-1 tracking-wide">Product Updates</h3>
+                      <h3 className="font-bold text-white mb-1 ">Product Updates</h3>
                       <p className="text-zinc-500 text-sm">
                         News about the latest features and improvements.
                       </p>
@@ -284,7 +284,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-bold text-white mb-1 tracking-wide">Marketing Emails</h3>
+                      <h3 className="font-bold text-white mb-1 ">Marketing Emails</h3>
                       <p className="text-zinc-500 text-sm">
                         Tips, tricks, and promotional offers.
                       </p>
@@ -304,7 +304,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           {activeTab === "danger" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-2 text-rose-500 tracking-wider header">Danger Zone</h2>
+                <h2 className="text-2xl font-bold mb-2 text-rose-500  header">Danger Zone</h2>
                 <p className="text-zinc-400 text-sm">
                   Irreversible and destructive actions.
                 </p>
@@ -313,14 +313,14 @@ export default function SettingsClient({ user }: SettingsClientProps) {
               <div className="bg-rose-500/5 rounded-xl p-8 border border-rose-500/20 shadow-sm">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="text-center md:text-left">
-                    <h3 className="font-bold text-white mb-1 tracking-wide">Delete Account</h3>
+                    <h3 className="font-bold text-white mb-1 ">Delete Account</h3>
                     <p className="text-rose-500/60 text-sm max-w-sm mx-auto md:mx-0">
                       Permanently delete your account, your subscription, and all past validations. This cannot be undone.
                     </p>
                   </div>
                   <Button
                     variant="destructive"
-                    className="bg-rose-600 hover:bg-rose-700 text-white rounded-[6px] px-6 font-bold uppercase tracking-widest text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10"
+                    className="bg-rose-600 hover:bg-rose-700 text-white rounded-[6px] px-6 font-bold uppercase  text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10"
                   >
                     <AlertTriangle className="w-4 h-4 mr-2" />
                     Delete Account

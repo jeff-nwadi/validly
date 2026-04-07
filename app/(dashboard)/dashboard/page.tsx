@@ -39,24 +39,24 @@ export default async function DashboardPage() {
       {/* Header & Stats Bar */}
       <div className='flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[#1F1F1F]'>
         <div className='space-y-1'>
-          <h1 className='text-xl md:text-2xl font-bold text-[#F8F8F8] header tracking-wider'>
+          <h1 className='text-xl md:text-2xl font-bold text-[#F8F8F8] header '>
             Dashboard
           </h1>
-          <p className='text-[#4A4A4A] text-[11px] font-bold uppercase tracking-widest'>Intelligence Workspace</p>
+          <p className='text-[#4A4A4A] text-[11px] font-bold uppercase '>Intelligence Workspace</p>
         </div>
 
         {/* Compact Stats Grid */}
         <div className='grid grid-cols-3 gap-4 lg:gap-8'>
            <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase tracking-widest mb-1">Total</span>
+              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  mb-1">Total</span>
               <span className="text-xl font-bold text-white header">{totalValidations}</span>
            </div>
            <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase tracking-widest mb-1">Hot</span>
+              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  mb-1">Hot</span>
               <span className="text-xl font-bold text-emerald-500 header">{hotIdeas}</span>
            </div>
            <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase tracking-widest mb-1">Avg Score</span>
+              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  mb-1">Avg Score</span>
               <span className="text-xl font-bold text-purple-500 header">{avgScore}</span>
            </div>
         </div>
@@ -71,9 +71,9 @@ export default async function DashboardPage() {
       <div className='space-y-6 pt-10 border-t border-[#1F1F1F]'>
         <div className='flex items-center justify-between'>
            <div className='flex items-center gap-2'>
-              <h2 className='text-[10px] font-bold text-white/40 uppercase tracking-widest'>Recent Validations</h2>
+              <h2 className='text-[10px] font-bold text-white/40 uppercase '>Recent Validations</h2>
            </div>
-           <Link href='/history' className='text-[10px] font-bold text-[#4A4A4A] hover:text-white transition-colors uppercase tracking-[0.2em] flex items-center gap-1 group'>
+           <Link href='/history' className='text-[10px] font-bold text-[#4A4A4A] hover:text-white transition-colors uppercase  flex items-center gap-1 group'>
               View Archive <span className='group-hover:translate-x-1 transition-transform'>→</span>
            </Link>
         </div>
@@ -83,7 +83,7 @@ export default async function DashboardPage() {
 
       {/* Status Footer */}
       <div className='pt-12 text-center'>
-         <p className="text-[10px] text-[#2C2C2C] uppercase tracking-[0.3em] font-bold">
+         <p className="text-[10px] text-[#2C2C2C] uppercase  font-bold">
             Validly Intelligence System • Version 1.0.4
          </p>
       </div>

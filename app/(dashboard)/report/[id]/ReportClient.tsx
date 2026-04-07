@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  TrendingUp,
   AlertTriangle,
   Target,
   Users,
@@ -15,22 +14,33 @@ import {
   Clock,
   BarChart3,
   FileText,
-  Zap,
-  Flame,
-  Snowflake,
+  ShieldCheck,
+  Circle,
+  Thermometer,
   DollarSign,
   User,
-  Rocket,
+  Milestone,
   Wrench,
-  Megaphone,
-  Crosshair,
+  Type,
+  Presentation,
   ListChecks,
   Lock,
+  ArrowRightCircle,
+  Share2,
+  Flag,
+  Crosshair,
+  Megaphone,
+  Rocket,
+  TrendingUp,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { chatWithReport } from "@/lib/actions/chat-with-report";
+import { ChevronDown, Send, Copy, Ghost, MessagesSquare } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 export interface Competitor {
   id: string;
@@ -127,6 +137,39 @@ export interface ReportData {
   firstCustomers: Customer[];
   mvpScope: MVPScope;
   marketInsights: string[];
+  gtmStrategy: {
+    launchPhase: string;
+    growthChannels: { channel: string; strategy: string; expectedROI: string; effort: string; howTo: string }[];
+    contentStrategy: string;
+    pricingStrategy: string;
+    partnershipOpportunities: string[];
+  };
+  landingPage: {
+    headline: string;
+    subheadline: string;
+    heroDescription: string;
+    features: { title: string; description: string }[];
+    socialProof: string;
+    cta: string;
+    faq: { question: string; answer: string }[];
+    pricingCopy: string;
+  };
+  pivotSuggestions: { pivotTitle: string; reason: string; viabilityScore: number; keyDifference: string }[];
+  socialKit: {
+    twitter: string[];
+    linkedin: string;
+    reddit: { subreddit: string; title: string; body: string };
+    productHunt: { tagline: string; description: string; firstComment: string };
+  };
+  fundraising: {
+    readinessScore: number;
+    investorReadiness: string;
+    keyMetricsNeeded: string[];
+    pitchAngle: string;
+    redFlags: string[];
+    bestInvestorTypes: string[];
+    estimatedValuation: string;
+  };
   isPro?: boolean;
 }
 
@@ -137,9 +180,9 @@ interface ReportSystemProps {
 
 const VerdictBadge: React.FC<{ verdict: "hot" | "warm" | "cold" }> = ({ verdict }) => {
   const config = {
-    hot: { icon: Flame, color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/20", label: "Hot" },
-    warm: { icon: AlertTriangle, color: "text-yellow-500", bg: "bg-yellow-500/10", border: "border-yellow-500/20", label: "Warm" },
-    cold: { icon: Snowflake, color: "text-blue-400", bg: "bg-blue-400/10", border: "border-blue-400/20", label: "Cold" },
+    hot: { icon: Circle, color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/20", label: "High" },
+    warm: { icon: Circle, color: "text-yellow-500", bg: "bg-yellow-500/10", border: "border-yellow-500/20", label: "Moderate" },
+    cold: { icon: Circle, color: "text-blue-500", bg: "bg-blue-500/10", border: "border-blue-500/20", label: "Stable" },
   }[verdict];
 
   const Icon = config.icon;
@@ -368,15 +411,134 @@ const RiskHeatmap: React.FC<{ risks: Risk[] }> = ({ risks }) => {
   );
 };
 
+const GrowthChannelCard = ({ channel, i }: { channel: any, i: number }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Parse tactics if they look like a list or have multiple sentences
+  const tactics = channel.howTo?.split(/[.!?]\s+/).filter((s: string) => s.length > 5) || [];
+
+  return (
+    <motion.div 
+      layout
+      className={cn(
+        "p-5 rounded-lg border bg-muted/5 transition-all duration-300",
+        isExpanded ? "md:col-span-2 border-primary/30 ring-1 ring-primary/10 shadow-sm" : "hover:border-primary/20"
+      )}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <h4 className="font-bold text-lg text-foreground flex items-center gap-2">
+          {channel.channel}
+          {channel.effort && (
+            <Badge variant="secondary" className="text-[9px] h-4 uppercase font-bold px-1.5 opacity-60">
+              {channel.effort} Effort
+            </Badge>
+          )}
+        </h4>
+        <Badge variant="outline" className="text-[10px] bg-primary/2 border-primary/10 text-primary">
+          ROI: {channel.expectedROI}
+        </Badge>
+      </div>
+      
+      <p className="text-sm mb-4 text-muted-foreground leading-relaxed">
+        {channel.strategy}
+      </p>
+
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        className="w-full justify-between h-8 text-xs font-bold uppercase bg-primary/5 hover:bg-primary/10 text-primary"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        {isExpanded ? "Hide Execution Details" : "View Detailed Tactics"}
+        <motion.span animate={{ rotate: isExpanded ? 180 : 0 }}>
+          <ChevronDown className="w-3 h-3" />
+        </motion.span>
+      </Button>
+
+      <AnimatePresence mode="wait">
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pt-6 space-y-4">
+              <div className="p-4 rounded-md bg-background border border-border/50">
+                <h5 className="text-[10px] font-bold uppercase text-primary mb-3">Step-by-Step Tactics</h5>
+                <ul className="space-y-3">
+                  {(tactics.length > 0 ? tactics : [channel.howTo]).map((t: string, idx: number) => (
+                    <li key={idx} className="flex items-start gap-3 text-sm">
+                      <div className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold mt-0.5 shrink-0">
+                        {idx + 1}
+                      </div>
+                      <span className="text-muted-foreground leading-relaxed">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
 export const ReportClient: React.FC<ReportSystemProps> = ({
   reportData,
   onExportPDF,
 }) => {
-  const [activeTab, setActiveTab] = useState<"overview" | "competitors" | "audience" | "risks" | "revenue" | "roadmap" | "stack" | "headlines" | "customers" | "scope">(
+  const [activeTab, setActiveTab] = useState<"overview" | "competitors" | "audience" | "risks" | "revenue" | "roadmap" | "stack" | "headlines" | "customers" | "scope" | "gtm" | "landing" | "kit" | "advisor">(
     "overview"
   );
 
-  const isProSection = (tab: string) => ["roadmap", "stack", "headlines", "customers", "scope"].includes(tab);
+  // Normalize data for legacy compatibility
+  const data = {
+    ...reportData,
+    gtmStrategy: reportData.gtmStrategy || { launchPhase: "Market Entry Framework", growthChannels: [], contentStrategy: "N/A", pricingStrategy: "N/A", partnershipOpportunities: [] },
+    landingPage: reportData.landingPage || { headline: "Concept Analysis", subheadline: "", features: [], cta: "Get Started", faq: [], pricingCopy: "" },
+    socialKit: reportData.socialKit || { twitter: [], linkedin: "", reddit: { subreddit: "", title: "", body: "" }, productHunt: { tagline: "", description: "", firstComment: "" } },
+    fundraising: reportData.fundraising || { readinessScore: 0, investorReadiness: "Analysis Pending", pitchAngle: "N/A", keyMetricsNeeded: [], redFlags: [], bestInvestorTypes: [], estimatedValuation: "N/A" },
+    pivotSuggestions: reportData.pivotSuggestions || [],
+    marketInsights: reportData.marketInsights || [],
+    mvpScope: reportData.mvpScope || { mustHave: [], niceToHave: [], dontBuild: [] },
+  };
+
+  const [chatMessages, setChatMessages] = useState<{ role: "user" | "assistant", content: string }[]>([
+    { role: "assistant", content: `Hi! I'm your startup advisor for **${data.ideaTitle}**. Ask me anything about this report or how to launch your business!` }
+  ]);
+  const [userInput, setUserInput] = useState("");
+  const [isChatLoading, setIsChatLoading] = useState(false);
+
+  const handleSendMessage = async () => {
+    if (!userInput.trim() || isChatLoading) return;
+
+    const newMessages = [...chatMessages, { role: "user" as const, content: userInput }];
+    setChatMessages(newMessages);
+    setUserInput("");
+    setIsChatLoading(true);
+
+    try {
+      const response = await chatWithReport(data.id, newMessages);
+      if (response.success && response.message) {
+        setChatMessages([...newMessages, { role: "assistant" as const, content: response.message }]);
+      } else {
+        setChatMessages([...newMessages, { role: "assistant" as const, content: "Sorry, I ran into an error. Let's try again." }]);
+      }
+    } catch (error) {
+       setChatMessages([...newMessages, { role: "assistant" as const, content: "Oops, something went wrong. Let's try again later." }]);
+    } finally {
+      setIsChatLoading(false);
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const isProSection = (tab: string) => ["roadmap", "stack", "headlines", "customers", "scope", "gtm", "landing", "kit", "advisor"].includes(tab);
   const isLocked = (tab: string) => false; // UNLOCKED FOR TESTING
 
   return (
@@ -391,12 +553,12 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div className="space-y-3">
               <div className="flex items-center gap-3 flex-wrap">
-                <h1 className="text-2xl md:text-4xl font-bold header tracking-wider">{reportData.ideaTitle}</h1>
-                <VerdictBadge verdict={reportData.verdict} />
+                <h1 className="text-2xl md:text-4xl font-bold header">{data.ideaTitle}</h1>
+                <VerdictBadge verdict={data.verdict} />
               </div>
-              <p className="text-base text-muted-foreground">{reportData.verdictReason}</p>
+              <p className="text-base text-muted-foreground">{data.verdictReason}</p>
               <p className="text-xs text-muted-foreground">
-                Generated on {reportData.generatedAt} • Report ID: {reportData.id}
+                Generated on {data.generatedAt} • Report ID: {data.id}
               </p>
             </div>
             <Button onClick={onExportPDF} size="lg" className="gap-2">
@@ -411,21 +573,21 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="lg:col-span-1">
             <Card className="h-full">
               <CardContent className="p-0">
-                <ViabilityGauge score={reportData.viabilityScore} />
+                <ViabilityGauge score={data.viabilityScore} />
               </CardContent>
             </Card>
           </motion.div>
           
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="lg:col-span-2">
-            <Card className="h-full bg-linear-to-br from-amber-500/5 to-orange-500/5 border-amber-500/20">
+          <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="lg:col-span-2">
+            <Card className="h-full bg-muted/10 border-border/50">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-amber-500" />
-                  Honest Verdict
+                <CardTitle className="flex items-center gap-2 text-foreground font-bold">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  Executive Analyst Verdict
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-base leading-relaxed tracking-wide">{reportData.honestVerdict}</p>
+                <p className="text-base leading-relaxed text-foreground">{data.honestVerdict}</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -434,16 +596,20 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
         {/* Navigation Tabs */}
         <div className="flex gap-2 border-b border-border overflow-x-auto pb-px no-scrollbar">
           {[
-            { id: "overview", label: "Market Overview", icon: BarChart3, pro: false },
+            { id: "overview", label: "Overview", icon: BarChart3, pro: false },
             { id: "competitors", label: "Competitors", icon: Users, pro: false },
-            { id: "audience", label: "Target Audience", icon: User, pro: false },
+            { id: "audience", label: "Audience", icon: User, pro: false },
             { id: "risks", label: "Risks", icon: AlertTriangle, pro: false },
-            { id: "revenue", label: "Revenue Models", icon: DollarSign, pro: false },
-            { id: "roadmap", label: "Build Roadmap", icon: Rocket, pro: true },
-            { id: "stack", label: "Tech Stack", icon: Wrench, pro: true },
-            { id: "headlines", label: "Headlines", icon: Megaphone, pro: true },
-            { id: "customers", label: "First 10 Customers", icon: Crosshair, pro: true },
-            { id: "scope", label: "MVP Scope", icon: ListChecks, pro: true },
+            { id: "revenue", label: "Revenue", icon: DollarSign, pro: false },
+            { id: "roadmap", label: "Roadmap", icon: Milestone, pro: true },
+            { id: "stack", label: "Stack", icon: Wrench, pro: true },
+            { id: "headlines", label: "Copy", icon: Type, pro: true },
+            { id: "customers", label: "Outreach", icon: Users, pro: true },
+            { id: "gtm", label: "Strategy", icon: Flag, pro: true },
+            { id: "landing", label: "Landing", icon: FileText, pro: true },
+            { id: "kit", label: "Social", icon: Share2, pro: true },
+            { id: "advisor", label: "Consultant", icon: MessagesSquare, pro: true },
+            { id: "scope", label: "Product Scope", icon: ListChecks, pro: true },
           ].map((tab) => {
             const locked = isLocked(tab.id);
             return (
@@ -470,10 +636,10 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
         <AnimatePresence mode="wait">
           <motion.div
              key={activeTab}
-             initial={{ opacity: 0, y: 10 }}
+             initial={{ opacity: 0, y: 5 }}
              animate={{ opacity: 1, y: 0 }}
-             exit={{ opacity: 0, y: -10 }}
-             transition={{ duration: 0.2 }}
+             exit={{ opacity: 0, y: -5 }}
+             transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
              className="min-h-[400px]"
           >
           {activeTab === "overview" && (
@@ -481,29 +647,29 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
               <div className="grid md:grid-cols-3 gap-4">
                 <Card>
                   <CardHeader>
-                    <CardDescription className="text-xs uppercase tracking-widest font-bold">TAM</CardDescription>
+                    <CardDescription className="text-xs uppercase font-bold">TAM</CardDescription>
                     <CardTitle className="text-lg">Total Market</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm font-medium">{reportData.marketSize.tam}</p>
+                    <p className="text-sm font-medium">{data.marketSize.tam}</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardDescription className="text-xs uppercase tracking-widest font-bold">SAM</CardDescription>
+                    <CardDescription className="text-xs uppercase font-bold">SAM</CardDescription>
                     <CardTitle className="text-lg">Serviceable</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm font-medium">{reportData.marketSize.sam}</p>
+                    <p className="text-sm font-medium">{data.marketSize.sam}</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardDescription className="text-xs uppercase tracking-widest font-bold">SOM</CardDescription>
+                    <CardDescription className="text-xs uppercase font-bold">SOM</CardDescription>
                     <CardTitle className="text-lg">Obtainable</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm font-medium">{reportData.marketSize.som}</p>
+                    <p className="text-sm font-medium">{data.marketSize.som}</p>
                   </CardContent>
                 </Card>
               </div>
@@ -516,17 +682,17 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                       <CardDescription>Current market trajectory</CardDescription>
                     </div>
                     <Badge variant="outline" className={cn(
-                      reportData.marketSize.trend === "growing" && "bg-green-500/10 text-green-500 border-green-500/20",
-                      reportData.marketSize.trend === "stable" && "bg-blue-500/10 text-blue-500 border-blue-500/20",
-                      reportData.marketSize.trend === "shrinking" && "bg-red-500/10 text-red-500 border-red-500/20"
+                      data.marketSize.trend === "growing" && "bg-green-500/10 text-green-500 border-green-500/20",
+                      data.marketSize.trend === "stable" && "bg-blue-500/10 text-blue-500 border-blue-500/20",
+                      data.marketSize.trend === "shrinking" && "bg-red-500/10 text-red-500 border-red-500/20"
                     )}>
                       <TrendingUp className="w-3 h-3 mr-1" />
-                      {reportData.marketSize.trend.charAt(0).toUpperCase() + reportData.marketSize.trend.slice(1)}
+                      {data.marketSize.trend.charAt(0).toUpperCase() + data.marketSize.trend.slice(1)}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {reportData.marketInsights?.map((insight, index) => (
+                  {data.marketInsights?.map((insight, index) => (
                     <div key={index} className="flex items-start gap-3 p-4 rounded-lg bg-muted/30 border border-border/50">
                       <TrendingUp className="w-4 h-4 text-primary mt-1 shrink-0" />
                       <p className="text-sm leading-relaxed">{insight}</p>
@@ -534,12 +700,92 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                   ))}
                 </CardContent>
               </Card>
+
+              {data.pivotSuggestions && data.pivotSuggestions.length > 0 && (
+                 <Card className="border-border/50 bg-muted/5">
+                   <CardHeader>
+                     <CardTitle className="text-xl flex items-center gap-2 text-foreground font-bold">
+                       <ArrowRightCircle className="w-5 h-5 text-primary" />
+                       Strategic Pivot Options
+                     </CardTitle>
+                     <CardDescription>Based on market viability scores, these present higher probability directions.</CardDescription>
+                   </CardHeader>
+                   <CardContent>
+                     <div className="grid md:grid-cols-2 gap-4">
+                       {data.pivotSuggestions.map((pivot, i) => (
+                         <div key={i} className="p-4 rounded-lg bg-background border border-border/50 transition-transform hover:translate-y-[-2px] duration-200">
+                           <div className="flex items-center justify-between mb-3">
+                             <h4 className="font-bold text-lg text-foreground">{pivot.pivotTitle}</h4>
+                             <Badge variant="outline" className="text-green-500 bg-green-500/10 border-green-500/20">
+                               Viability: {pivot.viabilityScore}
+                             </Badge>
+                           </div>
+                           <p className="text-sm text-muted-foreground mb-3">{pivot.reason}</p>
+                           <div className="text-xs text-primary font-bold uppercase mt-auto mb-1">Differentiator:</div>
+                           <p className="text-sm italic text-muted-foreground leading-relaxed">{pivot.keyDifference}</p>
+                         </div>
+                       ))}
+                     </div>
+                   </CardContent>
+                 </Card>
+              )}
+
+              {data.fundraising && (
+                 <Card>
+                   <CardHeader>
+                     <CardTitle className="text-xl flex items-center gap-2 text-foreground font-bold">
+                       <DollarSign className="w-5 h-5 text-primary" />
+                       Fundraising Readiness
+                     </CardTitle>
+                   </CardHeader>
+                   <CardContent className="space-y-6">
+                     <div className="flex items-center gap-6">
+                        <div className="w-24 h-24 shrink-0 relative flex items-center justify-center">
+                          <svg className="w-24 h-24 transform -rotate-90">
+                             <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="8" fill="none" className="text-muted" />
+                             <motion.circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="8" fill="none" strokeDasharray={`${2 * Math.PI * 42}`} strokeDashoffset={`${2 * Math.PI * 42 * (1 - data.fundraising.readinessScore / 100)}`} className="text-primary" initial={{ strokeDashoffset: 2 * Math.PI * 42 }} animate={{ strokeDashoffset: 2 * Math.PI * 42 * (1 - data.fundraising.readinessScore / 100) }} transition={{ duration: 1 }} strokeLinecap="round" />
+                          </svg>
+                          <span className="absolute text-2xl font-bold text-foreground">{data.fundraising.readinessScore}</span>
+                        </div>
+                        <div>
+                           <Badge className="mb-2 bg-primary/10 text-primary border-primary/20" variant="outline">{data.fundraising.investorReadiness}</Badge>
+                           <p className="text-sm text-muted-foreground leading-relaxed">{data.fundraising.pitchAngle}</p>
+                        </div>
+                     </div>
+
+                     <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                           <h4 className="text-xs font-bold uppercase text-[#4A4A4A] mb-3">Key Metrics Needed</h4>
+                           <ul className="space-y-2">
+                              {data.fundraising.keyMetricsNeeded?.map((m, i) => (
+                                 <li key={i} className="text-sm flex items-center gap-2 text-muted-foreground">
+                                    <CheckCircle2 className="w-4 h-4 text-green-500" />
+                                    {m}
+                                 </li>
+                              ))}
+                           </ul>
+                        </div>
+                        <div>
+                           <h4 className="text-xs font-bold uppercase text-red-500 mb-3">Red Flags</h4>
+                           <ul className="space-y-2">
+                              {data.fundraising.redFlags?.map((m, i) => (
+                                 <li key={i} className="text-sm flex items-center gap-2 text-muted-foreground">
+                                    <AlertTriangle className="w-4 h-4 text-red-500" />
+                                    {m}
+                                 </li>
+                              ))}
+                           </ul>
+                        </div>
+                     </div>
+                   </CardContent>
+                 </Card>
+              )}
             </div>
           )}
 
           {activeTab === "audience" && (
             <div className="space-y-6">
-              {reportData.targetAudience?.map((persona, index) => (
+              {data.targetAudience?.map((persona, index) => (
                 <div key={index}>
                   <Card className={cn(
                     persona.type === "primary" && "border-primary/30 bg-primary/2"
@@ -554,7 +800,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                       <CardDescription>{persona.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <h4 className="font-bold mb-4 text-xs uppercase tracking-widest text-[#4A4A4A]">Pain Points:</h4>
+                      <h4 className="font-bold mb-4 text-xs uppercase text-[#4A4A4A]">Pain Points:</h4>
                       <ul className="grid sm:grid-cols-2 gap-3">
                         {persona.painPoints?.map((point, i) => (
                           <li key={i} className="flex items-start gap-3 text-sm p-3 rounded-lg border border-border/50 bg-background/50">
@@ -581,7 +827,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {reportData.competitors?.map((competitor, index) => (
+                    {data.competitors?.map((competitor, index) => (
                       <CompetitorCard key={`${competitor.name}-${index}`} competitor={competitor} index={index} />
                     ))}
                   </div>
@@ -599,7 +845,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-4">
-                    {reportData.revenueModels?.map((model, index) => (
+                    {data.revenueModels?.map((model, index) => (
                       <div key={model.name || index}>
                         <Card className={cn(
                           "h-full transition-all",
@@ -645,14 +891,14 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-8">
-                    {reportData.buildRoadmap?.map((week, index) => (
+                    {data.buildRoadmap?.map((week, index) => (
                       <div key={`week-${index}`} className="relative">
                         <div className="flex items-start gap-6">
                           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-lg shadow-lg shadow-primary/20">
                             {week.week}
                           </div>
                           <div className="flex-1 pt-1">
-                            <h4 className="font-bold mb-4 text-xs uppercase tracking-[0.2em] text-[#4A4A4A]">Week {week.week} Objectives</h4>
+                            <h4 className="font-bold mb-4 text-xs uppercase text-[#4A4A4A]">Week {week.week} Objectives</h4>
                             <ul className="grid sm:grid-cols-2 gap-3">
                               {week.tasks?.map((task, i) => (
                                 <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground p-3 rounded-lg border border-border/30 bg-muted/20">
@@ -663,8 +909,8 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                             </ul>
                           </div>
                         </div>
-                        {index < reportData.buildRoadmap.length - 1 && (
-                          <div className="absolute left-6 top-12 -bottom-8 w-px bg-linear-to-b from-primary via-border to-transparent" />
+                        {index < data.buildRoadmap.length - 1 && (
+                          <div className="absolute left-6 top-12 -bottom-8 w-px bg-gradient-to-b from-primary via-border to-transparent" />
                         )}
                       </div>
                     ))}
@@ -688,11 +934,11 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {reportData.techStack?.map((item, index) => (
+                    {data.techStack?.map((item, index) => (
                       <div key={index} className="flex items-start gap-4 p-5 rounded-lg border bg-muted/40 border-border/50">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-primary/60">{item.category}</span>
+                            <span className="text-[10px] font-bold uppercase text-primary/60">{item.category}</span>
                           </div>
                           <h4 className="font-bold mb-2 text-lg text-foreground">{item.tool}</h4>
                           <p className="text-sm text-muted-foreground leading-relaxed">{item.reason}</p>
@@ -719,12 +965,12 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-4">
-                    {reportData.headlines?.map((headline, index) => (
-                      <div key={index} className="p-8 rounded-lg border bg-linear-to-br from-primary/5 to-primary/2 border-primary/20 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 p-4 font-bold text-[10px] uppercase tracking-widest text-primary opacity-20">Option 0{index + 1}</div>
-                        <h3 className="text-2xl font-bold mb-4 header tracking-wide text-foreground">{headline.text}</h3>
+                    {data.headlines?.map((headline, index) => (
+                      <div key={index} className="p-8 rounded-lg border bg-gradient-to-br from-primary/5 to-primary/2 border-primary/20 relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-4 font-bold text-[10px] uppercase text-primary opacity-20">Option 0{index + 1}</div>
+                        <h3 className="text-2xl font-bold mb-4 header text-foreground">{headline.text}</h3>
                         <div className="flex items-center gap-2">
-                           <span className="text-xs font-bold uppercase tracking-widest text-[#4A4A4A]">Angle:</span>
+                           <span className="text-xs font-bold uppercase text-[#4A4A4A]">Angle:</span>
                            <span className="text-xs text-muted-foreground">{headline.angle}</span>
                         </div>
                       </div>
@@ -749,7 +995,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-4">
-                    {reportData.firstCustomers?.map((customer, index) => (
+                    {data.firstCustomers?.map((customer, index) => (
                       <div key={index}>
                         <Card className="border-l-4 border-l-primary bg-muted/20">
                           <CardHeader className="pb-2">
@@ -757,11 +1003,11 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                           </CardHeader>
                           <CardContent className="space-y-4">
                             <div>
-                               <div className="text-[10px] font-bold uppercase tracking-widest text-[#4A4A4A] mb-2">The Tactic</div>
+                               <div className="text-[10px] font-bold uppercase text-[#4A4A4A] mb-2">The Tactic</div>
                                <p className="text-sm leading-relaxed">{customer.how}</p>
                             </div>
-                            <div className="p-4 rounded-[6px] bg-background border border-border/50">
-                               <div className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Sample Message</div>
+                            <div className="p-4 rounded-md bg-background border border-border/50">
+                               <div className="text-[10px] font-bold uppercase text-primary mb-2">Sample Message</div>
                                <p className="text-sm italic text-muted-foreground">"{customer.message}"</p>
                             </div>
                           </CardContent>
@@ -779,7 +1025,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
               <div className="grid md:grid-cols-3 gap-6">
                 <Card className="border-green-500/30 bg-green-500/2">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-green-500 uppercase tracking-widest text-xs">
+                    <CardTitle className="flex items-center gap-2 text-green-500 uppercase text-xs">
                       <CheckCircle2 className="w-4 h-4" />
                       Must Have
                     </CardTitle>
@@ -787,7 +1033,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3">
-                      {reportData.mvpScope.mustHave.map((item, i) => (
+                      {data.mvpScope.mustHave.map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm">
                           <CheckCircle2 className="w-4 h-4 text-green-500/60 mt-0.5 shrink-0" />
                           <span className="text-muted-foreground">{item}</span>
@@ -799,7 +1045,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
 
                 <Card className="border-yellow-500/30 bg-yellow-500/2">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-yellow-500 uppercase tracking-widest text-xs">
+                    <CardTitle className="flex items-center gap-2 text-yellow-500 uppercase text-xs">
                       <Clock className="w-4 h-4" />
                       Nice to Have
                     </CardTitle>
@@ -807,7 +1053,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3">
-                      {reportData.mvpScope.niceToHave.map((item, i) => (
+                      {data.mvpScope.niceToHave.map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm">
                           <Clock className="w-4 h-4 text-yellow-500/60 mt-0.5 shrink-0" />
                           <span className="text-muted-foreground">{item}</span>
@@ -819,7 +1065,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
 
                 <Card className="border-red-500/30 bg-red-500/2">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-red-500 uppercase tracking-widest text-xs">
+                    <CardTitle className="flex items-center gap-2 text-red-500 uppercase text-xs">
                       <XCircle className="w-4 h-4" />
                       Don't Build
                     </CardTitle>
@@ -827,7 +1073,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3">
-                      {reportData.mvpScope.dontBuild.map((item, i) => (
+                      {data.mvpScope.dontBuild.map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm">
                           <XCircle className="w-4 h-4 text-red-500/60 mt-0.5 shrink-0" />
                           <span className="text-muted-foreground">{item}</span>
@@ -840,6 +1086,204 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
             </div>
           )}
 
+          {activeTab === "gtm" && (
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl flex items-center gap-2 text-foreground font-bold">
+                    <Flag className="w-5 h-5 text-primary" />
+                    Market Penetration Strategy
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-8">
+                  <div className="p-6 rounded-lg bg-muted/10 border border-border/50">
+                    <h4 className="font-bold mb-2 text-sm uppercase text-[#4A4A4A]">Phase 1: Market Entry Framework</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{data.gtmStrategy?.launchPhase || "Initial launch strategy targeting core audience segments."}</p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {data.gtmStrategy?.growthChannels?.map((channel, i) => (
+                      <GrowthChannelCard key={i} channel={channel} i={i} />
+                    ))}
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="text-xs font-bold uppercase text-[#4A4A4A] mb-3">Communications Framework</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{data.gtmStrategy?.contentStrategy || "N/A"}</p>
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold uppercase text-[#4A4A4A] mb-3">Monetization Framework</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{data.gtmStrategy?.pricingStrategy || "N/A"}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === "landing" && (
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-primary" />
+                    Landing Page Generator
+                  </CardTitle>
+                  <CardDescription>Conversion-optimized copy for your launch website.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-8">
+                  <div className="space-y-4">
+                    <div className="p-6 rounded-lg border-2 border-dashed border-primary/20 bg-background group relative">
+                       <Button onClick={() => copyToClipboard(data.landingPage?.headline || "")} variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <Copy className="w-4 h-4" />
+                       </Button>
+                       <div className="text-[10px] font-bold uppercase text-primary mb-2">H1 Headline</div>
+                       <h3 className="text-3xl font-bold header">{data.landingPage?.headline || "Untitled Analysis"}</h3>
+                    </div>
+
+                    <div className="p-6 rounded-lg border bg-muted/10 group relative">
+                       <Button onClick={() => copyToClipboard(data.landingPage?.subheadline || "")} variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <Copy className="w-4 h-4" />
+                       </Button>
+                       <div className="text-[10px] font-bold uppercase text-[#4A4A4A] mb-2">Subheadline</div>
+                       <p className="text-xl text-muted-foreground">{data.landingPage?.subheadline || "No subheadline provided"}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-3 gap-4">
+                     {data.landingPage?.features?.map((f, i) => (
+                       <div key={i} className="p-4 rounded-lg border group relative">
+                          <Button onClick={() => copyToClipboard(`${f.title}: ${f.description}`)} variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Copy className="w-3 h-3" />
+                          </Button>
+                          <h4 className="font-bold mb-2">{f.title}</h4>
+                          <p className="text-sm text-muted-foreground">{f.description}</p>
+                       </div>
+                     ))}
+                  </div>
+
+                  <Card className="bg-primary text-primary-foreground border-none">
+                    <CardContent className="p-8 flex flex-col items-center text-center gap-4">
+                       <h4 className="text-xs font-bold uppercase opacity-80">Primary Call To Action</h4>
+                       <span className="text-3xl font-bold">{data.landingPage?.cta || "Get Started"}</span>
+                       <Button variant="secondary" className="mt-4" onClick={() => copyToClipboard(data.landingPage?.cta || "Get Started")}>Copy CTA</Button>
+                    </CardContent>
+                  </Card>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === "kit" && (
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl flex items-center gap-2 text-foreground font-bold">
+                    <Share2 className="w-5 h-5 text-primary" />
+                    Multi-Channel Outreach Kit
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                       <h4 className="font-bold flex items-center gap-2 text-sm">
+                          Twitter / X Posts
+                       </h4>
+                       <div className="space-y-3">
+                          {data.socialKit?.twitter?.map((t, i) => (
+                             <div key={i} className="p-4 rounded-lg border bg-muted/20 text-sm relative group">
+                                <Button onClick={() => copyToClipboard(t)} variant="ghost" size="icon" className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity w-6 h-6">
+                                  <Copy className="w-3 h-3" />
+                                </Button>
+                                {t}
+                             </div>
+                          ))}
+                       </div>
+                    </div>
+
+                    <div className="space-y-4">
+                       <h4 className="font-bold">LinkedIn Announcement</h4>
+                       <div className="p-4 rounded-lg border bg-muted/20 text-sm relative group whitespace-pre-wrap">
+                          <Button onClick={() => copyToClipboard(data.socialKit?.linkedin || "")} variant="ghost" size="icon" className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity w-6 h-6">
+                            <Copy className="w-3 h-3" />
+                          </Button>
+                          {data.socialKit?.linkedin || "N/A"}
+                       </div>
+                    </div>
+                  </div>
+
+                  {data.socialKit?.reddit && (
+                    <div className="p-6 rounded-lg border border-border/50 bg-muted/5">
+                      <h4 className="font-bold text-foreground mb-4 text-sm">Reddit Contextual Strategy (r/{data.socialKit.reddit.subreddit || "relevant-community"})</h4>
+                      <div className="space-y-3">
+                          <div className="font-bold text-sm">Title: {data.socialKit.reddit.title || "Subject Line"}</div>
+                          <div className="p-4 rounded bg-background border text-sm whitespace-pre-wrap leading-relaxed">
+                            {data.socialKit.reddit.body || "N/A"}
+                          </div>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === "advisor" && (
+             <div className="h-[600px] flex flex-col">
+                <Card className="flex-1 flex flex-col mb-4 overflow-hidden border-primary/20">
+                   <CardHeader className="border-b bg-primary/2">
+                      <CardTitle className="flex items-center gap-3">
+                         <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                            <MessagesSquare className="w-4 h-4 text-primary-foreground" />
+                         </div>
+                         Validly AI Advisor
+                      </CardTitle>
+                      <CardDescription>Ask about your GTM, technical hurdles, or pivot ideas.</CardDescription>
+                   </CardHeader>
+                   <ScrollArea className="flex-1 w-full h-[450px] p-4">
+                      <div className="space-y-4 pb-4">
+                         {chatMessages.map((msg, i) => (
+                            <div key={i} className={cn(
+                               "flex flex-col max-w-[85%] rounded-2xl p-4 shadow-sm",
+                               msg.role === "user" ? "ml-auto bg-primary text-primary-foreground rounded-tr-none" : "bg-muted text-foreground rounded-tl-none border border-border/50"
+                            )}>
+                               <span className={cn(
+                                 "text-[9px] font-bold uppercase opacity-60 mb-2",
+                                 msg.role === "user" ? "text-primary-foreground/80" : "text-[#4A4A4A]"
+                               )}>
+                                 {msg.role === "user" ? "Query" : "Advisor Response"}
+                               </span>
+                               <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                            </div>
+                         ))}
+                         {isChatLoading && (
+                            <div className="flex flex-col max-w-[85%] bg-muted rounded-2xl p-4 rounded-tl-none animate-pulse border border-border/50">
+                               <div className="h-3 w-12 bg-foreground/10 rounded mb-3" />
+                               <div className="h-4 w-48 bg-foreground/10 rounded" />
+                            </div>
+                         )}
+                      </div>
+                   </ScrollArea>
+                   <div className="p-4 border-t bg-muted/10">
+                      <div className="flex gap-2">
+                         <input
+                           type="text"
+                           placeholder="Type a message..."
+                           className="flex-1 bg-background border px-4 py-2 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                           value={userInput}
+                           onChange={(e) => setUserInput(e.target.value)}
+                           onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+                         />
+                         <Button onClick={handleSendMessage} disabled={isChatLoading || !userInput.trim()} size="icon" className="rounded-full shrink-0">
+                            <Send className="w-4 h-4" />
+                         </Button>
+                      </div>
+                   </div>
+                </Card>
+             </div>
+          )}
+
           {activeTab === "risks" && (
             <div className="space-y-6">
               <Card>
@@ -850,7 +1294,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RiskHeatmap risks={reportData.risks} />
+                  <RiskHeatmap risks={data.risks} />
                 </CardContent>
               </Card>
             </div>

@@ -77,7 +77,7 @@ export default function RegisterPage() {
         {/* Divider */}
         <div className='relative flex items-center py-2'>
           <div className='grow border-t border-[#1F1F1F]'></div>
-          <span className='shrink mx-4 text-[#9A9A9A] text-[11px] font-bold uppercase tracking-widest'>Or continue with email</span>
+          <span className='shrink mx-4 text-[#9A9A9A] text-[11px] font-bold uppercase '>Or continue with email</span>
           <div className='grow border-t border-[#1F1F1F]'></div>
         </div>
 

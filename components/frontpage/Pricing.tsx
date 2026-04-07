@@ -39,7 +39,7 @@ const Pricing = () => {
     <section id="pricing" className='flex justify-center items-center px-6 md:px-10 py-24'>
       <div className='max-w-7xl w-full'>
         <div className='mb-16 text-center'>
-          <h2 className='text-[#F8F8F8] text-3xl md:text-[40px] font-bold header mb-4 tracking-wider'>Simple, Transparent Pricing</h2>
+          <h2 className='text-[#F8F8F8] text-3xl md:text-[40px] font-bold header mb-4 '>Simple, Transparent Pricing</h2>
           <p className='text-[#9A9A9A] text-[14px] md:text-[16px] font-normal leading-relaxed'>
             Validate one idea for free, or upgrade for unlimited power.
           </p>
@@ -54,13 +54,13 @@ const Pricing = () => {
               }`}
             >
               {tier.featured && (
-                <div className='absolute -top-3 left-1/2 -translate-x-1/2 bg-[#7C3AED] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest header'>
+                <div className='absolute -top-3 left-1/2 -translate-x-1/2 bg-[#7C3AED] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase  header'>
                   Most Popular
                 </div>
               )}
 
               <div className='mb-8'>
-                <h3 className='text-[#F8F8F8] text-[24px] font-bold header mb-2 tracking-wider'>{tier.name}</h3>
+                <h3 className='text-[#F8F8F8] text-[24px] font-bold header mb-2 '>{tier.name}</h3>
                 <p className='text-[#9A9A9A] text-[14px] font-normal'>{tier.description}</p>
               </div>
 

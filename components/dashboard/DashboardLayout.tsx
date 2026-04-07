@@ -68,7 +68,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                  <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary'>
                     <CheckCircle className='h-5 w-5 text-primary-foreground' />
                  </div>
-                 <span className='text-lg font-bold header text-foreground tracking-wider uppercase'>Validly</span>
+                 <span className='text-lg font-bold header text-foreground  uppercase'>Validly</span>
               </div>
            )}
            <Button
@@ -142,7 +142,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <div className='p-3 rounded-lg bg-primary/5 border border-primary/10'>
                  <div className='flex items-center gap-2 mb-1'>
                     <Sparkles className='w-3.5 h-3.5 text-primary' />
-                    <span className='text-[11px] font-bold text-foreground tracking-wide uppercase'>Pro Plan</span>
+                    <span className='text-[11px] font-bold text-foreground  uppercase'>Pro Plan</span>
                  </div>
                  <p className='text-[10px] text-muted-foreground leading-snug'>Unlimited validations enabled.</p>
               </div>
@@ -188,7 +188,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <div className='w-7 h-7 bg-primary rounded-lg flex items-center justify-center font-extrabold text-primary-foreground text-xs'>
                 V
               </div>
-              <span className='font-bold text-sm header text-foreground tracking-wider uppercase'>Validly</span>
+              <span className='font-bold text-sm header text-foreground  uppercase'>Validly</span>
            </div>
            <button 
              onClick={() => setIsSidebarOpen(true)}

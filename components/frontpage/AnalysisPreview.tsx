@@ -7,7 +7,7 @@ export default function AnalysisPreview() {
     <section id="features" className='flex justify-center items-center px-1 md:px-10 bg-[#111111]'>
       <div className='py-16 md:py-24 max-w-7xl w-full'>
         <div className='mb-12 md:mb-16'>
-          <h2 className='text-[#F8F8F8] text-2xl md:text-[40px] font-bold header text-center mb-4 tracking-wider leading-tight'>Data-driven decisions</h2>
+          <h2 className='text-[#F8F8F8] text-2xl md:text-[40px] font-bold header text-center mb-4  leading-tight'>Data-driven decisions</h2>
           <p className='text-[#9A9A9A] text-[14px] md:text-[16px] font-normal w-md mx-auto text-center leading-relaxed'>
             Stop relying on gut feeling. Get a comprehensive breakdown of why your idea will or won't work.
           </p>
@@ -19,13 +19,13 @@ export default function AnalysisPreview() {
           {/* Header Section */}
           <div className='flex flex-col md:flex-row justify-between items-start gap-8 mb-10 md:mb-12'>
             <div>
-              <p className='text-[#9A9A9A] text-[11px] md:text-[12px] font-medium uppercase tracking-wide mb-2 md:mb-3'>Analysis Complete</p>
-              <h3 className='text-[#F8F8F8] text-[18px] md:text-[24px] font-bold header tracking-wider leading-tight'>CRM for Local Bakeries</h3>
+              <p className='text-[#9A9A9A] text-[11px] md:text-[12px] font-medium uppercase  mb-2 md:mb-3'>Analysis Complete</p>
+              <h3 className='text-[#F8F8F8] text-[18px] md:text-[24px] font-bold header  leading-tight'>CRM for Local Bakeries</h3>
             </div>
             
             <div className='flex items-center gap-6 w-full md:w-auto justify-between md:justify-end'>
               <div className='flex flex-col items-start md:items-end gap-2'>
-                <p className='text-[#9A9A9A] text-[11px] md:text-[12px] font-medium uppercase tracking-wide'>Viability Score</p>
+                <p className='text-[#9A9A9A] text-[11px] md:text-[12px] font-medium uppercase '>Viability Score</p>
                 <div className='bg-[#101914] text-[#10B981] px-3 py-1 rounded-full text-[11px] md:text-[12px] font-semibold border border-[#064E3B] flex items-center gap-1.5'>
                   Hot <span className='text-[10px]'>🔥</span>
                 </div>
@@ -63,7 +63,7 @@ export default function AnalysisPreview() {
                   <div className='text-[#A855F7]'>
                     <Users className='w-4 h-4' />
                   </div>
-                  <h4 className='text-[#F8F8F8] text-[16px] font-semibold header tracking-wider'>Top Competitors</h4>
+                  <h4 className='text-[#F8F8F8] text-[16px] font-semibold header '>Top Competitors</h4>
                 </div>
                 
                 <div className='space-y-4'>
@@ -72,7 +72,7 @@ export default function AnalysisPreview() {
                       <div className='w-10 h-10 bg-[#3B82F6] rounded-[6px] flex items-center justify-center text-white font-bold'>B</div>
                       <span className='text-[#F8F8F8] font-medium'>BakeManage</span>
                     </div>
-                    <span className='text-[#9A9A9A] text-[10px] md:text-[12px] uppercase tracking-wide px-3 py-1 bg-[#1A1A1A] rounded-[6px] border border-[#2C2C2C]'>Direct Comp</span>
+                    <span className='text-[#9A9A9A] text-[10px] md:text-[12px] uppercase  px-3 py-1 bg-[#1A1A1A] rounded-[6px] border border-[#2C2C2C]'>Direct Comp</span>
                   </div>
                   
                   <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-[#0A0A0A] border border-[#1F1F1F] rounded-[6px] gap-4'>
@@ -80,7 +80,7 @@ export default function AnalysisPreview() {
                       <div className='w-10 h-10 bg-[#EC4899] rounded-[6px] flex items-center justify-center text-white font-bold'>S</div>
                       <span className='text-[#F8F8F8] font-medium'>Square for Retail</span>
                     </div>
-                    <span className='text-[#9A9A9A] text-[10px] md:text-[12px] uppercase tracking-wide px-3 py-1 bg-[#1A1A1A] rounded-[6px] border border-[#2C2C2C]'>Indirect Comp</span>
+                    <span className='text-[#9A9A9A] text-[10px] md:text-[12px] uppercase  px-3 py-1 bg-[#1A1A1A] rounded-[6px] border border-[#2C2C2C]'>Indirect Comp</span>
                   </div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export default function AnalysisPreview() {
                   <div className='text-[#A855F7]'>
                     <Zap className='w-4 h-4' />
                   </div>
-                  <h4 className='text-[#F8F8F8] text-[16px] font-semibold header tracking-wider'>Suggested MVP Features</h4>
+                  <h4 className='text-[#F8F8F8] text-[16px] font-semibold header '>Suggested MVP Features</h4>
                 </div>
                 
                 <div className='flex flex-wrap gap-2 md:gap-3'>
@@ -119,7 +119,7 @@ export default function AnalysisPreview() {
                   <div className='text-[#EF4444]'>
                     <AlertTriangle className='w-4 h-4' />
                   </div>
-                  <h4 className='text-[#F87171] text-[16px] font-semibold header tracking-wider'>Biggest Risks</h4>
+                  <h4 className='text-[#F87171] text-[16px] font-semibold header '>Biggest Risks</h4>
                 </div>
                 
                 <ul className='space-y-3 md:space-y-4'>
@@ -142,12 +142,12 @@ export default function AnalysisPreview() {
                   <div className='text-[#10B981]'>
                     <TrendingUp className='w-4 h-4' />
                   </div>
-                  <h4 className='text-[#10B981] text-[16px] font-semibold header tracking-wider'>Market Size</h4>
+                  <h4 className='text-[#10B981] text-[16px] font-semibold header '>Market Size</h4>
                 </div>
                 
                 <div className='grow flex flex-col justify-center'>
                   <p className='text-[#F8F8F8] text-[36px] md:text-[48px] font-bold header leading-none mb-1 md:mb-2'>$2.4B</p>
-                  <p className='text-[#9A9A9A] text-[11px] md:text-[12px] uppercase tracking-wider'>Estimated SAM in US & Europe</p>
+                  <p className='text-[#9A9A9A] text-[11px] md:text-[12px] uppercase '>Estimated SAM in US & Europe</p>
                 </div>
               </div>
 

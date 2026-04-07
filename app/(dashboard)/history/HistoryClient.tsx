@@ -43,7 +43,7 @@ export default function HistoryClient({ initialValidations }: HistoryClientProps
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div className="space-y-1">
-            <h1 className="text-3xl font-bold tracking-wider text-white header">Validation History</h1>
+            <h1 className="text-3xl font-bold  text-white header">Validation History</h1>
             <p className="text-[#4A4A4A] text-sm font-medium">Review all your past SaaS idea validations.</p>
           </div>
 

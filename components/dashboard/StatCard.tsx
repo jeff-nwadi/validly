@@ -18,17 +18,17 @@ export default function StatCard({ label, value, icon: Icon, description, trend 
                <Icon className='w-4 h-4 text-white/60' />
            </div>
            {trend && (
-             <span className='px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#0A0A0A] text-[#4A4A4A] border border-[#1F1F1F] uppercase tracking-widest'>
+             <span className='px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#0A0A0A] text-[#4A4A4A] border border-[#1F1F1F] uppercase '>
                 {trend}
              </span>
            )}
        </div>
        
        <div>
-         <p className='text-[#4A4A4A] text-xs font-bold uppercase tracking-widest mb-1'>{label}</p>
+         <p className='text-[#4A4A4A] text-xs font-bold uppercase  mb-1'>{label}</p>
          <div className='flex items-baseline gap-2'>
-            <h4 className='text-3xl font-bold text-[#F8F8F8] header tracking-normal shrink-0'>{value}</h4>
-            {description && <span className='text-[10px] text-[#4A4A4A] uppercase tracking-wider font-medium truncate'>{description}</span>}
+            <h4 className='text-3xl font-bold text-[#F8F8F8] header  shrink-0'>{value}</h4>
+            {description && <span className='text-[10px] text-[#4A4A4A] uppercase  font-medium truncate'>{description}</span>}
          </div>
        </div>
     </div>

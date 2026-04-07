@@ -33,7 +33,7 @@ const Footer = () => {
             <div className="w-10 h-10 bg-[#7C3AED] rounded-xl flex items-center justify-center">
               <Lightbulb className="w-6 h-6 text-white fill-white" />
             </div>
-            <p className='header font-bold tracking-widest text-[22px] text-[#F8F8F8]'>Validly</p>
+            <p className='header font-bold  text-[22px] text-[#F8F8F8]'>Validly</p>
           </div>
           <p className="text-[#9A9A9A] text-[15px] leading-relaxed">
             Validate your SaaS ideas instantly with AI-powered market and competitor analysis.
@@ -43,7 +43,7 @@ const Footer = () => {
         {/* Links Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-[14px]">
           <div className="space-y-6">
-            <h4 className="text-[#F8F8F8] font-bold header uppercase tracking-widest">Product</h4>
+            <h4 className="text-[#F8F8F8] font-bold header uppercase ">Product</h4>
             <ul className="space-y-4 text-[#9A9A9A]">
               <li><Link href="#features" className="hover:text-[#F8F8F8] transition-colors">Features</Link></li>
               <li><Link href="#pricing" className="hover:text-[#F8F8F8] transition-colors">Pricing</Link></li>
@@ -51,7 +51,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="space-y-6">
-            <h4 className="text-[#F8F8F8] font-bold header uppercase tracking-widest">Company</h4>
+            <h4 className="text-[#F8F8F8] font-bold header uppercase ">Company</h4>
             <ul className="space-y-4 text-[#9A9A9A]">
               <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">About</Link></li>
               <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">Blog</Link></li>
@@ -59,7 +59,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="space-y-6">
-            <h4 className="text-[#F8F8F8] font-bold header uppercase tracking-widest">Legal</h4>
+            <h4 className="text-[#F8F8F8] font-bold header uppercase ">Legal</h4>
             <ul className="space-y-4 text-[#9A9A9A]">
               <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">Privacy</Link></li>
               <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">Terms</Link></li>

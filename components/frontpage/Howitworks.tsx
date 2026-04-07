@@ -27,7 +27,7 @@ export default function Howitworks() {
     <section id="how-it-works" className='flex justify-center items-center px-6 md:px-10'>
       <div className='py-16 md:py-24 max-w-7xl w-full'>
         <div className='mb-12 md:mb-16'>
-          <h2 className='text-[#F8F8F8] text-3xl md:text-[40px] font-bold header text-center mb-4 tracking-wider leading-tight'>How it works</h2>
+          <h2 className='text-[#F8F8F8] text-3xl md:text-[40px] font-bold header text-center mb-4  leading-tight'>How it works</h2>
           <p className='text-[#9A9A9A] text-[16px] md:text-[18px] font-normal w-md px-4 md:px-0 mx-auto text-center leading-relaxed font-sans'>
             From an idea in your head to a comprehensive business report in three simple steps.
           </p>
@@ -46,7 +46,7 @@ export default function Howitworks() {
                 <div className='text-[#7C3AED]'>
                   {step.icon}
                 </div>
-                <h3 className='text-[#F8F8F8] text-[22px] font-semibold header tracking-wider'>{step.title}</h3>
+                <h3 className='text-[#F8F8F8] text-[22px] font-semibold header '>{step.title}</h3>
                 <p className='text-[#9A9A9A] text-[15px] font-normal leading-relaxed max-w-[320px]'>
                   {step.description}
                 </p>

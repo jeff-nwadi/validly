@@ -74,7 +74,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
       <Card className="bg-[#0D0D0D] border-[#1F1F1F] overflow-hidden rounded-[6px]">
         <table className="w-full text-left border-collapse">
            <thead>
-              <tr className="border-b border-[#1F1F1F] text-[10px] font-bold text-[#4A4A4A] uppercase tracking-widest bg-[#111111]/50">
+              <tr className="border-b border-[#1F1F1F] text-[10px] font-bold text-[#4A4A4A] uppercase  bg-[#111111]/50">
                  <th className="px-6 py-4">Idea Name</th>
                  <th className="px-6 py-4">Date</th>
                  <th className="px-6 py-4">Viability Score</th>
@@ -92,7 +92,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                              <div className="w-9 h-9 bg-white/5 border border-white/10 rounded-[6px] flex items-center justify-center text-white/40 group-hover:text-white/60 transition-colors">
                                 <Lightbulb className="w-4 h-4" />
                              </div>
-                             <span className="text-sm font-bold text-[#F8F8F8] tracking-wide">{val.ideaTitle}</span>
+                             <span className="text-sm font-bold text-[#F8F8F8] ">{val.ideaTitle}</span>
                           </div>
                        </td>
                        <td className="px-6 py-5">
@@ -103,7 +103,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                        </td>
                        <td className="px-6 py-5">
                           <div className={cn(
-                             "inline-flex items-center gap-2 px-3 py-1 rounded-full border text-[11px] font-bold uppercase tracking-wider",
+                             "inline-flex items-center gap-2 px-3 py-1 rounded-full border text-[11px] font-bold uppercase ",
                              scoreColors[verdictType] || scoreColors.warm
                           )}>
                              <div className={cn("w-1.5 h-1.5 rounded-full", dotColors[verdictType] || dotColors.warm)} />
@@ -115,7 +115,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                        </td>
                        <td className="px-6 py-5">
                           <div className="flex items-center justify-end gap-2">
-                             <Button asChild variant="outline" size="sm" className="h-8 rounded-[6px] bg-[#111111] border-[#1F1F1F] text-[#9A9A9A] hover:text-white hover:bg-[#1A1A1A] text-xs font-bold uppercase tracking-widest px-3">
+                             <Button asChild variant="outline" size="sm" className="h-8 rounded-[6px] bg-[#111111] border-[#1F1F1F] text-[#9A9A9A] hover:text-white hover:bg-[#1A1A1A] text-xs font-bold uppercase  px-3">
                                 <Link href={`/report/${val.id}`}>
                                    <Eye className="w-3.5 h-3.5 mr-2" />
                                    View Report

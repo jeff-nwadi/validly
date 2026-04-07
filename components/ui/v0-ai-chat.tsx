@@ -109,7 +109,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
     return (
         <div className="flex flex-col items-center w-full max-w-4xl mx-auto p-4 space-y-8">
             {showTitle && (
-                <h1 className="text-2xl md:text-4xl font-bold text-black dark:text-white header tracking-wider text-center">
+                <h1 className="text-2xl md:text-4xl font-bold text-black dark:text-white header  text-center">
                     What idea are we validating today?
                 </h1>
             )}
@@ -150,7 +150,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
                                 className="group p-2 hover:bg-neutral-800 rounded-lg transition-colors flex items-center gap-2"
                             >
                                 <Paperclip className="w-4 h-4 text-[#4A4A4A]" />
-                                <span className="text-[10px] font-bold text-[#4A4A4A] uppercase tracking-widest transition-opacity">
+                                <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  transition-opacity">
                                     Attach
                                 </span>
                             </button>
@@ -158,7 +158,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
                         <div className="flex items-center gap-3">
                             <button
                                 type="button"
-                                className="px-3 py-1.5 rounded-lg text-[10px] font-bold text-[#4A4A4A] uppercase tracking-widest transition-colors border border-dashed border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800 flex items-center justify-between gap-2"
+                                className="px-3 py-1.5 rounded-lg text-[10px] font-bold text-[#4A4A4A] uppercase  transition-colors border border-dashed border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800 flex items-center justify-between gap-2"
                             >
                                 <PlusIcon className="w-3 h-3" />
                                 Project
@@ -213,7 +213,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
             </div>
 
             <div className="max-w-md">
-                 <p className='text-[14px] text-[#2C2C2C] text-center leading-relaxed tracking-wide'>
+                 <p className='text-[14px] text-[#2C2C2C] text-center leading-relaxed '>
                     AI validation takes ~30 seconds. The report will include viability score, market size, and MVP features.
                  </p>
             </div>
@@ -235,7 +235,7 @@ function ActionButton({ icon, label }: ActionButtonProps) {
             <div className="group-hover:text-purple-400 transition-colors">
                {icon}
             </div>
-            <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
+            <span className="text-[10px] font-bold uppercase ">{label}</span>
         </button>
     );
 }

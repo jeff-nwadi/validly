@@ -25,12 +25,12 @@ export default function AuthLayout({ children, title, subtitle }: { children: Re
           <div className='w-10 h-10 bg-[#7C3AED] rounded-[10px] flex items-center justify-center'>
             <Lightbulb className='w-6 h-6 text-white' />
           </div>
-          <span className='header font-bold text-2xl text-[#F8F8F8] tracking-wider'>Validly</span>
+          <span className='header font-bold text-2xl text-[#F8F8F8] '>Validly</span>
         </Link>
 
         {/* Insight Caption */}
         <div className='mt-auto relative z-10'>
-          <p className='text-[#F8F8F8] text-[20px] font-bold header tracking-wider mb-2'>Analyze. Validate. Succeed.</p>
+          <p className='text-[#F8F8F8] text-[20px] font-bold header  mb-2'>Analyze. Validate. Succeed.</p>
           <p className='text-[#9A9A9A] text-[15px] max-w-[340px]'>Let AI do the heavy lifting of market research and competitor analysis so you can focus on building.</p>
         </div>
       </div>
@@ -47,7 +47,7 @@ export default function AuthLayout({ children, title, subtitle }: { children: Re
         </Link>
 
         <div className='max-w-[420px] w-full mx-auto flex flex-col'>
-          <h1 className='text-[#F8F8F8] text-[32px] md:text-[40px] font-bold header mb-3 tracking-wider'>{title}</h1>
+          <h1 className='text-[#F8F8F8] text-[32px] md:text-[40px] font-bold header mb-3 '>{title}</h1>
           <p className='text-[#9A9A9A] text-[16px] mb-10'>{subtitle}</p>
           
           {children}
