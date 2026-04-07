@@ -1,40 +1,24 @@
-# 🔥 SaaS Idea Validator
+# ⚡ Validly — SaaS Idea Validator
 
-> Validate your SaaS idea in seconds using AI + real-time web research. Get a full report with competitor analysis, market size, viability score, and actionable recommendations.
+> Validate your SaaS idea in 30 seconds using advanced AI + real-time web research. Get high-fidelity reports with competitor analysis, market viability, and growth strategies.
 
-![SaaS Idea Validator](https://img.shields.io/badge/Status-In%20Development-yellow)
-![Next.js](https://img.shields.io/badge/Next.js-15-black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-
----
-
-## 🚀 Live Demo
-
-> Coming soon — [saas-validator.vercel.app](https://saas-validator.vercel.app)
-
----
-
-## 📸 Screenshots
-
-> Coming soon
+![Validly Status](https://img.shields.io/badge/Status-Active-black)
+![Next.js](https://img.shields.io/badge/Next.js-16.2-black)
+![React](https://img.shields.io/badge/React-19-blue)
+![Tailwind](https://img.shields.io/badge/Tailwind-v4-cyan)
 
 ---
 
 ## ✨ Features
 
-- 🤖 **AI-Powered Analysis** — Uses Claude API to generate deep, structured validation reports
-- 🔍 **Real-Time Research** — Tavily API searches the web for live competitor and market data
-- 📊 **Viability Score** — Every idea gets scored from 0–100
-- 🏆 **Verdict System** — Hot 🔥 / Warm ⚠️ / Cold ❄️ rating for each idea
-- 👥 **Competitor Discovery** — Finds top 5 existing competitors with links
-- 🎯 **Target Audience** — Identifies who your ideal customers are
-- 💰 **Revenue Model Suggestions** — Recommends the best monetization strategies
-- 🛠️ **MVP Feature List** — Tells you exactly what to build first
-- 📄 **PDF Export** — Download your full report (Pro plan)
-- 📁 **History** — Save and revisit all your past validations
-- 🔐 **Authentication** — Secure login with BetterAuth
-- 💳 **Subscription Plans** — Free and Pro tiers via Stripe
+- 🏎️ **30-Second Validation** — Interactive Hero experience with real-time feedback.
+- 🌉 **Persistence Bridge** — Ideas follow you from landing page to registration seamlessly using `localStorage` & `URL` propagation.
+- 🤖 **Multi-Model AI Engine** — Powered by **Vercel AI SDK** with Groq, Anthropic, and Google Gemini integration.
+- 🔍 **Real-Time Research** — Deep web search via **Tavily SDK** for live competitor and pricing data.
+- 💬 **V0-Style AI Chat** — Dynamic, auto-resizing chat interface for validating ideas within the dashboard.
+- 📊 **Structured Insights** — Comprehensive reports covering Market Size, Competitors, Pricing, and Growth.
+- 🎨 **Premium Aesthetic** — Minimalist monochrome design with glassmorphism, Framer Motion animations, and custom typography.
+- 🔐 **Modern Auth** — Secure session management using **Better-Auth 1.5**.
 
 ---
 
@@ -42,55 +26,31 @@
 
 | Category | Technology |
 |---|---|
-| **Framework** | Next.js 15 (App Router) |
-| **Language** | TypeScript |
-| **Styling** | Tailwind CSS + Shadcn/ui |
-| **Database** | Neon (PostgreSQL) |
+| **Framework** | Next.js 16.2 (App Router + Turbopack) |
+| **Runtime** | React 19 |
+| **Styling** | Tailwind CSS v4 + Framer Motion |
+| **Database** | Neon (Serverless PostgreSQL) |
 | **ORM** | Drizzle ORM |
-| **Auth** | BetterAuth |
-| **AI** | Claude API (Anthropic) |
-| **Search** | Tavily API |
-| **Payments** | Stripe |
-| **Email** | Resend + React Email |
-| **PDF Export** | React PDF |
-| **Deployment** | Vercel |
+| **Auth** | Better-Auth 1.5 |
+| **AI SDK** | Vercel AI SDK (with Groq, Anthropic, Google) |
+| **Search** | Tavily SDK |
+| **UI Components** | Radix UI + Custom Premium Components |
 
 ---
 
-## 📋 Validation Report Includes
-
-Each report generated contains:
-
-- ✅ Idea Summary
-- ✅ Viability Score (0–100)
-- ✅ Market Size Estimate
-- ✅ Top 5 Competitors (with links)
-- ✅ Target Audience Breakdown
-- ✅ Biggest Risks & Challenges
-- ✅ Recommended Revenue Models
-- ✅ Suggested MVP Features
-- ✅ Overall Verdict (Hot / Warm / Cold)
-
-
-## 🏁 Getting Started
+## 🏃 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - A [Neon](https://neon.tech) database
-- [Claude API](https://claude.com/docs/build-with-claude/api-keys) key
-- [Tavily API](https://tavily.com) key
-- [Stripe](https://stripe.com) account
-- [Resend](https://resend.com) account
+- API Keys: [Groq](https://wow.groq.com), [Tavily](https://tavily.com), [Better-Auth Secret](https://better-auth.com)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/saas-idea-validator.git
-
-# Navigate into the project
-cd saas-idea-validator
+git clone https://github.com/jeff-nwadi/validly.git
 
 # Install dependencies
 npm install
@@ -99,126 +59,57 @@ npm install
 cp .env.example .env.local
 ```
 
-
 ### Database Setup
 
 ```bash
-# Push schema to your Neon database
-npx drizzle-kit push
+# Push schema to your database
+npm run db:push
 
 # Run the development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+---
+
+## 🔄 The "Validly" Workflow
+
+1. **The Hook**: User enters an idea on the Hero section.
+2. **The Wait**: AI simulation runs with animated vertical stages (Researching → Analyzing → Finalizing).
+3. **The Bridge**: User registers/logs in; their idea is persisted via `localStorage` and `query fragments`.
+4. **The Trigger**: On dashboard mount, the `PendingValidationTrigger` auto-starts a real AI analysis.
+5. **The Report**: High-fidelity structured report generated and saved for future access.
 
 ---
 
-## 📁 Project Structure
+## 📁 Key Directories
 
-```
-/app
-  /(auth)
-    /login/page.tsx
-    /register/page.tsx
-  /(dashboard)
-    /dashboard/page.tsx        ← All validations
-    /validate/page.tsx         ← New idea submission
-    /report/[id]/page.tsx      ← Full report view
-    /history/page.tsx          ← Past reports
-    /settings/page.tsx         ← Account & billing
-  /(marketing)
-    /page.tsx                  ← Landing page
-    /pricing/page.tsx
-    /blog/page.tsx
-  /api
-    /auth/                     ← BetterAuth routes
-    /validate/                 ← AI validation endpoint
-    /payments/                 ← Stripe routes
-    /webhooks/                 ← Stripe webhooks
-
-/db
-  schema.ts                    ← Drizzle tables
-  index.ts                     ← Neon connection
-
-/lib
-  anthropic.ts                 ← Claude API client
-  tavily.ts                    ← Tavily search client
-  stripe.ts                    ← Stripe client
-  auth.ts                      ← BetterAuth config
-  resend.ts                    ← Email client
-
-/components
-  /ui                          ← Shadcn components
-  /dashboard                   ← Dashboard components
-  /report                      ← Report display components
-  /marketing                   ← Landing page components
-```
+- `/app`: Next.js 16 App Router (Auth, Dashboard, Marketing).
+- `/lib`: Core logic for AI SDK, Drizzle Schema, and Better-Auth.
+- `/components/frontpage`: Premium landing page components (Hero, Simulation, How it works).
+- `/components/dashboard`: Dashboard UI including the `v0` AI Chat interface and the Persistence Trigger.
 
 ---
 
-## 🔄 How It Works
+## 🗺️ Roadmap (Current Progress)
 
-```
-1. User submits a business idea
-          ↓
-2. Tavily searches the web for competitors & market data
-          ↓
-3. Claude API receives idea + search results
-          ↓
-4. Claude generates a full structured validation report
-          ↓
-5. Report is saved to Neon database
-          ↓
-6. User sees a beautiful, detailed report
-          ↓
-7. Pro users can export the report as PDF
-```
-
----
-
-## 🗺️ Roadmap
-
-- [x] Project setup & architecture
-- [ ] Landing page
-- [ ] Authentication (login/register)
-- [ ] Idea submission form
-- [ ] Tavily API integration
-- [ ] Claude API report generation
-- [ ] Report display page
-- [ ] Dashboard & history
-- [ ] Stripe subscription integration
-- [ ] Usage limits (free plan)
-- [ ] PDF export (pro plan)
-- [ ] Blog pages (SEO)
-- [ ] Email notifications
-- [ ] Mobile responsive polish
-- [ ] Product Hunt launch
+- [x] High-fidelity Landing Page & Hero Simulation
+- [x] Vercel AI SDK Migration
+- [x] Better-Auth Integration
+- [x] Drizzle ORM & Postgres Support
+- [x] Dashboard & AI Chat Transition
+- [x] Idea Persistence Bridge (Landing → Dashboard)
+- [ ] Stripe Payment Integration
+- [ ] Multi-Project Workspaces
+- [ ] Team Collaboration Features
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please open an issue first to discuss what you would like to change.
-
-```bash
-# Fork the repo
-# Create your feature branch
-git checkout -b feature/amazing-feature
-
-# Commit your changes
-git commit -m 'Add amazing feature'
-
-# Push to the branch
-git push origin feature/amazing-feature
-
-# Open a Pull Request
-```
+Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 ---
 
-## ⭐ Show Your Support
+## ⭐ Support Validly
 
-If you find this project useful, please consider giving it a ⭐ on GitHub!
-
-
+If you think this is a premium tool, please consider giving it a ⭐ on GitHub!
