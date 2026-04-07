@@ -17,12 +17,12 @@ dotenv.config()
 const stringOrNumber = z.preprocess((val) => String(val), z.string());
 
 const reportSchema = z.object({
-  ideaTitle: z.string(),
-  viabilityScore: z.number().min(0).max(100),
-  verdict: z.enum(["hot", "warm", "cold"]),
-  verdictReason: z.string(),
-  honestVerdict: z.string(),
-  summary: z.string(),
+  ideaTitle: z.string().default("Untitled Idea Analysis"),
+  viabilityScore: z.coerce.number().min(0).max(100).default(50),
+  verdict: z.enum(["hot", "warm", "cold"]).default("warm"),
+  verdictReason: z.string().default("General assessment based on limited data."),
+  honestVerdict: z.string().default("No honest assessment provided."),
+  summary: z.string().default("No summary provided."),
   marketSize: z.object({
     tam: stringOrNumber.optional(),
     sam: stringOrNumber.optional(),
@@ -77,6 +77,58 @@ const reportSchema = z.object({
     dontBuild: z.array(z.string()).optional(),
   }).optional(),
   marketInsights: z.array(z.string()).optional(),
+  gtmStrategy: z.object({
+    launchPhase: z.string().optional(),
+    growthChannels: z.array(z.object({
+      channel: z.string(),
+      strategy: z.string(),
+      expectedROI: z.string().optional(),
+      effort: z.string().optional(),
+      howTo: z.string().optional(),
+    })).optional(),
+    contentStrategy: z.string().optional(),
+    pricingStrategy: z.string().optional(),
+    partnershipOpportunities: z.array(z.string()).optional(),
+  }).optional(),
+  landingPage: z.object({
+    headline: z.string().optional(),
+    subheadline: z.string().optional(),
+    heroDescription: z.string().optional(),
+    features: z.array(z.object({ title: z.string(), description: z.string() })).optional(),
+    socialProof: z.string().optional(),
+    cta: z.string().optional(),
+    faq: z.array(z.object({ question: z.string(), answer: z.string() })).optional(),
+    pricingCopy: z.string().optional(),
+  }).optional(),
+  pivotSuggestions: z.array(z.object({
+    pivotTitle: z.string(),
+    reason: z.string(),
+    viabilityScore: z.number(),
+    keyDifference: z.string(),
+  })).optional(),
+  socialKit: z.object({
+    twitter: z.array(z.string()).optional(),
+    linkedin: z.string().optional(),
+    reddit: z.object({
+      subreddit: z.string(),
+      title: z.string(),
+      body: z.string(),
+    }).optional(),
+    productHunt: z.object({
+      tagline: z.string(),
+      description: z.string(),
+      firstComment: z.string(),
+    }).optional(),
+  }).optional(),
+  fundraising: z.object({
+    readinessScore: z.number().optional(),
+    investorReadiness: z.string().optional(),
+    keyMetricsNeeded: z.array(z.string()).optional(),
+    pitchAngle: z.string().optional(),
+    redFlags: z.array(z.string()).optional(),
+    bestInvestorTypes: z.array(z.string()).optional(),
+    estimatedValuation: z.string().optional(),
+  }).optional(),
 })
 
 interface ValidationInput {
@@ -181,20 +233,37 @@ export async function validateIdea(input: ValidationInput) {
       the founder can do TODAY
 
     STRICT TYPE RULES:
-    - marketSize.tam, sam, som: strings like "$5B" not numbers
-    - marketSize.trend: exactly "growing", "stable", or "shrinking"
+    - ideaTitle: a short, catchy title for the startup idea
+    - viabilityScore: a number between 0 and 100
+    - verdict: exactly one of "hot", "warm", or "cold"
+    - verdictReason: one sentence explaining the verdict
+    - honestVerdict: the "brutally honest" take (2-3 paragraphs)
+    - summary: a high-level summary of the validation report
+    - marketSize: object with {tam: string, sam: string, som: string, trend: "growing"|"stable"|"shrinking"}
     - mvpFeatures: array of OBJECTS {title, description, priority}
     - risks: array of OBJECTS {description, severity, mitigation}
-    - revenueModels: array of OBJECTS {name, description, recommended}
-    - buildRoadmap: array of OBJECTS {week, tasks[]}
+    - revenueModels: array of OBJECTS {name, description, recommended: boolean}
+    - buildRoadmap: array of OBJECTS {week: number, tasks: string[]}
     - techStack: array of OBJECTS {category, tool, reason}
     - headlines: array of OBJECTS {text, angle}
-    - firstCustomers: array of OBJECTS {where, how, message}
-    - competitors: array of OBJECTS {name, url, strength, weakness, keyDifference}
+    - socialKit: object with platform-ready launch content for twitter (array), linkedin, reddit (object), and productHunt (object)
+    - fundraising: readiness score, investor readiness type, metrics needed, pitch angle, red flags, and best investor types
+
+    ADDITIONAL SECTIONS TO INCLUDE:
+    11. GO TO MARKET STRATEGY: 
+    Specific channels, tactics and timeline to acquire first 100 customers for this exact idea.
+    12. PIVOT SUGGESTIONS (only if viabilityScore < 65): 
+    2-3 better versions of this idea with higher potential.
+    13. LANDING PAGE COPY: 
+    Complete copy for a landing page — headline, subheadline, features, CTA, FAQ.
+    14. SOCIAL MEDIA LAUNCH KIT: 
+    Ready-to-post content for Twitter, LinkedIn, Reddit and Product Hunt.
+    15. FUNDRAISING READINESS: 
+    Is this idea investor ready? Give a score out of 100 and specific advice.
 
     DO NOT return arrays of strings for any array field.
     DO NOT wrap response in any parent key.
-    START with { and END with }
+    START with { and END with } (Valid JSON only)
   `
 
   const userContent = `
@@ -261,7 +330,60 @@ export async function validateIdea(input: ValidationInput) {
     What are the real challenges? Is the timing right?
     What would make this fail? What would make it succeed?
 
-    Return the full JSON report now.
+    Return the full JSON report now following this exact structure:
+    {
+      "ideaTitle": "...",
+      "viabilityScore": 0-100,
+      "verdict": "hot" | "warm" | "cold",
+      "verdictReason": "...",
+      "honestVerdict": "...",
+      "summary": "...",
+      "marketSize": { "tam": "...", "sam": "...", "som": "...", "trend": "..." },
+      "competitors": [ { "name": "...", "url": "...", "strength": "...", "weakness": "...", "keyDifference": "..." } ],
+      "targetAudience": [ { "title": "...", "description": "...", "painPoints": ["..."] } ],
+      "mvpFeatures": [ { "title": "...", "description": "...", "priority": "..." } ],
+      "risks": [ { "description": "...", "severity": "...", "mitigation": "..." } ],
+      "revenueModels": [ { "name": "...", "description": "...", "recommended": true|false } ],
+      "buildRoadmap": [ { "week": 1-4, "tasks": ["..."] } ],
+      "techStack": [ { "category": "...", "tool": "...", "reason": "..." } ],
+      "headlines": [ { "text": "...", "angle": "..." } ],
+      "firstCustomers": [ { "where": "...", "how": "...", "message": "..." } ],
+      "mvpScope": { "mustHave": ["..."], "niceToHave": ["..."], "dontBuild": ["..."] },
+      "marketInsights": ["..."],
+      "gtmStrategy": {
+        "launchPhase": "...",
+        "growthChannels": [ { "channel": "...", "strategy": "...", "expectedROI": "...", "effort": "...", "howTo": "..." } ],
+        "contentStrategy": "...",
+        "pricingStrategy": "...",
+        "partnershipOpportunities": ["..."]
+      },
+      "landingPage": {
+        "headline": "...",
+        "subheadline": "...",
+        "heroDescription": "...",
+        "features": [ { "title": "...", "description": "..." } ],
+        "socialProof": "...",
+        "cta": "...",
+        "faq": [ { "question": "...", "answer": "..." } ],
+        "pricingCopy": "..."
+      },
+      "pivotSuggestions": [ { "pivotTitle": "...", "reason": "...", "viabilityScore": 0-100, "keyDifference": "..." } ],
+      "socialKit": {
+        "twitter": ["..."],
+        "linkedin": "...",
+        "reddit": { "subreddit": "...", "title": "...", "body": "..." },
+        "productHunt": { "tagline": "...", "description": "...", "firstComment": "..." }
+      },
+      "fundraising": {
+        "readinessScore": 0-100,
+        "investorReadiness": "...",
+        "keyMetricsNeeded": ["..."],
+        "pitchAngle": "...",
+        "redFlags": ["..."],
+        "bestInvestorTypes": ["..."],
+        "estimatedValuation": "..."
+      }
+    }
   `
 
   try {
@@ -309,6 +431,11 @@ export async function validateIdea(input: ValidationInput) {
         firstCustomers: parsed.firstCustomers || [],
         mvpScope: parsed.mvpScope || { mustHave: [], niceToHave: [], dontBuild: [] },
         marketInsights: parsed.marketInsights || [],
+        gtmStrategy: parsed.gtmStrategy || { launchPhase: "", growthChannels: [], contentStrategy: "", pricingStrategy: "", partnershipOpportunities: [] },
+        landingPage: parsed.landingPage || { headline: "", subheadline: "", heroDescription: "", features: [], socialProof: "", cta: "", faq: [], pricingCopy: "" },
+        pivotSuggestions: parsed.pivotSuggestions || [],
+        socialKit: parsed.socialKit || { twitter: [], linkedin: "", reddit: { subreddit: "", title: "", body: "" }, productHunt: { tagline: "", description: "", firstComment: "" } },
+        fundraising: parsed.fundraising || { readinessScore: 0, investorReadiness: "", keyMetricsNeeded: [], pitchAngle: "", redFlags: [], bestInvestorTypes: [], estimatedValuation: "" },
     };
 
     const id = nanoid()
