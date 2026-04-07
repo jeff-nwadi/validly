@@ -97,10 +97,10 @@ export async function validateIdea(input: ValidationInput) {
   const { ideaDescription, targetMarket, industry } = input
 
   let searchContext = "No real-time market data available.";
-  let competitorData = [];
-  let marketData = [];
-  let redditData = [];
-  let trendData = [];
+  let competitorData: { title: string; url: string; snippet: string }[] = [];
+  let marketData: { title: string; snippet: string; url: string }[] = [];
+  let redditData: { title: string; snippet: string }[] = [];
+  let trendData: { title: string; snippet: string }[] = [];
 
   try {
     const currentYear = new Date().getFullYear();
