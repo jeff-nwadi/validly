@@ -26,13 +26,14 @@ import {
   ListChecks,
   Lock,
   ArrowRightCircle,
-  Share2,
   Flag,
   Crosshair,
   Megaphone,
   Rocket,
   TrendingUp,
+  ClipboardList,
 } from "lucide-react";
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -116,6 +117,21 @@ export interface MVPScope {
   dontBuild: string[];
 }
 
+export interface FunctionalRequirement {
+  feature: string;
+  description: string;
+  priority: "must" | "should" | "could";
+}
+
+export interface PRD {
+  summary: string;
+  problemStatement: string;
+  userStories: string[];
+  functionalRequirements: FunctionalRequirement[];
+  technicalConstraints: string[];
+  successMetrics: string[];
+}
+
 export interface ReportData {
   id: string;
   ideaTitle: string;
@@ -139,39 +155,17 @@ export interface ReportData {
   marketInsights: string[];
   gtmStrategy: {
     launchPhase: string;
-    growthChannels: { channel: string; strategy: string; expectedROI: string; effort: string; howTo: string }[];
+    growthChannels: { channel: string; strategy: string; howTo: string }[];
     contentStrategy: string;
     pricingStrategy: string;
-    partnershipOpportunities: string[];
-  };
-  landingPage: {
-    headline: string;
-    subheadline: string;
-    heroDescription: string;
-    features: { title: string; description: string }[];
-    socialProof: string;
-    cta: string;
-    faq: { question: string; answer: string }[];
-    pricingCopy: string;
   };
   pivotSuggestions: { pivotTitle: string; reason: string; viabilityScore: number; keyDifference: string }[];
-  socialKit: {
-    twitter: string[];
-    linkedin: string;
-    reddit: { subreddit: string; title: string; body: string };
-    productHunt: { tagline: string; description: string; firstComment: string };
-  };
-  fundraising: {
-    readinessScore: number;
-    investorReadiness: string;
-    keyMetricsNeeded: string[];
-    pitchAngle: string;
-    redFlags: string[];
-    bestInvestorTypes: string[];
-    estimatedValuation: string;
-  };
   isPro?: boolean;
+  landingPage?: any;
+  socialKit?: any;
+  fundraising?: any;
 }
+
 
 interface ReportSystemProps {
   reportData: ReportData;
@@ -180,9 +174,9 @@ interface ReportSystemProps {
 
 const VerdictBadge: React.FC<{ verdict: "hot" | "warm" | "cold" }> = ({ verdict }) => {
   const config = {
-    hot: { icon: Circle, color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/20", label: "High" },
-    warm: { icon: Circle, color: "text-yellow-500", bg: "bg-yellow-500/10", border: "border-yellow-500/20", label: "Moderate" },
-    cold: { icon: Circle, color: "text-blue-500", bg: "bg-blue-500/10", border: "border-blue-500/20", label: "Stable" },
+    hot: { icon: Circle, color: "text-rose-500", bg: "bg-rose-50", border: "border-rose-100", label: "High" },
+    warm: { icon: Circle, color: "text-amber-500", bg: "bg-amber-50", border: "border-amber-100", label: "Moderate" },
+    cold: { icon: Circle, color: "text-blue-500", bg: "bg-blue-50", border: "border-blue-100", label: "Stable" },
   }[verdict];
 
   const Icon = config.icon;
@@ -219,7 +213,7 @@ const ViabilityGauge: React.FC<{ score: number }> = ({ score }) => {
             stroke="currentColor"
             strokeWidth="12"
             fill="none"
-            className="text-muted"
+            className="text-neutral-100"
           />
           <motion.circle
             cx="96"
@@ -246,7 +240,7 @@ const ViabilityGauge: React.FC<{ score: number }> = ({ score }) => {
           >
             {score}
           </motion.span>
-          <span className="text-sm text-muted-foreground mt-1">Viability Score</span>
+          <span className="text-sm text-neutral-400 mt-1">Viability Score</span>
         </div>
       </div>
       <Badge variant="outline" className="mt-4">
@@ -269,7 +263,7 @@ const CompetitorCard: React.FC<{ competitor: Competitor; index: number }> = ({
       <Card className="h-full hover:shadow-lg transition-shadow duration-300">
         <CardHeader>
           <div className="flex items-start justify-between">
-            <CardTitle className="text-lg">{competitor.name}</CardTitle>
+            <CardTitle className="text-[18px] font-semibold">{competitor.name}</CardTitle>
             <a
               href={competitor.url}
               target="_blank"
@@ -331,7 +325,7 @@ const MVPRoadmap: React.FC<{ features: MVPFeature[] }> = ({ features }) => {
           )}
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <h4 className="font-semibold">{feature.title}</h4>
+              <h4 className="text-[16px] font-medium">{feature.title}</h4>
               <Badge variant="outline" className={getPriorityColor(feature.priority)}>
                 {feature.priority}
               </Badge>
@@ -390,7 +384,7 @@ const RiskHeatmap: React.FC<{ risks: Risk[] }> = ({ risks }) => {
                 {getSeverityIcon(risk.severity)}
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h4 className="font-semibold text-sm">{risk.category}</h4>
+                    <h4 className="text-[16px] font-medium">{risk.category}</h4>
                     <Badge variant="outline" className="text-xs">
                       {risk.severity}
                     </Badge>
@@ -421,25 +415,22 @@ const GrowthChannelCard = ({ channel, i }: { channel: any, i: number }) => {
     <motion.div 
       layout
       className={cn(
-        "p-5 rounded-lg border bg-muted/5 transition-all duration-300",
-        isExpanded ? "md:col-span-2 border-primary/30 ring-1 ring-primary/10 shadow-sm" : "hover:border-primary/20"
+        "p-5 rounded-lg border border-neutral-100 bg-neutral-50/50 transition-all duration-300",
+        isExpanded ? "md:col-span-2 border-black/10 ring-1 ring-black/5 shadow-sm" : "hover:border-neutral-200"
       )}
     >
       <div className="flex items-center justify-between mb-3">
-        <h4 className="font-bold text-lg text-foreground flex items-center gap-2">
+        <h4 className="text-[18px] font-semibold text-black">
           {channel.channel}
           {channel.effort && (
-            <Badge variant="secondary" className="text-[9px] h-4 uppercase font-bold px-1.5 opacity-60">
+            <Badge variant="secondary" className="text-[10px] h-4 uppercase font-bold px-1.5 opacity-60 ml-2">
               {channel.effort} Effort
             </Badge>
           )}
         </h4>
-        <Badge variant="outline" className="text-[10px] bg-primary/2 border-primary/10 text-primary">
-          ROI: {channel.expectedROI}
-        </Badge>
       </div>
       
-      <p className="text-sm mb-4 text-muted-foreground leading-relaxed">
+      <p className="text-[14px] font-normal mb-4 text-muted-foreground leading-relaxed">
         {channel.strategy}
       </p>
 
@@ -490,24 +481,25 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
   reportData,
   onExportPDF,
 }) => {
-  const [activeTab, setActiveTab] = useState<"overview" | "competitors" | "audience" | "risks" | "revenue" | "roadmap" | "stack" | "headlines" | "customers" | "scope" | "gtm" | "landing" | "kit" | "advisor">(
+  const [activeTab, setActiveTab] = useState<"overview" | "competitors" | "audience" | "risks" | "revenue" | "roadmap" | "stack" | "customers" | "gtm" | "copy" | "advisor" | "headlines" | "scope">(
     "overview"
   );
 
+
   // Normalize data for legacy compatibility
   const data = {
-    ...reportData,
-    gtmStrategy: reportData.gtmStrategy || { launchPhase: "Market Entry Framework", growthChannels: [], contentStrategy: "N/A", pricingStrategy: "N/A", partnershipOpportunities: [] },
-    landingPage: reportData.landingPage || { headline: "Concept Analysis", subheadline: "", features: [], cta: "Get Started", faq: [], pricingCopy: "" },
-    socialKit: reportData.socialKit || { twitter: [], linkedin: "", reddit: { subreddit: "", title: "", body: "" }, productHunt: { tagline: "", description: "", firstComment: "" } },
-    fundraising: reportData.fundraising || { readinessScore: 0, investorReadiness: "Analysis Pending", pitchAngle: "N/A", keyMetricsNeeded: [], redFlags: [], bestInvestorTypes: [], estimatedValuation: "N/A" },
-    pivotSuggestions: reportData.pivotSuggestions || [],
-    marketInsights: reportData.marketInsights || [],
-    mvpScope: reportData.mvpScope || { mustHave: [], niceToHave: [], dontBuild: [] },
+    ...(reportData || {}),
+    gtmStrategy: reportData?.gtmStrategy || { launchPhase: "Market Entry Framework", growthChannels: [], contentStrategy: "N/A", pricingStrategy: "N/A", partnershipOpportunities: [] },
+    landingPage: reportData?.landingPage || { headline: "Concept Analysis", subheadline: "", features: [], cta: "Get Started", faq: [], pricingCopy: "" },
+    socialKit: reportData?.socialKit || { twitter: [], linkedin: "", reddit: { subreddit: "", title: "", body: "" }, productHunt: { tagline: "", description: "", firstComment: "" } },
+    fundraising: reportData?.fundraising || { readinessScore: 0, investorReadiness: "Analysis Pending", pitchAngle: "N/A", keyMetricsNeeded: [], redFlags: [], bestInvestorTypes: [], estimatedValuation: "N/A" },
+    pivotSuggestions: reportData?.pivotSuggestions || [],
+    marketInsights: reportData?.marketInsights || [],
+    mvpScope: reportData?.mvpScope || { mustHave: [], niceToHave: [], dontBuild: [] },
   };
 
   const [chatMessages, setChatMessages] = useState<{ role: "user" | "assistant", content: string }[]>([
-    { role: "assistant", content: `Hi! I'm your startup advisor for **${data.ideaTitle}**. Ask me anything about this report or how to launch your business!` }
+    { role: "assistant", content: `Hi! I'm your startup advisor for "${data.ideaTitle}". Ask me anything about this report or how to launch your business!` }
   ]);
   const [userInput, setUserInput] = useState("");
   const [isChatLoading, setIsChatLoading] = useState(false);
@@ -538,11 +530,11 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
     navigator.clipboard.writeText(text);
   };
 
-  const isProSection = (tab: string) => ["roadmap", "stack", "headlines", "customers", "scope", "gtm", "landing", "kit", "advisor"].includes(tab);
+  const isProSection = (tab: string) => ["roadmap", "stack", "headlines", "customers", "scope", "gtm", "prd", "kit", "advisor"].includes(tab);
   const isLocked = (tab: string) => false; // UNLOCKED FOR TESTING
 
   return (
-    <div className="flex-1 overflow-y-auto bg-background text-foreground">
+    <div className="flex-1 overflow-y-auto bg-white text-black">
       <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-6">
         {/* Header */}
         <motion.div
@@ -553,15 +545,15 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div className="space-y-3">
               <div className="flex items-center gap-3 flex-wrap">
-                <h1 className="text-2xl md:text-4xl font-bold header">{data.ideaTitle}</h1>
+                <h1 className="text-[18px] font-semibold text-black">{data.ideaTitle}</h1>
                 <VerdictBadge verdict={data.verdict} />
               </div>
-              <p className="text-base text-muted-foreground">{data.verdictReason}</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-[14px] font-normal text-neutral-500">{data.verdictReason}</p>
+              <p className="text-xs text-neutral-400">
                 Generated on {data.generatedAt} • Report ID: {data.id}
               </p>
             </div>
-            <Button onClick={onExportPDF} size="lg" className="gap-2">
+            <Button onClick={onExportPDF} size="lg" className="gap-2 bg-black hover:bg-neutral-800 text-white rounded-[6px] font-bold uppercase text-xs h-11">
               <Download className="w-4 h-4" />
               Export PDF
             </Button>
@@ -579,15 +571,15 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
           </motion.div>
           
           <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="lg:col-span-2">
-            <Card className="h-full bg-muted/10 border-border/50">
+            <Card className="h-full bg-neutral-50 border-neutral-100 shadow-sm">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-foreground font-bold">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
+                <CardTitle className="flex items-center gap-2 text-[18px] font-semibold text-black">
+                  <ShieldCheck className="w-5 h-5 text-black" />
                   Executive Analyst Verdict
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-base leading-relaxed text-foreground">{data.honestVerdict}</p>
+                <p className="text-[14px] font-normal leading-relaxed text-black/80">{data.honestVerdict}</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -603,13 +595,10 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
             { id: "revenue", label: "Revenue", icon: DollarSign, pro: false },
             { id: "roadmap", label: "Roadmap", icon: Milestone, pro: true },
             { id: "stack", label: "Stack", icon: Wrench, pro: true },
-            { id: "headlines", label: "Copy", icon: Type, pro: true },
-            { id: "customers", label: "Outreach", icon: Users, pro: true },
             { id: "gtm", label: "Strategy", icon: Flag, pro: true },
-            { id: "landing", label: "Landing", icon: FileText, pro: true },
-            { id: "kit", label: "Social", icon: Share2, pro: true },
-            { id: "advisor", label: "Consultant", icon: MessagesSquare, pro: true },
-            { id: "scope", label: "Product Scope", icon: ListChecks, pro: true },
+            { id: "copy", label: "Copy", icon: ClipboardList, pro: true },
+            { id: "advisor", label: "Advisor", icon: MessagesSquare, pro: true },
+
           ].map((tab) => {
             const locked = isLocked(tab.id);
             return (
@@ -620,8 +609,8 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                   "flex items-center gap-2 px-4 py-3 border-b-2 transition-colors whitespace-nowrap text-sm font-medium",
                   locked && "opacity-50 cursor-not-allowed",
                   activeTab === tab.id
-                    ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
+                    ? "border-black text-black"
+                    : "border-transparent text-neutral-400 hover:text-black"
                 )}
               >
                 <tab.icon className="w-4 h-4" />
@@ -648,10 +637,10 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 <Card>
                   <CardHeader>
                     <CardDescription className="text-xs uppercase font-bold">TAM</CardDescription>
-                    <CardTitle className="text-lg">Total Market</CardTitle>
+                    <CardTitle className="text-[16px] font-medium">Total Market</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm font-medium">{data.marketSize.tam}</p>
+                    <p className="text-[14px] font-normal">{data.marketSize.tam}</p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -757,7 +746,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                         <div>
                            <h4 className="text-xs font-bold uppercase text-[#4A4A4A] mb-3">Key Metrics Needed</h4>
                            <ul className="space-y-2">
-                              {data.fundraising.keyMetricsNeeded?.map((m, i) => (
+                              {data.fundraising.keyMetricsNeeded?.map((m: string, i: number) => (
                                  <li key={i} className="text-sm flex items-center gap-2 text-muted-foreground">
                                     <CheckCircle2 className="w-4 h-4 text-green-500" />
                                     {m}
@@ -768,7 +757,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                         <div>
                            <h4 className="text-xs font-bold uppercase text-red-500 mb-3">Red Flags</h4>
                            <ul className="space-y-2">
-                              {data.fundraising.redFlags?.map((m, i) => (
+                              {data.fundraising.redFlags?.map((m: string, i: number) => (
                                  <li key={i} className="text-sm flex items-center gap-2 text-muted-foreground">
                                     <AlertTriangle className="w-4 h-4 text-red-500" />
                                     {m}
@@ -935,7 +924,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 <CardContent>
                   <div className="grid sm:grid-cols-2 gap-4">
                     {data.techStack?.map((item, index) => (
-                      <div key={index} className="flex items-start gap-4 p-5 rounded-lg border bg-muted/40 border-border/50">
+                      <div key={index} className="flex items-start gap-4 p-5 rounded-lg border bg-neutral-50 border-neutral-100">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
                             <span className="text-[10px] font-bold uppercase text-primary/60">{item.category}</span>
@@ -966,12 +955,12 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 <CardContent>
                   <div className="grid gap-4">
                     {data.headlines?.map((headline, index) => (
-                      <div key={index} className="p-8 rounded-lg border bg-gradient-to-br from-primary/5 to-primary/2 border-primary/20 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 p-4 font-bold text-[10px] uppercase text-primary opacity-20">Option 0{index + 1}</div>
-                        <h3 className="text-2xl font-bold mb-4 header text-foreground">{headline.text}</h3>
+                      <div key={index} className="p-8 rounded-lg border bg-white border-neutral-200 relative overflow-hidden group shadow-sm">
+                        <div className="absolute top-0 right-0 p-4 font-bold text-[10px] uppercase text-black opacity-20">Option 0{index + 1}</div>
+                        <h3 className="text-[18px] font-semibold mb-4 text-black">{headline.text}</h3>
                         <div className="flex items-center gap-2">
-                           <span className="text-xs font-bold uppercase text-[#4A4A4A]">Angle:</span>
-                           <span className="text-xs text-muted-foreground">{headline.angle}</span>
+                           <span className="text-[14px] font-medium text-black">Angle:</span>
+                           <span className="text-[14px] font-normal text-neutral-500">{headline.angle}</span>
                         </div>
                       </div>
                     ))}
@@ -997,18 +986,18 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                   <div className="grid gap-4">
                     {data.firstCustomers?.map((customer, index) => (
                       <div key={index}>
-                        <Card className="border-l-4 border-l-primary bg-muted/20">
+                        <Card className="border-l-4 border-l-black bg-white shadow-sm">
                           <CardHeader className="pb-2">
-                            <CardTitle className="text-lg">{customer.where}</CardTitle>
+                            <CardTitle className="text-[18px] font-semibold">{customer.where}</CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-4">
                             <div>
-                               <div className="text-[10px] font-bold uppercase text-[#4A4A4A] mb-2">The Tactic</div>
-                               <p className="text-sm leading-relaxed">{customer.how}</p>
+                               <div className="text-[10px] font-bold uppercase text-neutral-400 mb-2">The Tactic</div>
+                               <p className="text-[14px] font-normal leading-relaxed text-black">{customer.how}</p>
                             </div>
-                            <div className="p-4 rounded-md bg-background border border-border/50">
-                               <div className="text-[10px] font-bold uppercase text-primary mb-2">Sample Message</div>
-                               <p className="text-sm italic text-muted-foreground">"{customer.message}"</p>
+                            <div className="p-4 rounded-md bg-neutral-50 border border-neutral-200">
+                               <div className="text-[10px] font-bold uppercase text-black mb-2">Sample Message</div>
+                               <p className="text-[14px] font-normal italic text-neutral-600">"{customer.message}"</p>
                             </div>
                           </CardContent>
                         </Card>
@@ -1096,9 +1085,9 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-8">
-                  <div className="p-6 rounded-lg bg-muted/10 border border-border/50">
-                    <h4 className="font-bold mb-2 text-sm uppercase text-[#4A4A4A]">Phase 1: Market Entry Framework</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{data.gtmStrategy?.launchPhase || "Initial launch strategy targeting core audience segments."}</p>
+                  <div className="p-6 rounded-lg bg-neutral-50 border border-neutral-200">
+                    <h4 className="text-[16px] font-medium mb-2 text-black">Market Entry Framework</h4>
+                    <p className="text-[14px] font-normal text-neutral-600 leading-relaxed">{data.gtmStrategy?.launchPhase || "Initial launch strategy targeting core audience segments."}</p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-4">
@@ -1109,12 +1098,12 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="text-xs font-bold uppercase text-[#4A4A4A] mb-3">Communications Framework</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{data.gtmStrategy?.contentStrategy || "N/A"}</p>
+                      <h4 className="text-[16px] font-medium text-black mb-3">Communications Framework</h4>
+                      <p className="text-[14px] font-normal text-neutral-600 leading-relaxed">{data.gtmStrategy?.contentStrategy || "N/A"}</p>
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold uppercase text-[#4A4A4A] mb-3">Monetization Framework</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{data.gtmStrategy?.pricingStrategy || "N/A"}</p>
+                      <h4 className="text-[16px] font-medium text-black mb-3">Monetization Framework</h4>
+                      <p className="text-[14px] font-normal text-neutral-600 leading-relaxed">{data.gtmStrategy?.pricingStrategy || "N/A"}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -1122,108 +1111,33 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
             </div>
           )}
 
-          {activeTab === "landing" && (
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl flex items-center gap-2">
-                    <FileText className="w-5 h-5 text-primary" />
-                    Landing Page Generator
-                  </CardTitle>
-                  <CardDescription>Conversion-optimized copy for your launch website.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-8">
-                  <div className="space-y-4">
-                    <div className="p-6 rounded-lg border-2 border-dashed border-primary/20 bg-background group relative">
-                       <Button onClick={() => copyToClipboard(data.landingPage?.headline || "")} variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                         <Copy className="w-4 h-4" />
-                       </Button>
-                       <div className="text-[10px] font-bold uppercase text-primary mb-2">H1 Headline</div>
-                       <h3 className="text-3xl font-bold header">{data.landingPage?.headline || "Untitled Analysis"}</h3>
-                    </div>
-
-                    <div className="p-6 rounded-lg border bg-muted/10 group relative">
-                       <Button onClick={() => copyToClipboard(data.landingPage?.subheadline || "")} variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                         <Copy className="w-4 h-4" />
-                       </Button>
-                       <div className="text-[10px] font-bold uppercase text-[#4A4A4A] mb-2">Subheadline</div>
-                       <p className="text-xl text-muted-foreground">{data.landingPage?.subheadline || "No subheadline provided"}</p>
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-3 gap-4">
-                     {data.landingPage?.features?.map((f, i) => (
-                       <div key={i} className="p-4 rounded-lg border group relative">
-                          <Button onClick={() => copyToClipboard(`${f.title}: ${f.description}`)} variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Copy className="w-3 h-3" />
-                          </Button>
-                          <h4 className="font-bold mb-2">{f.title}</h4>
-                          <p className="text-sm text-muted-foreground">{f.description}</p>
-                       </div>
-                     ))}
-                  </div>
-
-                  <Card className="bg-primary text-primary-foreground border-none">
-                    <CardContent className="p-8 flex flex-col items-center text-center gap-4">
-                       <h4 className="text-xs font-bold uppercase opacity-80">Primary Call To Action</h4>
-                       <span className="text-3xl font-bold">{data.landingPage?.cta || "Get Started"}</span>
-                       <Button variant="secondary" className="mt-4" onClick={() => copyToClipboard(data.landingPage?.cta || "Get Started")}>Copy CTA</Button>
-                    </CardContent>
-                  </Card>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-
-          {activeTab === "kit" && (
+          {activeTab === "copy" && (
             <div className="space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="text-xl flex items-center gap-2 text-foreground font-bold">
-                    <Share2 className="w-5 h-5 text-primary" />
-                    Multi-Channel Outreach Kit
+                    <Type className="w-5 h-5 text-primary" />
+                    High-Converting Headlines
                   </CardTitle>
+                  <CardDescription>Targeted copy angles for your initial landing page</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                       <h4 className="font-bold flex items-center gap-2 text-sm">
-                          Twitter / X Posts
-                       </h4>
-                       <div className="space-y-3">
-                          {data.socialKit?.twitter?.map((t, i) => (
-                             <div key={i} className="p-4 rounded-lg border bg-muted/20 text-sm relative group">
-                                <Button onClick={() => copyToClipboard(t)} variant="ghost" size="icon" className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity w-6 h-6">
-                                  <Copy className="w-3 h-3" />
-                                </Button>
-                                {t}
-                             </div>
-                          ))}
-                       </div>
-                    </div>
-
-                    <div className="space-y-4">
-                       <h4 className="font-bold">LinkedIn Announcement</h4>
-                       <div className="p-4 rounded-lg border bg-muted/20 text-sm relative group whitespace-pre-wrap">
-                          <Button onClick={() => copyToClipboard(data.socialKit?.linkedin || "")} variant="ghost" size="icon" className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity w-6 h-6">
-                            <Copy className="w-3 h-3" />
+                <CardContent className="space-y-4">
+                    <div className="grid gap-4">
+                       {data.headlines?.map((h, i) => (
+                        <div key={i} className="group relative p-6 rounded-xl bg-white border border-neutral-200 hover:border-black transition-all duration-300 shadow-sm">
+                          <span className="text-[10px] font-bold uppercase tracking-normal text-neutral-400 mb-2 block">{h.angle || "Marketing Angle"}</span>
+                          <p className="text-[18px] font-semibold text-black mb-2 leading-tight pr-12">{h.text}</p>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="absolute top-4 right-4 text-neutral-400 hover:text-black transition-colors"
+                            onClick={() => copyToClipboard(h.text)}
+                          >
+                            <Copy className="w-4 h-4" />
                           </Button>
-                          {data.socialKit?.linkedin || "N/A"}
-                       </div>
-                    </div>
-                  </div>
-
-                  {data.socialKit?.reddit && (
-                    <div className="p-6 rounded-lg border border-border/50 bg-muted/5">
-                      <h4 className="font-bold text-foreground mb-4 text-sm">Reddit Contextual Strategy (r/{data.socialKit.reddit.subreddit || "relevant-community"})</h4>
-                      <div className="space-y-3">
-                          <div className="font-bold text-sm">Title: {data.socialKit.reddit.title || "Subject Line"}</div>
-                          <div className="p-4 rounded bg-background border text-sm whitespace-pre-wrap leading-relaxed">
-                            {data.socialKit.reddit.body || "N/A"}
-                          </div>
-                      </div>
-                    </div>
-                  )}
+                        </div>
+                      ))}
+                   </div>
                 </CardContent>
               </Card>
             </div>
@@ -1246,15 +1160,15 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                          {chatMessages.map((msg, i) => (
                             <div key={i} className={cn(
                                "flex flex-col max-w-[85%] rounded-2xl p-4 shadow-sm",
-                               msg.role === "user" ? "ml-auto bg-primary text-primary-foreground rounded-tr-none" : "bg-muted text-foreground rounded-tl-none border border-border/50"
+                               msg.role === "user" ? "ml-auto bg-black text-white rounded-tr-none" : "bg-white text-black rounded-tl-none border border-neutral-200"
                             )}>
-                               <span className={cn(
-                                 "text-[9px] font-bold uppercase opacity-60 mb-2",
-                                 msg.role === "user" ? "text-primary-foreground/80" : "text-[#4A4A4A]"
-                               )}>
-                                 {msg.role === "user" ? "Query" : "Advisor Response"}
-                               </span>
-                               <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                                <span className={cn(
+                                  "text-[10px] font-bold uppercase opacity-60 mb-2",
+                                  msg.role === "user" ? "text-neutral-300" : "text-neutral-500"
+                                )}>
+                                  {msg.role === "user" ? "Query" : "Advisor Response"}
+                                </span>
+                                <p className="text-[14px] font-normal leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                             </div>
                          ))}
                          {isChatLoading && (
@@ -1305,3 +1219,4 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
     </div>
   );
 };
+

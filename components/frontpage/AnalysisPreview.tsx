@@ -4,11 +4,11 @@ import { cn } from '@/lib/utils'
 
 export default function AnalysisPreview() {
   return (
-    <section id="features" className='flex justify-center items-center px-1 md:px-10 bg-[#111111]'>
+    <section id="features" className='flex justify-center items-center px-1 md:px-10 bg-white border-y border-neutral-100'>
       <div className='py-16 md:py-24 max-w-7xl w-full'>
         <div className='mb-12 md:mb-16'>
-          <h2 className='text-[#F8F8F8] text-2xl md:text-[40px] font-bold header text-center mb-4  leading-tight'>Data-driven decisions</h2>
-          <p className='text-[#9A9A9A] text-[14px] md:text-[16px] font-normal w-md mx-auto text-center leading-relaxed'>
+          <h2 className='text-black text-[18px] font-semibold text-center mb-4 leading-tight uppercase'>Data-driven decisions</h2>
+          <p className='text-neutral-500 text-[14px] font-normal w-md mx-auto text-center leading-relaxed'>
             Stop relying on gut feeling. Get a comprehensive breakdown of why your idea will or won't work.
           </p>
         </div>
@@ -19,14 +19,14 @@ export default function AnalysisPreview() {
           {/* Header Section */}
           <div className='flex flex-col md:flex-row justify-between items-start gap-8 mb-10 md:mb-12'>
             <div>
-              <p className='text-[#9A9A9A] text-[11px] md:text-[12px] font-medium uppercase  mb-2 md:mb-3'>Analysis Complete</p>
-              <h3 className='text-[#F8F8F8] text-[18px] md:text-[24px] font-bold header  leading-tight'>CRM for Local Bakeries</h3>
+              <p className='text-neutral-400 text-[10px] font-bold uppercase mb-2 md:mb-3'>Analysis Complete</p>
+              <h3 className='text-black text-[18px] font-semibold leading-tight'>CRM for Local Bakeries</h3>
             </div>
             
             <div className='flex items-center gap-6 w-full md:w-auto justify-between md:justify-end'>
               <div className='flex flex-col items-start md:items-end gap-2'>
-                <p className='text-[#9A9A9A] text-[11px] md:text-[12px] font-medium uppercase '>Viability Score</p>
-                <div className='bg-[#101914] text-[#10B981] px-3 py-1 rounded-full text-[11px] md:text-[12px] font-semibold border border-[#064E3B] flex items-center gap-1.5'>
+                <p className='text-neutral-400 text-[10px] font-bold uppercase'>Viability Score</p>
+                <div className='bg-green-50 text-green-600 px-3 py-1 rounded-full text-[11px] font-semibold border border-green-200 flex items-center gap-1.5'>
                   Hot <span className='text-[10px]'>🔥</span>
                 </div>
               </div>
@@ -36,7 +36,7 @@ export default function AnalysisPreview() {
                 <svg className='w-full h-full -rotate-90' viewBox='0 0 100 100'>
                   <circle 
                     cx='50' cy='50' r='42' 
-                    fill='none' stroke='#1F1F1F' strokeWidth='8' 
+                    fill='none' stroke='#F4F4F5' strokeWidth='8' 
                   />
                   <circle 
                     cx='50' cy='50' r='42' 
@@ -46,7 +46,7 @@ export default function AnalysisPreview() {
                     strokeLinecap='round'
                   />
                 </svg>
-                <span className='absolute text-[#F8F8F8] text-[24px] md:text-[28px] font-bold header'>85</span>
+                <span className='absolute text-black text-[24px] font-semibold'>85</span>
               </div>
             </div>
           </div>
@@ -58,40 +58,40 @@ export default function AnalysisPreview() {
             <div className='lg:col-span-3 space-y-6'>
               
               {/* Top Competitors */}
-              <div className='bg-[#111111]/50 border border-[#1F1F1F] rounded-[6px] p-5'>
+              <div className='bg-white border border-neutral-200 rounded-[8px] p-5 shadow-sm'>
                 <div className='flex items-center gap-3 mb-6'>
-                  <div className='text-[#A855F7]'>
+                  <div className='text-black'>
                     <Users className='w-4 h-4' />
                   </div>
-                  <h4 className='text-[#F8F8F8] text-[16px] font-semibold header '>Top Competitors</h4>
+                  <h4 className='text-black text-[16px] font-medium'>Top Competitors</h4>
                 </div>
                 
                 <div className='space-y-4'>
-                  <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-[#0A0A0A] border border-[#1F1F1F] rounded-[6px] gap-4'>
+                  <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-neutral-50 border border-neutral-200 rounded-[6px] gap-4'>
                     <div className='flex items-center gap-4'>
-                      <div className='w-10 h-10 bg-[#3B82F6] rounded-[6px] flex items-center justify-center text-white font-bold'>B</div>
-                      <span className='text-[#F8F8F8] font-medium'>BakeManage</span>
+                      <div className='w-10 h-10 bg-blue-100 rounded-[6px] flex items-center justify-center text-blue-600 font-bold'>B</div>
+                      <span className='text-black font-medium text-[14px]'>BakeManage</span>
                     </div>
-                    <span className='text-[#9A9A9A] text-[10px] md:text-[12px] uppercase  px-3 py-1 bg-[#1A1A1A] rounded-[6px] border border-[#2C2C2C]'>Direct Comp</span>
+                    <span className='text-neutral-500 text-[10px] uppercase px-3 py-1 bg-white rounded-[6px] border border-neutral-200'>Direct Comp</span>
                   </div>
                   
-                  <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-[#0A0A0A] border border-[#1F1F1F] rounded-[6px] gap-4'>
+                  <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-neutral-50 border border-neutral-200 rounded-[6px] gap-4'>
                     <div className='flex items-center gap-4'>
-                      <div className='w-10 h-10 bg-[#EC4899] rounded-[6px] flex items-center justify-center text-white font-bold'>S</div>
-                      <span className='text-[#F8F8F8] font-medium'>Square for Retail</span>
+                      <div className='w-10 h-10 bg-pink-100 rounded-[6px] flex items-center justify-center text-pink-600 font-bold'>S</div>
+                      <span className='text-black font-medium text-[14px]'>Square for Retail</span>
                     </div>
-                    <span className='text-[#9A9A9A] text-[10px] md:text-[12px] uppercase  px-3 py-1 bg-[#1A1A1A] rounded-[6px] border border-[#2C2C2C]'>Indirect Comp</span>
+                    <span className='text-neutral-500 text-[10px] uppercase px-3 py-1 bg-white rounded-[6px] border border-neutral-200'>Indirect Comp</span>
                   </div>
                 </div>
               </div>
 
               {/* Suggested MVP Features */}
-              <div className='bg-[#111111]/50 border border-[#1F1F1F] rounded-[6px] p-5'>
+              <div className='bg-white border border-neutral-200 rounded-[8px] p-5 shadow-sm'>
                 <div className='flex items-center gap-3 mb-6'>
-                  <div className='text-[#A855F7]'>
+                  <div className='text-black'>
                     <Zap className='w-4 h-4' />
                   </div>
-                  <h4 className='text-[#F8F8F8] text-[16px] font-semibold header '>Suggested MVP Features</h4>
+                  <h4 className='text-black text-[16px] font-medium'>Suggested MVP Features</h4>
                 </div>
                 
                 <div className='flex flex-wrap gap-2 md:gap-3'>
@@ -101,7 +101,7 @@ export default function AnalysisPreview() {
                     "Automated Invoicing",
                     "Customer Database"
                   ].map((feature, i) => (
-                    <div key={i} className='px-3 py-1.5 md:px-4 md:py-2 bg-[#0A0A0A] border border-[#1F1F1F] rounded-full text-[#9A9A9A] text-[12px] md:text-[14px] hover:text-[#F8F8F8] hover:border-[#A855F7] transition-colors'>
+                    <div key={i} className='px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-full text-neutral-600 text-[14px] hover:text-black hover:border-black transition-colors'>
                       {feature}
                     </div>
                   ))}
@@ -114,12 +114,12 @@ export default function AnalysisPreview() {
             <div className='lg:col-span-2 flex flex-col space-y-4 md:space-y-6'>
               
               {/* Biggest Risks */}
-              <div className='bg-[#191111] border border-[#521C1C]/50 rounded-[6px] p-5'>
+              <div className='bg-red-50 border border-red-100 rounded-[8px] p-5 shadow-sm'>
                 <div className='flex items-center gap-3 mb-4 md:mb-6'>
-                  <div className='text-[#EF4444]'>
+                  <div className='text-red-500'>
                     <AlertTriangle className='w-4 h-4' />
                   </div>
-                  <h4 className='text-[#F87171] text-[16px] font-semibold header '>Biggest Risks</h4>
+                  <h4 className='text-red-600 text-[16px] font-medium'>Biggest Risks</h4>
                 </div>
                 
                 <ul className='space-y-3 md:space-y-4'>
@@ -128,8 +128,8 @@ export default function AnalysisPreview() {
                     "High churn rate for seasonal businesses.",
                     "Strong entrenchment of existing POS solutions."
                   ].map((risk, i) => (
-                    <li key={i} className='flex gap-2 md:gap-3 text-[#F87171]/80 text-[13px] md:text-[14px] leading-snug md:leading-relaxed'>
-                      <span className='w-1 md:w-1.5 h-1 md:h-1.5 rounded-full bg-[#EF4444] mt-1.5 md:mt-2 shrink-0' />
+                    <li key={i} className='flex gap-2 md:gap-3 text-red-700/80 text-[14px] leading-relaxed'>
+                      <span className='w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0' />
                       {risk}
                     </li>
                   ))}
@@ -137,17 +137,17 @@ export default function AnalysisPreview() {
               </div>
 
               {/* Market Size */}
-              <div className='bg-[#111917] border border-[#10B981]/20 rounded-[6px] p-5 grow flex flex-col'>
+              <div className='bg-green-50 border border-green-100 rounded-[8px] p-5 grow flex flex-col shadow-sm'>
                 <div className='flex items-center gap-3 mb-4 md:mb-6'>
-                  <div className='text-[#10B981]'>
+                  <div className='text-green-600'>
                     <TrendingUp className='w-4 h-4' />
                   </div>
-                  <h4 className='text-[#10B981] text-[16px] font-semibold header '>Market Size</h4>
+                  <h4 className='text-green-600 text-[16px] font-medium'>Market Size</h4>
                 </div>
                 
                 <div className='grow flex flex-col justify-center'>
-                  <p className='text-[#F8F8F8] text-[36px] md:text-[48px] font-bold header leading-none mb-1 md:mb-2'>$2.4B</p>
-                  <p className='text-[#9A9A9A] text-[11px] md:text-[12px] uppercase '>Estimated SAM in US & Europe</p>
+                  <p className='text-black text-[36px] font-semibold leading-none mb-1 md:mb-2'>$2.4B</p>
+                  <p className='text-neutral-500 text-[10px] font-bold uppercase'>Estimated SAM in US & Europe</p>
                 </div>
               </div>
 

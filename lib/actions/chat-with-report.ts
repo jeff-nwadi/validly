@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
 import { db } from "@/db"
 import { validations } from "@/db/schema"
-import { groq } from "@/lib/groq-client"
+import Groq from "groq-sdk"
 import { eq } from "drizzle-orm"
 
 export async function chatWithReport(reportId: string, messages: { role: "user" | "assistant", content: string }[]) {
@@ -43,10 +43,17 @@ export async function chatWithReport(reportId: string, messages: { role: "user" 
   `;
 
   try {
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+    
+    const transformedMessages = messages.map(m => ({ 
+      role: m.role, 
+      content: m.content 
+    })) as any[];
+
     const completion = await groq.chat.completions.create({
       messages: [
         { role: "system", content: systemContent },
-        ...messages
+        ...transformedMessages
       ],
       model: "llama-3.3-70b-versatile",
       temperature: 0.7,

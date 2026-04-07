@@ -41,30 +41,30 @@ export default function SettingsClient({ user }: SettingsClientProps) {
   const usagePercentage = user.plan === 'pro' ? 0 : (user.validationsUsed / validationLimit) * 100;
 
   return (
-    <div className="flex-1 overflow-y-auto bg-black text-white">
+    <div className="flex-1 overflow-y-auto bg-white text-black">
       {/* Header */}
-      <div className="border-b border-zinc-800 px-6 py-8 md:px-8 md:py-10">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2  header">Settings</h1>
-        <p className="text-zinc-400 text-xs md:text-sm">
+      <div className="border-b border-neutral-100 px-6 py-8 md:px-8 md:py-10">
+        <h1 className="text-[18px] font-semibold text-black mb-2">Settings</h1>
+        <p className="text-neutral-500 text-[14px]">
           Manage your account, billing, and system preferences.
         </p>
       </div>
 
       <div className="flex flex-col md:flex-row min-h-[calc(100vh-160px)]">
         {/* Sidebar */}
-        <div className="w-full md:w-64 border-r border-zinc-800 p-6 space-y-2">
+        <div className="w-full md:w-64 border-r border-neutral-100 p-6 space-y-2">
           <nav className="space-y-1">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    activeTab === tab.id
-                      ? "bg-zinc-800 text-white"
-                      : "text-zinc-400 hover:text-white hover:bg-zinc-900"
-                  }`}
+                   key={tab.id}
+                   onClick={() => setActiveTab(tab.id)}
+                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                     activeTab === tab.id
+                       ? "bg-neutral-100 text-black"
+                       : "text-neutral-500 hover:text-black hover:bg-neutral-50"
+                   }`}
                 >
                   <Icon className="w-4 h-4" />
                   {tab.label}
@@ -73,10 +73,10 @@ export default function SettingsClient({ user }: SettingsClientProps) {
             })}
           </nav>
           
-          <div className="pt-4 mt-4 border-t border-zinc-800 md:hidden">
+          <div className="pt-4 mt-4 border-t border-neutral-100 md:hidden">
              <Button 
                variant="ghost" 
-               className="w-full justify-start text-zinc-400 hover:text-rose-500 hover:bg-rose-500/10"
+               className="w-full justify-start text-neutral-500 hover:text-rose-500 hover:bg-rose-50"
                onClick={() => signOut()}
              >
                 <LogOut className="w-4 h-4 mr-3" />
@@ -90,34 +90,34 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           {activeTab === "profile" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-2  header">Profile</h2>
-                <p className="text-zinc-400 text-sm">
+                <h2 className="text-[18px] font-semibold text-black mb-2">Profile</h2>
+                <p className="text-neutral-500 text-[14px]">
                   Update your personal information and avatar.
                 </p>
               </div>
 
-              <div className="bg-[#0D0D0D] rounded-xl p-6 md:p-8 border border-zinc-800 shadow-sm">
+              <div className="bg-white rounded-xl p-6 md:p-8 border border-neutral-100 shadow-sm">
                 {/* Avatar Section */}
-                <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 pb-8 border-b border-zinc-800 text-center sm:text-left">
-                  <Avatar className="w-20 h-20 border border-zinc-800 shrink-0">
+                <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 pb-8 border-b border-neutral-100 text-center sm:text-left">
+                  <Avatar className="w-20 h-20 border border-neutral-100 shrink-0">
                     {user.image ? <AvatarImage src={user.image} /> : null}
-                    <AvatarFallback className="bg-zinc-800 text-zinc-400 text-xl font-bold">
-                      {user.name.split(' ').map(n => n[0]).join('')}
+                    <AvatarFallback className="bg-neutral-100 text-neutral-400 text-xl font-bold">
+                       {user.name.split(' ').map(n => n[0]).join('')}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                     <Button
-                      variant="outline"
-                      size="sm"
-                      className="bg-[#111111] border-zinc-700 text-white hover:bg-zinc-800 rounded-[6px] w-full sm:w-auto"
+                       variant="outline"
+                       size="sm"
+                       className="bg-white border-neutral-200 text-black hover:bg-neutral-50 rounded-[6px] w-full sm:w-auto"
                     >
                       <Upload className="w-4 h-4 mr-2" />
                       Change Avatar
                     </Button>
                     <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-[6px] w-full sm:w-auto"
+                       variant="ghost"
+                       size="sm"
+                       className="text-neutral-400 hover:text-black hover:bg-neutral-50 rounded-[6px] w-full sm:w-auto"
                     >
                       Remove
                     </Button>
@@ -127,30 +127,30 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 {/* Form Fields */}
                 <div className="space-y-6">
                   <div>
-                    <Label htmlFor="name" className="text-white mb-2 block font-bold uppercase  text-[10px]">
+                    <Label htmlFor="name" className="text-neutral-400 mb-2 block font-bold uppercase text-[10px]">
                       Full Name
                     </Label>
                     <Input
-                      id="name"
-                      defaultValue={user.name}
-                      className="bg-black border-zinc-800 text-white rounded-[6px] h-11 focus-visible:ring-violet-500/20"
+                       id="name"
+                       defaultValue={user.name}
+                       className="bg-white border-neutral-200 text-black rounded-[6px] h-11 focus-visible:ring-black/5"
                     />
                   </div>
-
+ 
                   <div>
-                    <Label htmlFor="email" className="text-white mb-2 block font-bold uppercase  text-[10px]">
+                    <Label htmlFor="email" className="text-neutral-400 mb-2 block font-bold uppercase text-[10px]">
                       Email Address
                     </Label>
                     <Input
-                      id="email"
-                      type="email"
-                      defaultValue={user.email}
-                      className="bg-black border-zinc-800 text-white rounded-[6px] h-11 focus-visible:ring-violet-500/20"
+                       id="email"
+                       type="email"
+                       defaultValue={user.email}
+                       className="bg-white border-neutral-200 text-black rounded-[6px] h-11 focus-visible:ring-black/5"
                     />
                   </div>
-
+ 
                   <div className="flex justify-end pt-4">
-                    <Button className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white px-8 rounded-[6px] font-bold uppercase  text-xs h-11 w-full sm:w-auto">
+                    <Button className="bg-black hover:bg-neutral-800 text-white px-8 rounded-[6px] font-bold uppercase text-xs h-11 w-full sm:w-auto">
                       Save Changes
                     </Button>
                   </div>
@@ -162,45 +162,45 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           {activeTab === "billing" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-2  header">Billing & Usage</h2>
-                <p className="text-zinc-400 text-sm">
+                <h2 className="text-[18px] font-semibold text-black mb-2">Billing & Usage</h2>
+                <p className="text-neutral-500 text-[14px]">
                   Manage your subscription plan and view usage limits.
                 </p>
               </div>
 
               <div className="space-y-6">
                 {/* Current Plan */}
-                <div className="bg-[#0D0D0D] rounded-xl p-6 border border-zinc-800 shadow-sm">
+                <div className="bg-white rounded-xl p-6 border border-neutral-100 shadow-sm">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-lg font-bold  uppercase text-white/90">{user.plan} Plan</h3>
-                      <Badge className="bg-violet-600 text-white hover:bg-violet-600 rounded-full px-3">
+                      <h3 className="text-[16px] font-medium uppercase text-black/90">{user.plan} Plan</h3>
+                      <Badge className="bg-black text-white hover:bg-black rounded-full px-3">
                         Active
                       </Badge>
                     </div>
                     <Button
-                      variant="outline"
-                      size="sm"
-                      className="bg-[#111111] border-zinc-700 text-white hover:bg-zinc-800 rounded-[6px] w-full sm:w-auto"
+                       variant="outline"
+                       size="sm"
+                       className="bg-white border-neutral-200 text-black hover:bg-neutral-50 rounded-[6px] w-full sm:w-auto"
                     >
                       Manage Plan
                     </Button>
                   </div>
-                  <p className="text-zinc-500 text-sm">
+                  <p className="text-neutral-500 text-[14px]">
                     {user.plan === 'pro' ? 'Unlimited validations per month.' : 'Up to 5 validations per month.'}
                   </p>
                 </div>
 
                 {/* Usage */}
-                <div className="bg-[#0D0D0D] rounded-xl p-6 border border-zinc-800 shadow-sm">
+                <div className="bg-white rounded-xl p-6 border border-neutral-100 shadow-sm">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-bold uppercase  text-zinc-400">Monthly Validations Used</h3>
-                    <span className="text-white font-bold text-sm">
+                    <h3 className="text-[10px] font-bold uppercase text-neutral-400">Monthly Validations Used</h3>
+                    <span className="text-black font-bold text-sm">
                        {user.validationsUsed} / {user.plan === 'pro' ? '∞' : validationLimit}
                     </span>
                   </div>
-                  <Progress value={user.plan === 'pro' ? 100 : usagePercentage} className="h-2 mb-3 bg-zinc-800" />
-                  <p className="text-zinc-500 text-xs leading-relaxed">
+                  <Progress value={user.plan === 'pro' ? 100 : usagePercentage} className="h-2 mb-3 bg-neutral-100" />
+                  <p className="text-neutral-500 text-[12px] leading-relaxed">
                     {user.plan === 'pro' 
                       ? 'You have unlimited usage on the Pro plan.' 
                       : `You have ${validationLimit - user.validationsUsed} validations left this month.`}
@@ -209,22 +209,22 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
                 {/* Upgrade Card (Only show if not Pro) */}
                 {user.plan !== 'pro' && (
-                  <div className="bg-linear-to-br from-violet-900/40 via-purple-900/20 to-zinc-950 rounded-xl p-6 border border-violet-800/30 overflow-hidden relative group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity hidden sm:block">
+                  <div className="bg-neutral-50 rounded-xl p-6 border border-neutral-100 overflow-hidden relative group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity hidden sm:block text-black">
                        <CreditCard className="w-24 h-24" />
                     </div>
                     <div className="flex flex-col sm:flex-row items-start justify-between gap-8 relative z-10">
                       <div>
                         <div className="flex items-center gap-2 mb-3">
                           <span className="text-2xl">🚀</span>
-                          <h3 className="text-xl font-bold  header text-white">Upgrade to Lifetime</h3>
+                          <h3 className="text-[18px] font-semibold text-black">Upgrade to Lifetime</h3>
                         </div>
-                        <p className="text-zinc-300 text-sm mb-4 max-w-md leading-relaxed">
+                        <p className="text-neutral-500 text-[14px] mb-4 max-w-md leading-relaxed">
                           Get unlimited AI validations forever with a single payment. No monthly fees, no limits.
                         </p>
-                        <p className="text-white text-2xl font-black er">$49</p>
+                        <p className="text-black text-[18px] font-bold">$49</p>
                       </div>
-                      <Button className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white px-6 rounded-[6px] font-bold shadow-lg shadow-violet-500/20 w-full sm:w-auto">
+                      <Button className="bg-black hover:bg-neutral-800 text-white px-6 rounded-[6px] font-bold shadow-lg shadow-black/5 w-full sm:w-auto">
                         Upgrade Now
                       </Button>
                     </div>
@@ -244,8 +244,8 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           {activeTab === "notifications" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-2  header">Notifications</h2>
-                <p className="text-zinc-400 text-sm">
+                <h2 className="text-[18px] font-semibold text-black mb-2">Notifications</h2>
+                <p className="text-neutral-500 text-[14px]">
                   Choose what updates you want to receive.
                 </p>
               </div>
@@ -304,23 +304,23 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           {activeTab === "danger" && (
             <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-2 text-rose-500  header">Danger Zone</h2>
-                <p className="text-zinc-400 text-sm">
+                <h2 className="text-[18px] font-semibold text-rose-500 mb-2">Danger Zone</h2>
+                <p className="text-neutral-500 text-[14px]">
                   Irreversible and destructive actions.
                 </p>
               </div>
 
-              <div className="bg-rose-500/5 rounded-xl p-8 border border-rose-500/20 shadow-sm">
+              <div className="bg-rose-50 rounded-xl p-8 border border-rose-100 shadow-sm">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="text-center md:text-left">
-                    <h3 className="font-bold text-white mb-1 ">Delete Account</h3>
-                    <p className="text-rose-500/60 text-sm max-w-sm mx-auto md:mx-0">
+                    <h3 className="font-semibold text-black mb-1">Delete Account</h3>
+                    <p className="text-rose-500/60 text-[14px] max-w-sm mx-auto md:mx-0">
                       Permanently delete your account, your subscription, and all past validations. This cannot be undone.
                     </p>
                   </div>
                   <Button
                     variant="destructive"
-                    className="bg-rose-600 hover:bg-rose-700 text-white rounded-[6px] px-6 font-bold uppercase  text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10"
+                    className="bg-rose-600 hover:bg-rose-700 text-white rounded-[6px] px-6 font-bold uppercase text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10"
                   >
                     <AlertTriangle className="w-4 h-4 mr-2" />
                     Delete Account

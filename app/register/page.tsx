@@ -53,13 +53,13 @@ export default function RegisterPage() {
     >
       <div className='flex flex-col gap-6 w-full'>
         {/* Toggle Controls */}
-        <div className='grid grid-cols-2 p-1.5 bg-[#111111] border border-[#1F1F1F] rounded-[12px] mb-4'>
-           <button className='bg-[#0A0A0A] border border-[#1F1F1F] text-[#F8F8F8] py-2.5 rounded-[8px] sub-text font-semibold text-[14px] shadow-lg'>
+        <div className='grid grid-cols-2 p-1.5 bg-neutral-100 border border-neutral-200 rounded-[12px] mb-4'>
+           <button className='bg-white border border-neutral-200 text-black py-2.5 rounded-[8px] font-semibold text-[14px] shadow-sm'>
              Register
            </button>
            <button 
              onClick={() => router.push('/login')} 
-             className='text-[#9A9A9A] hover:text-[#F8F8F8] transition-colors py-2.5 rounded-[8px] sub-text font-medium text-[14px]'
+             className='text-neutral-500 hover:text-black transition-colors py-2.5 rounded-[8px] font-medium text-[14px]'
            >
              Login
            </button>
@@ -68,7 +68,7 @@ export default function RegisterPage() {
         {/* Social Auth */}
         <button 
           onClick={handleGoogleSignIn}
-          className='w-full flex items-center justify-center gap-3 bg-[#111111] border border-[#1F1F1F] text-[#F8F8F8] py-3.5 rounded-[12px] hover:bg-[#1A1A1A] transition-all group'
+          className='w-full flex items-center justify-center gap-3 bg-white border border-neutral-200 text-black py-3.5 rounded-[12px] hover:bg-neutral-50 transition-all group'
         >
           <GoogleIcon className='w-5 h-5 group-hover:scale-110 transition-transform' />
           <span className='font-medium text-[15px]'>Continue with Google</span>
@@ -76,54 +76,54 @@ export default function RegisterPage() {
 
         {/* Divider */}
         <div className='relative flex items-center py-2'>
-          <div className='grow border-t border-[#1F1F1F]'></div>
-          <span className='shrink mx-4 text-[#9A9A9A] text-[11px] font-bold uppercase '>Or continue with email</span>
-          <div className='grow border-t border-[#1F1F1F]'></div>
+          <div className='grow border-t border-neutral-100'></div>
+          <span className='shrink mx-4 text-neutral-400 text-[11px] font-bold uppercase '>Or continue with email</span>
+          <div className='grow border-t border-neutral-100'></div>
         </div>
 
         {/* Email Form */}
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
           <div className='flex flex-col gap-2'>
-            <label className='text-[#F8F8F8] text-[14px] font-medium'>Full Name</label>
+            <label className='text-black text-[14px] font-medium'>Full Name</label>
             <input 
               {...register("name")}
               type="text" 
               placeholder="Alex Johnson" 
-              className='bg-[#0A0A0A] border border-[#1F1F1F] text-[#F8F8F8] p-4 rounded-[12px] focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED]/20 transition-all placeholder:text-[#4A4A4A]'
+              className='bg-white border border-neutral-200 text-black p-4 rounded-[12px] focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
             />
-            {errors.name && <span className='text-red-500 text-xs'>{errors.name.message}</span>}
+            {errors.name && <span className='text-rose-500 text-xs'>{errors.name.message}</span>}
           </div>
 
           <div className='flex flex-col gap-2'>
-            <label className='text-[#F8F8F8] text-[14px] font-medium'>Email address</label>
+            <label className='text-black text-[14px] font-medium'>Email address</label>
             <input 
               {...register("email")}
               type="email" 
               placeholder="alex@example.com" 
-              className='bg-[#0A0A0A] border border-[#1F1F1F] text-[#F8F8F8] p-4 rounded-[12px] focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED]/20 transition-all placeholder:text-[#4A4A4A]'
+              className='bg-white border border-neutral-200 text-black p-4 rounded-[12px] focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
             />
-            {errors.email && <span className='text-red-500 text-xs'>{errors.email.message}</span>}
+            {errors.email && <span className='text-rose-500 text-xs'>{errors.email.message}</span>}
           </div>
 
           <div className='flex flex-col gap-2'>
-            <label className='text-[#F8F8F8] text-[14px] font-medium'>Password</label>
+            <label className='text-black text-[14px] font-medium'>Password</label>
             <div className='relative'>
               <input 
                 {...register("password")}
                 type={showPassword ? "text" : "password"} 
                 placeholder="••••••••" 
-                className='w-full bg-[#0A0A0A] border border-[#1F1F1F] text-[#F8F8F8] p-4 rounded-[12px] focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED]/20 transition-all placeholder:text-[#4A4A4A]'
+                className='w-full bg-white border border-neutral-200 text-black p-4 rounded-[12px] focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
               />
               <button 
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className='absolute right-4 top-1/2 -translate-y-1/2 text-[#4A4A4A] hover:text-[#9A9A9A] transition-colors'
+                className='absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-black transition-colors'
               >
                 {showPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
               </button>
             </div>
-            {errors.password && <span className='text-red-500 text-xs'>{errors.password.message}</span>}
-            <p className='text-[#9A9A9A] text-[12px] mt-1'>Must be at least 8 characters.</p>
+            {errors.password && <span className='text-rose-500 text-xs'>{errors.password.message}</span>}
+            <p className='text-neutral-400 text-[12px] mt-1'>Must be at least 8 characters.</p>
           </div>
 
           {registrationMutation.isError && (
@@ -135,7 +135,7 @@ export default function RegisterPage() {
           <button 
             type="submit"
             disabled={registrationMutation.isPending}
-            className='w-full bg-[#7C3AED] hover:bg-[#6D28D9] text-white py-4 rounded-[12px] font-bold text-[16px] shadow-[0_4px_20px_rgba(124,58,237,0.3)] hover:shadow-[0_4px_25px_rgba(124,58,237,0.4)] transition-all flex items-center justify-center gap-2'
+            className='w-full bg-black hover:bg-neutral-800 text-white py-4 rounded-[12px] font-bold text-[16px] shadow-lg shadow-black/5 transition-all flex items-center justify-center gap-2'
           >
             {registrationMutation.isPending ? <Loader2 className='w-5 h-5 animate-spin' /> : 'Create Account'}
           </button>

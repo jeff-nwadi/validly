@@ -25,17 +25,17 @@ const GithubIcon = ({ className }: { className?: string }) => (
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0A0A0A] pt-24 pb-12 px-6 md:px-10 border-t border-[#1F1F1F]">
+    <footer className="bg-white pt-24 pb-12 px-6 md:px-10 border-t border-neutral-100">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
         {/* Branding & Description */}
         <div className="max-w-xs space-y-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#7C3AED] rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
               <Lightbulb className="w-6 h-6 text-white fill-white" />
             </div>
-            <p className='header font-bold  text-[22px] text-[#F8F8F8]'>Validly</p>
+            <p className='font-bold text-[22px] text-black'>Validly</p>
           </div>
-          <p className="text-[#9A9A9A] text-[15px] leading-relaxed">
+          <p className="text-neutral-500 text-[15px] leading-relaxed">
             Validate your SaaS ideas instantly with AI-powered market and competitor analysis.
           </p>
         </div>
@@ -43,26 +43,26 @@ const Footer = () => {
         {/* Links Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-[14px]">
           <div className="space-y-6">
-            <h4 className="text-[#F8F8F8] font-bold header uppercase ">Product</h4>
-            <ul className="space-y-4 text-[#9A9A9A]">
-              <li><Link href="#features" className="hover:text-[#F8F8F8] transition-colors">Features</Link></li>
-              <li><Link href="#pricing" className="hover:text-[#F8F8F8] transition-colors">Pricing</Link></li>
-              <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">Changelog</Link></li>
+            <h4 className="text-black font-bold uppercase">Product</h4>
+            <ul className="space-y-4 text-neutral-500">
+              <li><Link href="#features" className="hover:text-black transition-colors">Features</Link></li>
+              <li><Link href="#pricing" className="hover:text-black transition-colors">Pricing</Link></li>
+              <li><Link href="#" className="hover:text-black transition-colors">Changelog</Link></li>
             </ul>
           </div>
           <div className="space-y-6">
-            <h4 className="text-[#F8F8F8] font-bold header uppercase ">Company</h4>
-            <ul className="space-y-4 text-[#9A9A9A]">
-              <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">About</Link></li>
-              <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">Blog</Link></li>
-              <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">Contact</Link></li>
+            <h4 className="text-black font-bold uppercase">Company</h4>
+            <ul className="space-y-4 text-neutral-500">
+              <li><Link href="#" className="hover:text-black transition-colors">About</Link></li>
+              <li><Link href="#" className="hover:text-black transition-colors">Blog</Link></li>
+              <li><Link href="#" className="hover:text-black transition-colors">Contact</Link></li>
             </ul>
           </div>
           <div className="space-y-6">
-            <h4 className="text-[#F8F8F8] font-bold header uppercase ">Legal</h4>
-            <ul className="space-y-4 text-[#9A9A9A]">
-              <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">Privacy</Link></li>
-              <li><Link href="#" className="hover:text-[#F8F8F8] transition-colors">Terms</Link></li>
+            <h4 className="text-black font-bold uppercase">Legal</h4>
+            <ul className="space-y-4 text-neutral-500">
+              <li><Link href="#" className="hover:text-black transition-colors">Privacy</Link></li>
+              <li><Link href="#" className="hover:text-black transition-colors">Terms</Link></li>
             </ul>
           </div>
         </div>
@@ -70,14 +70,14 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="max-w-7xl mx-auto pt-24 mt-12 flex flex-col sm:flex-row justify-between items-center gap-6">
-        <p className="text-[#9A9A9A] text-[14px] font-sans">
+        <p className="text-neutral-400 text-[14px] font-sans">
           © {new Date().getFullYear()} Validly Inc. All rights reserved.
         </p>
-        <div className="flex gap-6 text-[#9A9A9A]">
-          <Link href="#" className="hover:text-[#F8F8F8] transition-all" aria-label="Twitter">
+        <div className="flex gap-6 text-neutral-400">
+          <Link href="#" className="hover:text-black transition-all" aria-label="Twitter">
             <TwitterXIcon className="w-5 h-5" />
           </Link>
-          <Link href="#" className="hover:text-[#F8F8F8] transition-all" aria-label="Github">
+          <Link href="#" className="hover:text-black transition-all" aria-label="Github">
             <GithubIcon className="w-5 h-5" />
           </Link>
         </div>

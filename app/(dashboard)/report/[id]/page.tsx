@@ -54,6 +54,8 @@ export default async function Page({ params }: PageProps) {
     if (!reportData.generatedAt) {
         reportData.generatedAt = validation.createdAt.toLocaleDateString();
     }
+
+
   } catch (error) {
     console.error("Error parsing report JSON:", error);
     return (

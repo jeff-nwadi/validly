@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 };
 
 import QueryProvider from "@/components/providers/query-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function RootLayout({
   children,
@@ -38,14 +39,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", "dark", "scroll-smooth", ibmPlexMono.variable, calSans.variable, inter.variable, "font-sans", geist.variable)}
+      className={cn("h-full", "antialiased", "scroll-smooth", ibmPlexMono.variable, calSans.variable, inter.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
+      <body className={cn("min-h-full flex flex-col bg-white text-black")}>
         <QueryProvider>
           {children}
         </QueryProvider>
+        <Toaster position="top-right" expand={false} richColors />
       </body>
     </html>
   );
 }
+

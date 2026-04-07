@@ -35,18 +35,18 @@ export default async function DashboardPage() {
     : 0;
 
   return (
-    <div className='flex-1 overflow-y-auto p-4 md:p-8 space-y-10 bg-[#0A0A0A]'>
+    <div className='flex-1 overflow-y-auto p-4 md:p-8 space-y-10 bg-white'>
       {/* Header & Stats Bar */}
-      <div className='flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[#1F1F1F]'>
+      <div className='flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-neutral-100'>
         <div className='space-y-1'>
-          <h1 className='text-xl md:text-2xl font-bold text-[#F8F8F8] header '>
+          <h1 className='text-[18px] font-semibold text-black'>
             Dashboard
           </h1>
-          <p className='text-[#4A4A4A] text-[11px] font-bold uppercase '>Intelligence Workspace</p>
+          <p className='text-neutral-400 text-[10px] font-bold uppercase'>Intelligence Workspace</p>
         </div>
 
         {/* Compact Stats Grid */}
-        <div className='grid grid-cols-3 gap-4 lg:gap-8'>
+        {/* <div className='grid grid-cols-3 gap-4 lg:gap-8'>
            <div className="flex flex-col">
               <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  mb-1">Total</span>
               <span className="text-xl font-bold text-white header">{totalValidations}</span>
@@ -59,7 +59,7 @@ export default async function DashboardPage() {
               <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  mb-1">Avg Score</span>
               <span className="text-xl font-bold text-purple-500 header">{avgScore}</span>
            </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Primary Action: AI Chat */}
@@ -68,7 +68,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Recent Validations Section */}
-      <div className='space-y-6 pt-10 border-t border-[#1F1F1F]'>
+      {/* <div className='space-y-6 pt-10 border-t border-[#1F1F1F]'>
         <div className='flex items-center justify-between'>
            <div className='flex items-center gap-2'>
               <h2 className='text-[10px] font-bold text-white/40 uppercase '>Recent Validations</h2>
@@ -79,11 +79,11 @@ export default async function DashboardPage() {
         </div>
 
         <ValidationList validations={userValidations.slice(0, 3)} />
-      </div>
+      </div> */}
 
       {/* Status Footer */}
       <div className='pt-12 text-center'>
-         <p className="text-[10px] text-[#2C2C2C] uppercase  font-bold">
+         <p className="text-[10px] text-neutral-200 uppercase font-bold">
             Validly Intelligence System • Version 1.0.4
          </p>
       </div>

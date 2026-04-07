@@ -57,18 +57,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Sidebar */}
       <aside className={cn(
-        'fixed inset-y-0 left-0 z-50 flex flex-col border-r border-border bg-card transition-all duration-300 ease-in-out lg:z-0 lg:static lg:translate-x-0',
+        'fixed inset-y-0 left-0 z-50 flex flex-col border-r border-neutral-200 bg-white transition-all duration-300 ease-in-out lg:z-0 lg:static lg:translate-x-0',
         isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0',
         isCollapsed ? 'lg:w-16' : 'lg:w-64'
       )}>
         {/* Sidebar Header */}
-        <div className='flex h-16 items-center justify-between border-b border-border px-4'>
+        <div className='flex h-16 items-center justify-between border-b border-neutral-200 px-4'>
            {(!isCollapsed || isSidebarOpen) && (
               <div className='flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300'>
-                 <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary'>
-                    <CheckCircle className='h-5 w-5 text-primary-foreground' />
+                 <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-black'>
+                    <CheckCircle className='h-5 w-5 text-white' />
                  </div>
-                 <span className='text-lg font-bold header text-foreground  uppercase'>Validly</span>
+                 <span className='text-[18px] font-semibold text-black  uppercase'>Validly</span>
               </div>
            )}
            <Button
@@ -151,11 +151,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* User Card */}
         <div className='border-t border-border p-3'>
-           <div className={cn(
-              'flex items-center gap-3 rounded-lg bg-muted p-3 transition-all duration-300',
-              isCollapsed && !isSidebarOpen ? 'justify-center p-2' : ''
-           )}>
-              <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-primary text-sm font-bold text-primary-foreground overflow-hidden'>
+            <div className={cn(
+               'flex items-center gap-3 rounded-lg bg-neutral-50 p-3 transition-all duration-300 border border-neutral-200',
+               isCollapsed && !isSidebarOpen ? 'justify-center p-2' : ''
+            )}>
+              <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-black text-sm font-bold text-white overflow-hidden'>
                  {session?.user?.image ? (
                     <img src={session.user.image} alt={session.user.name} className="w-full h-full object-cover" />
                  ) : (
@@ -164,8 +164,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </div>
               {(!isCollapsed || isSidebarOpen) && (
                  <div className='flex-1 overflow-hidden animate-in fade-in slide-in-from-left-2 duration-300'>
-                    <p className='truncate text-sm font-bold text-foreground leading-tight'>{session?.user?.name || 'Alex Mercer'}</p>
-                    <p className='truncate text-[11px] text-muted-foreground'>{session?.user?.email || 'alex@example.com'}</p>
+                    <p className='truncate text-[14px] font-semibold text-black leading-tight'>{session?.user?.name || 'Alex Mercer'}</p>
+                    <p className='truncate text-[12px] text-neutral-500'>{session?.user?.email || 'alex@example.com'}</p>
                  </div>
               )}
               {(!isCollapsed || isSidebarOpen) && (
@@ -181,7 +181,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Main Content Area */}
-      <main className='flex-1 flex flex-col overflow-hidden bg-background relative'>
+      <main className='flex-1 flex flex-col overflow-hidden bg-white relative'>
         {/* Mobile Header (Only visible on small screens) */}
         <header className='flex items-center justify-between px-6 py-4 border-b border-border lg:hidden'>
            <div className='flex items-center gap-2'>

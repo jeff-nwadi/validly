@@ -109,13 +109,13 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
     return (
         <div className="flex flex-col items-center w-full max-w-4xl mx-auto p-4 space-y-8">
             {showTitle && (
-                <h1 className="text-2xl md:text-4xl font-bold text-black dark:text-white header  text-center">
+                <h1 className="text-[18px] font-semibold text-black text-center">
                     What idea are we validating today?
                 </h1>
             )}
 
             <div className="w-full">
-                <div className="relative bg-neutral-900 rounded-[12px] border border-neutral-800 p-2">
+                <div className="relative bg-white rounded-[12px] border border-neutral-200 p-2 shadow-sm">
                     <div className="overflow-y-auto">
                         <Textarea
                             ref={textareaRef}
@@ -131,7 +131,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
                                 "resize-none",
                                 "bg-transparent",
                                 "border-none",
-                                "text-white text-lg",
+                                "text-black text-[14px] font-normal",
                                 "focus:outline-none",
                                 "focus-visible:ring-0 focus-visible:ring-offset-0",
                                 "placeholder:text-neutral-500 placeholder:text-lg",
@@ -147,31 +147,31 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
                         <div className="flex items-center gap-4">
                             <button
                                 type="button"
-                                className="group p-2 hover:bg-neutral-800 rounded-lg transition-colors flex items-center gap-2"
+                                className="group p-2 hover:bg-neutral-100 rounded-lg transition-colors flex items-center gap-2"
                             >
-                                <Paperclip className="w-4 h-4 text-[#4A4A4A]" />
-                                <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  transition-opacity">
+                                <Paperclip className="w-4 h-4 text-[#71717A]" />
+                                <span className="text-[10px] font-bold text-[#71717A] uppercase  transition-opacity">
                                     Attach
                                 </span>
                             </button>
                         </div>
                         <div className="flex items-center gap-3">
-                            <button
+                            {/* <button
                                 type="button"
                                 className="px-3 py-1.5 rounded-lg text-[10px] font-bold text-[#4A4A4A] uppercase  transition-colors border border-dashed border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800 flex items-center justify-between gap-2"
                             >
                                 <PlusIcon className="w-3 h-3" />
                                 Project
-                            </button>
+                            </button> */}
                             <button
                                 type="button"
                                 onClick={handleAction}
                                 disabled={!value.trim() || isPending}
                                 className={cn(
-                                    "p-2.5 rounded-lg text-sm transition-all border border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800 flex items-center justify-center",
+                                    "p-2.5 rounded-full text-sm transition-all border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-100 flex items-center justify-center",
                                     value.trim()
-                                        ? "bg-white text-black"
-                                        : "text-zinc-400"
+                                        ? "bg-black text-white"
+                                        : "text-neutral-400"
                                 )}
                             >
                                 {isPending ? (
@@ -181,8 +181,8 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
                                         className={cn(
                                             "w-4 h-4",
                                             value.trim()
-                                                ? "text-black"
-                                                : "text-zinc-400"
+                                                ? "text-white"
+                                                : "text-neutral-400"
                                         )}
                                     />
                                 )}
@@ -213,7 +213,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
             </div>
 
             <div className="max-w-md">
-                 <p className='text-[14px] text-[#2C2C2C] text-center leading-relaxed '>
+                 <p className='text-[14px] font-normal text-neutral-500 text-center'>
                     AI validation takes ~30 seconds. The report will include viability score, market size, and MVP features.
                  </p>
             </div>
@@ -230,7 +230,7 @@ function ActionButton({ icon, label }: ActionButtonProps) {
     return (
         <button
             type="button"
-            className="flex items-center gap-2 px-4 py-2 bg-neutral-900 hover:bg-neutral-800 rounded-full border border-neutral-800 text-[#4A4A4A] hover:text-white transition-all group"
+            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-neutral-50 rounded-full border border-neutral-200 text-[#71717A] hover:text-black transition-all group shadow-sm"
         >
             <div className="group-hover:text-purple-400 transition-colors">
                {icon}

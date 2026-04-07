@@ -9,6 +9,18 @@ import Link from 'next/link'
 import { deleteValidation } from './actions'
 import { useRouter } from 'next/navigation'
 
+import { toast } from 'sonner'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+
 interface Validation {
   id: string
   ideaTitle: string
@@ -24,48 +36,72 @@ interface HistoryClientProps {
 
 export default function HistoryClient({ initialValidations }: HistoryClientProps) {
   const [searchQuery, setSearchQuery] = useState('')
+  const [isDeleting, setIsDeleting] = useState<string | null>(null)
   const router = useRouter()
 
   const filteredValidations = initialValidations.filter((val) =>
     val.ideaTitle.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this validation?')) {
-       await deleteValidation(id)
-       router.refresh()
+  const confirmDelete = async () => {
+    if (!isDeleting) return;
+    
+    try {
+      await deleteValidation(isDeleting)
+      toast.success('Validation deleted successfully')
+      router.refresh()
+    } catch (error) {
+      toast.error('Failed to delete validation')
+    } finally {
+      setIsDeleting(null)
     }
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-[#0A0A0A]">
+    <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div className="space-y-1">
-            <h1 className="text-3xl font-bold  text-white header">Validation History</h1>
-            <p className="text-[#4A4A4A] text-sm font-medium">Review all your past SaaS idea validations.</p>
+            <h1 className="text-[18px] font-semibold text-black">Validation History</h1>
+            <p className="text-neutral-500 text-[14px] font-normal">Review all your past SaaS idea validations.</p>
           </div>
 
           <div className="flex items-center gap-4 w-full md:w-auto">
-             <div className="relative flex-1 md:w-80">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4A4A4A]" />
+              <div className="relative flex-1 md:w-80">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
                 <Input
                    placeholder="Search validations by name..."
-                   className="pl-10 bg-[#0D0D0D] border-[#1F1F1F] text-white placeholder:text-[#4A4A4A] h-10 rounded-[6px] focus-visible:ring-white/10"
+                   className="pl-10 bg-white border-neutral-200 text-black placeholder:text-neutral-400 h-10 rounded-[6px] focus-visible:ring-black/5"
                    value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}
                 />
-             </div>
+              </div>
           </div>
         </div>
 
         {/* Validation List */}
-        <ValidationList validations={filteredValidations} onDelete={handleDelete} />
+        <ValidationList validations={filteredValidations} onDelete={(id) => setIsDeleting(id)} />
+
+        {/* Delete Confirmation */}
+        <AlertDialog open={!!isDeleting} onOpenChange={(open) => !open && setIsDeleting(null)}>
+          <AlertDialogContent className="bg-white border-neutral-200">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-black">Delete Validation?</AlertDialogTitle>
+              <AlertDialogDescription className="text-neutral-500">
+                This action cannot be undone. This will permanently delete the validation report.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-white border-neutral-200 text-black hover:bg-neutral-50">Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={confirmDelete} className="bg-rose-600 hover:bg-rose-700 text-white border-0">Delete Report</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {/* Floating Action Button */}
         <div className="fixed bottom-10 right-10 z-50">
-           <Button asChild size="icon" className="w-14 h-14 rounded-full bg-[#7C3AED] hover:bg-[#6D28D9] shadow-2xl shadow-[#7C3AED]/20 border border-white/10 group transition-all duration-300">
+           <Button asChild size="icon" className="w-14 h-14 rounded-full bg-black hover:bg-neutral-800 shadow-2xl shadow-black/10 border border-neutral-200 group transition-all duration-300">
               <Link href="/validate">
                  <Plus className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
               </Link>
@@ -75,3 +111,4 @@ export default function HistoryClient({ initialValidations }: HistoryClientProps
     </div>
   )
 }
+
