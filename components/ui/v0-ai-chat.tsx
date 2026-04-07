@@ -115,7 +115,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
             )}
 
             <div className="w-full">
-                <div className="relative bg-white rounded-[12px] border border-neutral-200 p-2 shadow-sm">
+                <div className="relative bg-white rounded-xl border border-neutral-100 p-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-black/5">
                     <div className="overflow-y-auto">
                         <Textarea
                             ref={textareaRef}
@@ -131,7 +131,7 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
                                 "resize-none",
                                 "bg-transparent",
                                 "border-none",
-                                "text-black text-[14px] font-normal",
+                                "text-black text-[15px] font-normal",
                                 "focus:outline-none",
                                 "focus-visible:ring-0 focus-visible:ring-offset-0",
                                 "placeholder:text-neutral-500 placeholder:text-lg",

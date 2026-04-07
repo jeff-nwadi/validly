@@ -250,12 +250,12 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 </p>
               </div>
 
-              <div className="bg-[#0D0D0D] rounded-xl p-8 border border-zinc-800 shadow-sm">
+              <div className="bg-neutral-50 rounded-xl p-8 border border-neutral-100 shadow-sm">
                 <div className="space-y-6">
-                  <div className="flex items-center justify-between pb-6 border-b border-zinc-800">
+                  <div className="flex items-center justify-between pb-6 border-b border-neutral-100">
                     <div>
-                      <h3 className="font-bold text-white mb-1 ">Validation Reports</h3>
-                      <p className="text-zinc-500 text-sm">
+                      <h3 className="font-bold text-black mb-1 ">Validation Reports</h3>
+                      <p className="text-neutral-500 text-sm">
                         Receive an email when your AI report is ready.
                       </p>
                     </div>
@@ -267,10 +267,10 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between pb-6 border-b border-zinc-800">
+                  <div className="flex items-center justify-between pb-6 border-b border-neutral-100">
                     <div>
-                      <h3 className="font-bold text-white mb-1 ">Product Updates</h3>
-                      <p className="text-zinc-500 text-sm">
+                      <h3 className="font-bold text-black mb-1 ">Product Updates</h3>
+                      <p className="text-neutral-500 text-sm">
                         News about the latest features and improvements.
                       </p>
                     </div>
@@ -284,8 +284,8 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-bold text-white mb-1 ">Marketing Emails</h3>
-                      <p className="text-zinc-500 text-sm">
+                      <h3 className="font-bold text-black mb-1 ">Marketing Emails</h3>
+                      <p className="text-neutral-500 text-sm">
                         Tips, tricks, and promotional offers.
                       </p>
                     </div>

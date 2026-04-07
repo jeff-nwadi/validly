@@ -553,7 +553,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 Generated on {data.generatedAt} • Report ID: {data.id}
               </p>
             </div>
-            <Button onClick={onExportPDF} size="lg" className="gap-2 bg-black hover:bg-neutral-800 text-white rounded-[6px] font-bold uppercase text-xs h-11">
+            <Button onClick={onExportPDF} size="lg" className="gap-2 bg-black hover:bg-neutral-800 text-white rounded-md font-bold uppercase text-xs h-11">
               <Download className="w-4 h-4" />
               Export PDF
             </Button>
@@ -702,16 +702,16 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                    <CardContent>
                      <div className="grid md:grid-cols-2 gap-4">
                        {data.pivotSuggestions.map((pivot, i) => (
-                         <div key={i} className="p-4 rounded-lg bg-background border border-border/50 transition-transform hover:translate-y-[-2px] duration-200">
+                         <div key={i} className="p-4 rounded-lg bg-neutral-50 border border-neutral-100 transition-transform hover:translate-y-[-2px] duration-200">
                            <div className="flex items-center justify-between mb-3">
-                             <h4 className="font-bold text-lg text-foreground">{pivot.pivotTitle}</h4>
-                             <Badge variant="outline" className="text-green-500 bg-green-500/10 border-green-500/20">
+                             <h4 className="font-bold text-[18px] text-black">{pivot.pivotTitle}</h4>
+                             <Badge variant="outline" className="text-emerald-500 bg-emerald-50 border-emerald-100">
                                Viability: {pivot.viabilityScore}
                              </Badge>
                            </div>
-                           <p className="text-sm text-muted-foreground mb-3">{pivot.reason}</p>
-                           <div className="text-xs text-primary font-bold uppercase mt-auto mb-1">Differentiator:</div>
-                           <p className="text-sm italic text-muted-foreground leading-relaxed">{pivot.keyDifference}</p>
+                           <p className="text-[14px] font-normal text-neutral-500 mb-3">{pivot.reason}</p>
+                           <div className="text-[10px] text-black font-bold uppercase mt-auto mb-1">Differentiator:</div>
+                           <p className="text-[14px] italic text-black/80 leading-relaxed">{pivot.keyDifference}</p>
                          </div>
                        ))}
                      </div>
@@ -731,7 +731,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                      <div className="flex items-center gap-6">
                         <div className="w-24 h-24 shrink-0 relative flex items-center justify-center">
                           <svg className="w-24 h-24 transform -rotate-90">
-                             <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="8" fill="none" className="text-muted" />
+                             <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="8" fill="none" className="text-neutral-100" />
                              <motion.circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="8" fill="none" strokeDasharray={`${2 * Math.PI * 42}`} strokeDashoffset={`${2 * Math.PI * 42 * (1 - data.fundraising.readinessScore / 100)}`} className="text-primary" initial={{ strokeDashoffset: 2 * Math.PI * 42 }} animate={{ strokeDashoffset: 2 * Math.PI * 42 * (1 - data.fundraising.readinessScore / 100) }} transition={{ duration: 1 }} strokeLinecap="round" />
                           </svg>
                           <span className="absolute text-2xl font-bold text-foreground">{data.fundraising.readinessScore}</span>
@@ -792,9 +792,9 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                       <h4 className="font-bold mb-4 text-xs uppercase text-[#4A4A4A]">Pain Points:</h4>
                       <ul className="grid sm:grid-cols-2 gap-3">
                         {persona.painPoints?.map((point, i) => (
-                          <li key={i} className="flex items-start gap-3 text-sm p-3 rounded-lg border border-border/50 bg-background/50">
+                          <li key={i} className="flex items-start gap-3 text-[14px] p-4 rounded-lg border border-neutral-100 bg-neutral-50 transition-colors hover:bg-neutral-100/50">
                             <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
-                            <span>{point}</span>
+                            <span className="text-black/80">{point}</span>
                           </li>
                         ))}
                       </ul>
@@ -883,7 +883,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                     {data.buildRoadmap?.map((week, index) => (
                       <div key={`week-${index}`} className="relative">
                         <div className="flex items-start gap-6">
-                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-lg shadow-lg shadow-primary/20">
+                          <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-black text-sm font-bold text-white overflow-hidden'>
                             {week.week}
                           </div>
                           <div className="flex-1 pt-1">

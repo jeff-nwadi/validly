@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Cal_Sans, Inter, Geist } from "next/font/google";
+import { IBM_Plex_Mono, Inter, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -11,11 +11,6 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: "400",
 })
 
-const calSans = Cal_Sans({
-  subsets: ["latin"],
-  variable: "--font-cal-sans",
-  weight: "400",
-})
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", "scroll-smooth", ibmPlexMono.variable, calSans.variable, inter.variable, "font-sans", geist.variable)}
+      className={cn("h-full", "antialiased", "scroll-smooth", ibmPlexMono.variable, inter.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
       <body className={cn("min-h-full flex flex-col bg-white text-black")}>

@@ -40,7 +40,7 @@ const Pricing = () => {
       <div className='max-w-7xl w-full'>
         <div className='mb-16 text-center'>
           <h2 className='text-black text-[18px] font-semibold mb-4 uppercase'>Simple, Transparent Pricing</h2>
-          <p className='text-neutral-500 text-[14px] font-normal leading-relaxed'>
+          <p className='text-neutral-500 text-[14px] font-normal leading-relaxed max-w-md mx-auto'>
             Validate one idea for free, or upgrade for unlimited power.
           </p>
         </div>
@@ -49,7 +49,7 @@ const Pricing = () => {
           {tiers.map((tier, index) => (
             <div 
               key={index} 
-              className={`relative bg-white border border-neutral-200 rounded-[8px] p-8 transition-all duration-300 shadow-sm ${
+              className={`relative bg-white border border-neutral-200 rounded-lg p-8 transition-all duration-300 shadow-sm ${
                 tier.featured ? 'border-black ring-1 ring-black/5 lg:scale-105 z-10' : ''
               }`}
             >
@@ -69,7 +69,7 @@ const Pricing = () => {
                 <span className='text-neutral-400 text-[14px]'>{tier.period}</span>
               </div>
 
-              <button className={`w-full py-3 rounded-[6px] text-[14px] font-semibold mb-8 transition-all duration-300 ${
+              <button className={`w-full py-3 rounded-md text-[14px] font-semibold mb-8 transition-all duration-300 ${
                 tier.buttonVariant === 'solid' 
                   ? 'bg-black text-white hover:bg-neutral-800' 
                   : 'bg-white border border-neutral-200 text-black hover:bg-neutral-50'

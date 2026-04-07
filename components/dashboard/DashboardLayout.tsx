@@ -46,7 +46,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     : 'AM';
 
   return (
-    <div className='flex h-screen bg-background overflow-hidden text-[#9A9A9A]'>
+    <div className='flex h-screen bg-white overflow-hidden text-neutral-500'>
       {/* Mobile Backdrop */}
       {isSidebarOpen && (
         <div 
