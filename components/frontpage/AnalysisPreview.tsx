@@ -33,7 +33,7 @@ export default function AnalysisPreview() {
     <section id="features" className='relative flex justify-center items-center px-1 md:px-10 overflow-hidden'>
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-neutral-50/50 blur-[100px]" />
+        <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-neutral-50/50 blur-[100px]" />
         <div className="absolute inset-0 opacity-[0.03]" 
              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
       </div>
@@ -46,14 +46,14 @@ export default function AnalysisPreview() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className='mb-12 md:mb-16'>
-          <motion.h2 variants={itemVariants} className='text-black text-[18px] font-semibold text-center mb-4 leading-tight uppercase tracking-widest'>Data-driven decisions</motion.h2>
-          <motion.p variants={itemVariants} className='text-neutral-500 text-[16px] font-normal max-w-md mx-auto text-center leading-relaxed text-balance'>
+          <motion.h2 variants={itemVariants} className='text-black text-[18px] md:text-[24px] font-semibold text-center mb-4 leading-tight tracking-widest'>Data-driven decisions</motion.h2>
+          <motion.p variants={itemVariants} className='text-neutral-500 text-[14px] md:text-[16px] font-normal max-w-md mx-auto text-center leading-relaxed text-balance'>
             Stop relying on gut feeling. Get a comprehensive breakdown of why your idea will or won't work.
           </motion.p>
         </div>
 
         {/* Main Analysis Card */}
-        <motion.div variants={itemVariants} className='relative p-6 md:p-14 overflow-hidden bg-white/50 backdrop-blur-sm border border-neutral-200 rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.02)]'>
+        <motion.div variants={itemVariants} className='relative p-6 md:p-14 overflow-hidden bg-white/50 backdrop-blur-sm'>
           
           {/* Header Section */}
           <div className='flex flex-col md:flex-row justify-between items-start gap-8 mb-10 md:mb-12'>

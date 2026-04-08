@@ -49,22 +49,6 @@ export default async function DashboardPage() {
           </h1>
           <p className='text-neutral-400 text-[10px] font-bold'>Intelligence Workspace</p>
         </div>
-
-        {/* Compact Stats Grid */}
-        {/* <div className='grid grid-cols-3 gap-4 lg:gap-8'>
-           <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  mb-1">Total</span>
-              <span className="text-xl font-bold text-white header">{totalValidations}</span>
-           </div>
-           <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  mb-1">Hot</span>
-              <span className="text-xl font-bold text-emerald-500 header">{hotIdeas}</span>
-           </div>
-           <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#4A4A4A] uppercase  mb-1">Avg Score</span>
-              <span className="text-xl font-bold text-purple-500 header">{avgScore}</span>
-           </div>
-        </div> */}
       </div>
 
       {/* Primary Action: AI Chat */}
@@ -72,23 +56,9 @@ export default async function DashboardPage() {
          <VercelV0Chat showTitle={true} />
       </div>
 
-      {/* Recent Validations Section */}
-      {/* <div className='space-y-6 pt-10 border-t border-[#1F1F1F]'>
-        <div className='flex items-center justify-between'>
-           <div className='flex items-center gap-2'>
-              <h2 className='text-[10px] font-bold text-white/40 uppercase '>Recent Validations</h2>
-           </div>
-           <Link href='/history' className='text-[10px] font-bold text-[#4A4A4A] hover:text-white transition-colors uppercase  flex items-center gap-1 group'>
-              View Archive <span className='group-hover:translate-x-1 transition-transform'>→</span>
-           </Link>
-        </div>
-
-        <ValidationList validations={userValidations.slice(0, 3)} />
-      </div> */}
-
       {/* Status Footer */}
-      <div className='pt-12 text-center'>
-         <p className="text-[10px] text-neutral-200 uppercase font-bold">
+      <div className='pt-12 pb-4 text-center'>
+         <p className="text-[10px] text-neutral-400 uppercase font-bold tracking-widest text-balance">
             Validly Intelligence System • Version 1.0.4
          </p>
       </div>

@@ -79,8 +79,8 @@ const Pricing = () => {
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className='mb-16 text-center'>
-          <motion.h2 variants={itemVariants} className='text-black text-[18px] font-semibold mb-4 uppercase tracking-widest'>Simple, Transparent Pricing</motion.h2>
-          <motion.p variants={itemVariants} className='text-neutral-500 text-[16px] font-normal leading-relaxed max-w-md mx-auto text-balance'>
+          <motion.h2 variants={itemVariants} className='text-black text-[18px] font-semibold mb-4 tracking-widest'>Simple, Transparent Pricing</motion.h2>
+          <motion.p variants={itemVariants} className='text-neutral-500 text-[14px] md:text-[16px] font-normal leading-relaxed max-w-md mx-auto text-balance'>
             Validate one idea for free, or upgrade for unlimited power.
           </motion.p>
         </div>

@@ -37,6 +37,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const { data: session } = useSession()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const [localAvatar, setLocalAvatar] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Sync mocked avatar from local storage
+    const stored = localStorage.getItem('mock_avatar_url');
+    if (stored) setLocalAvatar(stored);
+    
+    const handleAvatarUpdate = () => setLocalAvatar(localStorage.getItem('mock_avatar_url'));
+    window.addEventListener('avatar-updated', handleAvatarUpdate);
+    return () => window.removeEventListener('avatar-updated', handleAvatarUpdate);
+  }, []);
 
   // Auto-close sidebar on mobile when navigating
   useEffect(() => {
@@ -52,7 +63,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Mobile Backdrop */}
       {isSidebarOpen && (
         <div 
-          className='fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden'
+          className='fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden overscroll-contain'
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
@@ -76,6 +87,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
            <Button
              variant="ghost"
              size="icon"
+             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
              onClick={() => {
                 if (window.innerWidth < 1024) {
                    setIsSidebarOpen(false);
@@ -104,10 +116,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
+                    'group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none',
                     isActive 
-                      ? 'bg-primary text-primary-foreground shadow-sm' 
-                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                      ? 'bg-neutral-100/80 text-black shadow-sm font-semibold' 
+                      : 'text-neutral-500 hover:bg-neutral-50 hover:text-black',
                     isDesktopCollapsed && 'justify-center px-0'
                   )}
                 >
@@ -158,8 +170,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                isCollapsed && !isSidebarOpen ? 'justify-center p-2' : ''
             )}>
               <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-black text-sm font-bold text-white overflow-hidden'>
-                 {session?.user?.image ? (
-                    <img src={session.user.image} alt={session.user.name} className="w-full h-full object-cover" />
+                 {localAvatar || session?.user?.image ? (
+                    <img src={localAvatar || session?.user?.image || ""} alt={session?.user?.name || "User"} className="w-full h-full object-cover" />
                  ) : (
                     userInitials
                  )}
@@ -172,6 +184,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               )}
               {(!isCollapsed || isSidebarOpen) && (
                  <button 
+                   aria-label="Sign out"
                    onClick={async () => {
                      toast.loading("Logging out...", { id: "logout" });
                      await signOut({
@@ -186,7 +199,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                        }
                      });
                    }}
-                   className='p-1.5 hover:bg-black/5 rounded-md text-muted-foreground hover:text-foreground transition-colors'
+                   className='p-1.5 hover:bg-neutral-200/50 rounded-md text-neutral-500 hover:text-black transition-colors focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'
                  >
                     <LogOut className='w-4 h-4' />
                  </button>
@@ -206,8 +219,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className='font-bold text-sm header text-foreground  uppercase'>Validly</span>
            </div>
            <button 
+             aria-label="Open sidebar menu"
              onClick={() => setIsSidebarOpen(true)}
-             className='p-2 text-foreground hover:bg-muted rounded-lg'
+             className='p-2 text-black hover:bg-neutral-100 rounded-lg focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'
            >
               <Menu className='w-5 h-5' />
            </button>

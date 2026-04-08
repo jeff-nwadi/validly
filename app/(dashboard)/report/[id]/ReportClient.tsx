@@ -42,6 +42,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { chatWithReport } from "@/lib/actions/chat-with-report";
 import { ChevronDown, Send, Copy, Ghost, MessagesSquare } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { toast } from "sonner";
 
 export interface Competitor {
   id: string;
@@ -484,6 +485,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
   const [activeTab, setActiveTab] = useState<"overview" | "competitors" | "audience" | "risks" | "revenue" | "roadmap" | "stack" | "customers" | "gtm" | "copy" | "advisor" | "headlines" | "scope">(
     "overview"
   );
+  const [isExporting, setIsExporting] = useState(false);
 
 
   // Normalize data for legacy compatibility
@@ -526,6 +528,29 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
     }
   };
 
+  const handleExportPDF = async () => {
+     try {
+        setIsExporting(true);
+        toast.loading("Generating Executive PDF...", { id: "pdf-export" });
+        const { pdf } = await import('@react-pdf/renderer');
+        const { ReportPDF } = await import('@/components/report/ReportPDF');
+        
+        const blob = await pdf(<ReportPDF data={data} />).toBlob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Validly-Report-${data.ideaTitle.replace(/[^a-zA-Z0-9]/g, '-')}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+        toast.success("PDF downloaded successfully!", { id: "pdf-export" });
+     } catch (err) {
+        console.error("PDF Export Error:", err);
+        toast.error("Failed to generate PDF.", { id: "pdf-export" });
+     } finally {
+        setIsExporting(false);
+     }
+  };
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
   };
@@ -553,9 +578,14 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                 Generated on {data.generatedAt} • Report ID: {data.id}
               </p>
             </div>
-            <Button onClick={onExportPDF} size="lg" className="gap-2 bg-black hover:bg-neutral-800 text-white rounded-md font-bold uppercase text-xs h-11">
-              <Download className="w-4 h-4" />
-              Export PDF
+            <Button 
+               disabled={isExporting}
+               onClick={handleExportPDF} 
+               size="lg" 
+               className="gap-2 bg-black hover:bg-neutral-800 text-white rounded-md font-bold uppercase text-xs h-11 transition-all disabled:opacity-50"
+            >
+              <Download className={cn("w-4 h-4", isExporting && "animate-pulse")} />
+              {isExporting ? "Generating..." : "Export PDF"}
             </Button>
           </div>
         </motion.div>
@@ -665,7 +695,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
               
               <Card>
                 <CardHeader>
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                       <CardTitle>Market Trend</CardTitle>
                       <CardDescription>Current market trajectory</CardDescription>
@@ -673,10 +703,11 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                     <Badge variant="outline" className={cn(
                       data.marketSize.trend === "growing" && "bg-green-500/10 text-green-500 border-green-500/20",
                       data.marketSize.trend === "stable" && "bg-blue-500/10 text-blue-500 border-blue-500/20",
-                      data.marketSize.trend === "shrinking" && "bg-red-500/10 text-red-500 border-red-500/20"
+                      data.marketSize.trend === "shrinking" && "bg-red-500/10 text-red-500 border-red-500/20",
+                      "w-fit max-w-full whitespace-normal text-left"
                     )}>
-                      <TrendingUp className="w-3 h-3 mr-1" />
-                      {data.marketSize.trend.charAt(0).toUpperCase() + data.marketSize.trend.slice(1)}
+                      <TrendingUp className="w-3 h-3 mr-1 shrink-0 mt-0.5" />
+                      <span className="line-clamp-2">{data.marketSize.trend.charAt(0).toUpperCase() + data.marketSize.trend.slice(1)}</span>
                     </Badge>
                   </div>
                 </CardHeader>

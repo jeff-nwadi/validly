@@ -66,8 +66,8 @@ export default function Howitworks() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className='mb-12 md:mb-16'>
-          <motion.h2 variants={itemVariants} className='text-black text-[18px] font-semibold text-center mb-4 leading-tight uppercase tracking-widest'>How it works</motion.h2>
-          <motion.p variants={itemVariants} className='text-neutral-500 text-[16px] font-normal max-w-md mx-auto text-center leading-relaxed text-balance'>
+          <motion.h2 variants={itemVariants} className='text-black text-[18px] font-semibold text-center mb-4 leading-tight tracking-widest'>How it works</motion.h2>
+          <motion.p variants={itemVariants} className='text-neutral-500 text-[14px] md:text-[16px] font-normal max-w-md mx-auto text-center leading-relaxed text-balance'>
             From an idea in your head to a comprehensive business report in three simple steps.
           </motion.p>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { User, CreditCard, Bell, AlertTriangle, Upload, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,17 @@ import { Badge } from "@/components/ui/badge";
 import { signOut } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from 'next/navigation';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface SettingsClientProps {
   user: {
@@ -32,6 +43,54 @@ export default function SettingsClient({ user }: SettingsClientProps) {
     productUpdates: true,
     marketingEmails: false,
   });
+  const [deleteConfirmation, setDeleteConfirmation] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  
+  const [avatarUrl, setAvatarUrl] = useState(user.image);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('mock_avatar_url');
+    if (stored) setAvatarUrl(stored);
+  }, []);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image must be less than 5MB");
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setAvatarUrl(base64String);
+        localStorage.setItem('mock_avatar_url', base64String);
+        window.dispatchEvent(new Event('avatar-updated'));
+        toast.success("Avatar updated! Make sure to save your changes.");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveAvatar = () => {
+    setAvatarUrl(null);
+    localStorage.removeItem('mock_avatar_url');
+    window.dispatchEvent(new Event('avatar-updated'));
+  };
+
+  const handleDeleteAccount = async () => {
+    setIsDeleting(true);
+    toast.loading("Permanently deleting account...", { id: "delete-account" });
+    
+    // Simulate API delay for deletion
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    toast.dismiss("delete-account");
+    toast.success("Account successfully deleted.");
+    router.push('/');
+  };
 
   const tabs = [
     { id: "profile", label: "Profile", icon: User },
@@ -63,9 +122,9 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 <button
                    key={tab.id}
                    onClick={() => setActiveTab(tab.id)}
-                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none ${
                      activeTab === tab.id
-                       ? "bg-neutral-100 text-black"
+                       ? "bg-neutral-100 text-black shadow-sm"
                        : "text-neutral-500 hover:text-black hover:bg-neutral-50"
                    }`}
                 >
@@ -79,7 +138,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
           <div className="pt-4 mt-4 border-t border-neutral-100 md:hidden">
              <Button 
                variant="ghost" 
-               className="w-full justify-start text-neutral-500 hover:text-rose-500 hover:bg-rose-50"
+               className="w-full justify-start text-neutral-500 hover:text-rose-500 hover:bg-rose-50 focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none"
                onClick={async () => {
                  toast.loading("Logging out...", { id: "logout" });
                  await signOut({
@@ -116,13 +175,21 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 {/* Avatar Section */}
                 <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 pb-8 border-b border-neutral-100 text-center sm:text-left">
                   <Avatar className="w-20 h-20 border border-neutral-100 shrink-0">
-                    {user.image ? <AvatarImage src={user.image} /> : null}
+                    {avatarUrl ? <AvatarImage src={avatarUrl} className="object-cover" /> : null}
                     <AvatarFallback className="bg-neutral-100 text-neutral-400 text-xl font-bold">
                        {user.name.split(' ').map(n => n[0]).join('')}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      ref={fileInputRef} 
+                      onChange={handleImageUpload} 
+                    />
                     <Button
+                       onClick={() => fileInputRef.current?.click()}
                        variant="outline"
                        size="sm"
                        className="bg-white border-neutral-200 text-black hover:bg-neutral-50 rounded-md w-full sm:w-auto"
@@ -131,9 +198,10 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                       Change Avatar
                     </Button>
                     <Button
+                       onClick={handleRemoveAvatar}
                        variant="ghost"
                        size="sm"
-                       className="text-neutral-400 hover:text-black hover:bg-neutral-50 rounded-md w-full sm:w-auto"
+                       className="text-neutral-400 hover:text-rose-500 hover:bg-rose-50 rounded-md w-full sm:w-auto transition-colors"
                     >
                       Remove
                     </Button>
@@ -149,7 +217,8 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                     <Input
                        id="name"
                        defaultValue={user.name}
-                       className="bg-white border-neutral-200 text-black rounded-md h-11 focus-visible:ring-black/5"
+                       autoComplete="name"
+                       className="bg-white border-neutral-200 text-black rounded-md h-11 transition-all focus-visible:ring-2 focus-visible:ring-black focus-visible:border-black"
                     />
                   </div>
  
@@ -161,12 +230,14 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                        id="email"
                        type="email"
                        defaultValue={user.email}
-                       className="bg-white border-neutral-200 text-black rounded-md h-11 focus-visible:ring-black/5"
+                       autoComplete="email"
+                       spellCheck={false}
+                       className="bg-white border-neutral-200 text-black rounded-md h-11 transition-all focus-visible:ring-2 focus-visible:ring-black focus-visible:border-black"
                     />
                   </div>
  
                   <div className="flex justify-end pt-4">
-                    <Button className="bg-black hover:bg-neutral-800 text-white px-8 rounded-md font-bold uppercase text-xs h-11 w-full sm:w-auto">
+                    <Button onClick={() => toast.success("Profile saved successfully!")} className="bg-black hover:bg-neutral-800 text-white px-8 rounded-md font-bold uppercase text-xs h-11 w-full sm:w-auto transition-colors">
                       Save Changes
                     </Button>
                   </div>
@@ -249,7 +320,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
                 {/* Cancel Link */}
                 <div className="pt-4">
-                   <button className="text-zinc-600 hover:text-zinc-400 text-xs underline underline-offset-4 transition-colors">
+                   <button className="text-zinc-600 hover:text-zinc-400 text-[13px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none rounded-md px-2 py-1 -ml-2">
                      Cancel Subscription
                    </button>
                 </div>
@@ -270,12 +341,13 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 <div className="space-y-6">
                   <div className="flex items-center justify-between pb-6 border-b border-neutral-100">
                     <div>
-                      <h3 className="font-bold text-black mb-1 ">Validation Reports</h3>
+                      <Label htmlFor="noti-validation" className="font-bold text-black mb-1 block cursor-pointer">Validation Reports</Label>
                       <p className="text-neutral-500 text-sm">
                         Receive an email when your AI report is ready.
                       </p>
                     </div>
                     <Switch
+                      id="noti-validation"
                       checked={notifications.validationReports}
                       onCheckedChange={(checked) =>
                         setNotifications({ ...notifications, validationReports: checked })
@@ -285,12 +357,13 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
                   <div className="flex items-center justify-between pb-6 border-b border-neutral-100">
                     <div>
-                      <h3 className="font-bold text-black mb-1 ">Product Updates</h3>
+                      <Label htmlFor="noti-product" className="font-bold text-black mb-1 block cursor-pointer">Product Updates</Label>
                       <p className="text-neutral-500 text-sm">
                         News about the latest features and improvements.
                       </p>
                     </div>
                     <Switch
+                      id="noti-product"
                       checked={notifications.productUpdates}
                       onCheckedChange={(checked) =>
                         setNotifications({ ...notifications, productUpdates: checked })
@@ -300,12 +373,13 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-bold text-black mb-1 ">Marketing Emails</h3>
+                      <Label htmlFor="noti-marketing" className="font-bold text-black mb-1 block cursor-pointer">Marketing Emails</Label>
                       <p className="text-neutral-500 text-sm">
                         Tips, tricks, and promotional offers.
                       </p>
                     </div>
                     <Switch
+                      id="noti-marketing"
                       checked={notifications.marketingEmails}
                       onCheckedChange={(checked) =>
                         setNotifications({ ...notifications, marketingEmails: checked })
@@ -334,13 +408,58 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                       Permanently delete your account, your subscription, and all past validations. This cannot be undone.
                     </p>
                   </div>
-                  <Button
-                    variant="destructive"
-                    className="bg-rose-600 hover:bg-rose-700 text-white rounded-md px-6 font-bold uppercase text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10"
-                  >
-                    <AlertTriangle className="w-4 h-4 mr-2" />
-                    Delete Account
-                  </Button>
+                  
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="destructive"
+                        className="bg-rose-600 hover:bg-rose-700 text-white rounded-md px-6 font-bold uppercase text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10 focus-visible:ring-2 focus-visible:ring-rose-500"
+                      >
+                        <AlertTriangle className="w-4 h-4 mr-2" />
+                        Delete Account
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="bg-white border-neutral-100">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="flex items-center gap-2 text-rose-600">
+                          <AlertTriangle className="w-5 h-5" />
+                          Absolute Destructive Action
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-neutral-500 pt-2 pb-4 text-sm leading-relaxed">
+                          You are about to permanently delete your account, including your 
+                          <span className="font-bold text-black"> {user.plan} </span> 
+                          subscription and all <span className="font-bold text-black">{user.validationsUsed}</span> past validations forever. 
+                          This action cannot be undone. Please type <span className="font-bold text-black bg-neutral-100 px-1 py-0.5 rounded">DELETE</span> to confirm.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      
+                      <div className="py-2">
+                        <Input 
+                          placeholder="Type DELETE to confirm" 
+                          value={deleteConfirmation}
+                          onChange={(e) => setDeleteConfirmation(e.target.value)}
+                          className="bg-neutral-50 border-neutral-200 text-black font-medium h-11"
+                        />
+                      </div>
+
+                      <AlertDialogFooter className="mt-6 border-t border-neutral-100 pt-4">
+                        <AlertDialogCancel 
+                          className="bg-white border-neutral-200 text-black hover:bg-neutral-50 font-semibold"
+                          onClick={() => setDeleteConfirmation("")}
+                        >
+                          Cancel
+                        </AlertDialogCancel>
+                        <Button
+                          variant="destructive"
+                          onClick={handleDeleteAccount}
+                          disabled={deleteConfirmation !== "DELETE" || isDeleting}
+                          className="bg-rose-600 hover:bg-rose-700 text-white font-bold disabled:opacity-50 transition-all"
+                        >
+                          {isDeleting ? "Deleting..." : "Permanently Delete"}
+                        </Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </div>

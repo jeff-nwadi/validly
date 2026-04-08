@@ -61,12 +61,12 @@ function RegisterContent() {
       <div className='flex flex-col gap-6 w-full'>
         {/* Toggle Controls */}
         <div className='grid grid-cols-2 p-1.5 bg-neutral-100 border border-neutral-200 rounded-xl mb-4'>
-           <button className='bg-white border border-neutral-200 text-black py-2.5 rounded-lg font-semibold text-[14px] shadow-sm'>
+           <button className='bg-white border border-neutral-200 text-black py-2.5 rounded-lg font-semibold text-[14px] shadow-sm focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'>
              Register
            </button>
            <button 
              onClick={() => router.push('/login')} 
-             className='text-neutral-500 hover:text-black transition-colors py-2.5 rounded-lg font-medium text-[14px]'
+             className='text-neutral-500 hover:text-black hover:bg-neutral-200/50 transition-colors py-2.5 rounded-lg font-medium text-[14px] focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'
            >
              Login
            </button>
@@ -75,7 +75,7 @@ function RegisterContent() {
         {/* Social Auth */}
         <button 
           onClick={handleGoogleSignIn}
-          className='w-full flex items-center justify-center gap-3 bg-white border border-neutral-200 text-black py-3.5 rounded-xl hover:bg-neutral-50 transition-all group'
+          className='w-full flex items-center justify-center gap-3 bg-white border border-neutral-200 text-black py-3.5 rounded-xl hover:bg-neutral-50 transition-all group focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'
         >
           <GoogleIcon className='w-5 h-5 group-hover:scale-110 transition-transform' />
           <span className='font-medium text-[15px]'>Continue with Google</span>
@@ -91,58 +91,69 @@ function RegisterContent() {
         {/* Email Form */}
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
           <div className='flex flex-col gap-2'>
-            <label className='text-black text-[14px] font-medium'>Full Name</label>
+            <label htmlFor="name" className='text-black text-[14px] font-medium'>Full Name</label>
             <input 
               {...register("name")}
+              id="name"
               type="text" 
+              autoComplete="name"
               placeholder="Alex Johnson" 
-              className='bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
+              className='bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400 focus-visible:ring-2 focus-visible:ring-black'
             />
-            {errors.name && <span className='text-rose-500 text-xs'>{errors.name.message}</span>}
+            {errors.name && <span className='text-rose-500 text-xs mt-1'>{errors.name.message}</span>}
           </div>
 
           <div className='flex flex-col gap-2'>
-            <label className='text-black text-[14px] font-medium'>Email address</label>
+            <label htmlFor="email" className='text-black text-[14px] font-medium'>Email address</label>
             <input 
               {...register("email")}
+              id="email"
               type="email" 
+              autoComplete="email"
+              spellCheck={false}
               placeholder="alex@example.com" 
-              className='bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
+              className='bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400 focus-visible:ring-2 focus-visible:ring-black'
             />
-            {errors.email && <span className='text-rose-500 text-xs'>{errors.email.message}</span>}
+            {errors.email && <span className='text-rose-500 text-xs mt-1'>{errors.email.message}</span>}
           </div>
 
           <div className='flex flex-col gap-2'>
-            <label className='text-black text-[14px] font-medium'>Password</label>
+            <label htmlFor="password" className='text-black text-[14px] font-medium'>Password</label>
             <div className='relative'>
               <input 
                 {...register("password")}
+                id="password"
                 type={showPassword ? "text" : "password"} 
+                autoComplete="new-password"
                 placeholder="••••••••" 
-                className='w-full bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400'
+                className='w-full bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400 focus-visible:ring-2 focus-visible:ring-black'
               />
               <button 
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className='absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-black transition-colors'
+                className='absolute right-4 top-1/2 -translate-y-1/2 p-1 text-neutral-400 hover:text-black hover:bg-neutral-100 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
+                {showPassword ? <EyeOff className='w-4 h-4' /> : <Eye className='w-4 h-4' />}
               </button>
             </div>
-            {errors.password && <span className='text-rose-500 text-xs'>{errors.password.message}</span>}
-            <p className='text-neutral-400 text-[12px] mt-1'>Must be at least 8 characters.</p>
+            {errors.password && <span className='text-rose-500 text-xs mt-1'>{errors.password.message}</span>}
+            <p id="password-hint" className='text-neutral-400 text-[12px] mt-1'>Must be at least 8 characters.</p>
           </div>
 
-          {registrationMutation.isError && (
-            <div className='p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-xl'>
-              {registrationMutation.error.message}
-            </div>
-          )}
+          <div aria-live="polite">
+            {registrationMutation.isError && (
+              <div className='p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-xl'>
+                {registrationMutation.error.message}
+              </div>
+            )}
+          </div>
 
           <button 
             type="submit"
             disabled={registrationMutation.isPending}
-            className='w-full bg-black hover:bg-neutral-800 text-white py-4 rounded-xl font-bold text-[16px] shadow-lg shadow-black/5 transition-all flex items-center justify-center gap-2'
+            aria-busy={registrationMutation.isPending}
+            className='w-full bg-black hover:bg-neutral-800 text-white py-4 rounded-xl font-bold text-[16px] shadow-lg shadow-black/5 transition-all flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black focus-visible:outline-none disabled:opacity-70 disabled:cursor-not-allowed'
           >
             {registrationMutation.isPending ? <Loader2 className='w-5 h-5 animate-spin' /> : 'Create Account'}
           </button>

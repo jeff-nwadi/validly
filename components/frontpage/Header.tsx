@@ -73,7 +73,7 @@ export default function Header() {
               </button>
            </div>
           <nav className="flex flex-col items-center justify-center gap-12 p-10 pt-20">
-            <ul className='flex flex-col items-center gap-10 font-bold text-[24px] text-neutral-300 uppercase tracking-tighter'>
+            <ul className='flex flex-col items-center gap-10 font-bold text-[18px] text-neutral-300 uppercase tracking-tighter'>
               <Link href="#how-it-works" onClick={() => setIsOpen(false)} className='hover:text-black transition-colors'>How it works</Link>
               <Link href="#features" onClick={() => setIsOpen(false)} className='hover:text-black transition-colors'>Features</Link>
               <Link href="#pricing" onClick={() => setIsOpen(false)} className='hover:text-black transition-colors'>Pricing</Link>
