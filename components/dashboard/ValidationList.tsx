@@ -116,7 +116,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                        </td>
                         <td className="px-6 py-5">
                            <div className="flex items-center justify-end gap-2">
-                              <Button asChild variant="outline" size="sm" className="h-8 rounded-[6px] bg-white border-neutral-200 text-neutral-500 hover:text-black hover:bg-neutral-50 text-[10px] font-bold uppercase px-3">
+                              <Button asChild variant="outline" size="sm" className="h-8 rounded-md bg-white border-neutral-200 text-neutral-500 hover:text-black hover:bg-neutral-50 text-[10px] font-bold uppercase px-3">
                                  <Link href={`/report/${val.id}`}>
                                     <Eye className="w-3.5 h-3.5 mr-2" />
                                     View Report
@@ -125,7 +125,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                               <Button 
                                  variant="outline" 
                                  size="icon" 
-                                 className="h-8 w-8 rounded-[6px] bg-white border-neutral-200 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 hover:border-rose-100 transition-all"
+                                 className="h-8 w-8 rounded-md bg-white border-neutral-200 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 hover:border-rose-100 transition-all"
                                  onClick={() => onDelete?.(val.id)}
                               >
                                  <Trash2 className="w-3.5 h-3.5" />
@@ -144,10 +144,10 @@ export default function ValidationList({ validations, onDelete }: ValidationList
          {validations.map((val) => {
             const verdictType = val.verdict.toLowerCase() as keyof typeof scoreColors
             return (
-               <Card key={val.id} className="bg-white border-neutral-200 overflow-hidden rounded-[8px] p-5 space-y-4 shadow-sm">
+               <Card key={val.id} className="bg-white border-neutral-200 overflow-hidden rounded-lg p-5 space-y-4 shadow-sm">
                   <div className="flex items-start justify-between">
                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-neutral-50 border border-neutral-200 rounded-[6px] flex items-center justify-center text-neutral-400">
+                        <div className="w-10 h-10 bg-neutral-50 border border-neutral-200 rounded-md flex items-center justify-center text-neutral-400">
                            <Lightbulb className="w-5 h-5" />
                         </div>
                         <div className="space-y-0.5">

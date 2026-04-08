@@ -10,6 +10,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { signOut } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from 'next/navigation';
 
 interface SettingsClientProps {
   user: {
@@ -23,6 +25,7 @@ interface SettingsClientProps {
 }
 
 export default function SettingsClient({ user }: SettingsClientProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("profile");
   const [notifications, setNotifications] = useState({
     validationReports: true,
@@ -77,7 +80,20 @@ export default function SettingsClient({ user }: SettingsClientProps) {
              <Button 
                variant="ghost" 
                className="w-full justify-start text-neutral-500 hover:text-rose-500 hover:bg-rose-50"
-               onClick={() => signOut()}
+               onClick={async () => {
+                 toast.loading("Logging out...", { id: "logout" });
+                 await signOut({
+                   fetchOptions: {
+                     onSuccess: () => {
+                       toast.success("Logged out successfully", { id: "logout" });
+                       router.push('/');
+                     },
+                     onError: (ctx) => {
+                       toast.error(ctx.error.message || "Failed to log out", { id: "logout" });
+                     }
+                   }
+                 });
+               }}
              >
                 <LogOut className="w-4 h-4 mr-3" />
                 Sign Out
@@ -109,7 +125,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                     <Button
                        variant="outline"
                        size="sm"
-                       className="bg-white border-neutral-200 text-black hover:bg-neutral-50 rounded-[6px] w-full sm:w-auto"
+                       className="bg-white border-neutral-200 text-black hover:bg-neutral-50 rounded-md w-full sm:w-auto"
                     >
                       <Upload className="w-4 h-4 mr-2" />
                       Change Avatar
@@ -117,7 +133,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                     <Button
                        variant="ghost"
                        size="sm"
-                       className="text-neutral-400 hover:text-black hover:bg-neutral-50 rounded-[6px] w-full sm:w-auto"
+                       className="text-neutral-400 hover:text-black hover:bg-neutral-50 rounded-md w-full sm:w-auto"
                     >
                       Remove
                     </Button>
@@ -133,7 +149,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                     <Input
                        id="name"
                        defaultValue={user.name}
-                       className="bg-white border-neutral-200 text-black rounded-[6px] h-11 focus-visible:ring-black/5"
+                       className="bg-white border-neutral-200 text-black rounded-md h-11 focus-visible:ring-black/5"
                     />
                   </div>
  
@@ -145,12 +161,12 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                        id="email"
                        type="email"
                        defaultValue={user.email}
-                       className="bg-white border-neutral-200 text-black rounded-[6px] h-11 focus-visible:ring-black/5"
+                       className="bg-white border-neutral-200 text-black rounded-md h-11 focus-visible:ring-black/5"
                     />
                   </div>
  
                   <div className="flex justify-end pt-4">
-                    <Button className="bg-black hover:bg-neutral-800 text-white px-8 rounded-[6px] font-bold uppercase text-xs h-11 w-full sm:w-auto">
+                    <Button className="bg-black hover:bg-neutral-800 text-white px-8 rounded-md font-bold uppercase text-xs h-11 w-full sm:w-auto">
                       Save Changes
                     </Button>
                   </div>
@@ -181,7 +197,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                     <Button
                        variant="outline"
                        size="sm"
-                       className="bg-white border-neutral-200 text-black hover:bg-neutral-50 rounded-[6px] w-full sm:w-auto"
+                       className="bg-white border-neutral-200 text-black hover:bg-neutral-50 rounded-md w-full sm:w-auto"
                     >
                       Manage Plan
                     </Button>
@@ -224,7 +240,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                         </p>
                         <p className="text-black text-[18px] font-bold">$49</p>
                       </div>
-                      <Button className="bg-black hover:bg-neutral-800 text-white px-6 rounded-[6px] font-bold shadow-lg shadow-black/5 w-full sm:w-auto">
+                      <Button className="bg-black hover:bg-neutral-800 text-white px-6 rounded-md font-bold shadow-lg shadow-black/5 w-full sm:w-auto">
                         Upgrade Now
                       </Button>
                     </div>
@@ -320,7 +336,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                   </div>
                   <Button
                     variant="destructive"
-                    className="bg-rose-600 hover:bg-rose-700 text-white rounded-[6px] px-6 font-bold uppercase text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10"
+                    className="bg-rose-600 hover:bg-rose-700 text-white rounded-md px-6 font-bold uppercase text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10"
                   >
                     <AlertTriangle className="w-4 h-4 mr-2" />
                     Delete Account

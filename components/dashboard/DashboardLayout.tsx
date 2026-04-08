@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { 
   Home, 
@@ -32,6 +33,7 @@ const navigation: NavItem[] = [
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
   const { data: session } = useSession()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -170,7 +172,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               )}
               {(!isCollapsed || isSidebarOpen) && (
                  <button 
-                   onClick={() => signOut()}
+                   onClick={async () => {
+                     toast.loading("Logging out...", { id: "logout" });
+                     await signOut({
+                       fetchOptions: {
+                         onSuccess: () => {
+                           toast.success("Logged out successfully", { id: "logout" });
+                           router.push('/');
+                         },
+                         onError: (ctx) => {
+                           toast.error(ctx.error.message || "Failed to log out", { id: "logout" });
+                         }
+                       }
+                     });
+                   }}
                    className='p-1.5 hover:bg-black/5 rounded-md text-muted-foreground hover:text-foreground transition-colors'
                  >
                     <LogOut className='w-4 h-4' />

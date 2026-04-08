@@ -26,61 +26,64 @@ const GithubIcon = ({ className }: { className?: string }) => (
 const Footer = () => {
   return (
     <footer className="bg-white pt-24 pb-12 px-6 md:px-10 border-t border-neutral-100">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-16">
         {/* Branding & Description */}
         <div className="max-w-xs space-y-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
-              <Lightbulb className="w-6 h-6 text-white fill-white" />
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 bg-black rounded-xl flex items-center justify-center">
+              <Lightbulb className="w-5 h-5 text-white fill-white" aria-hidden="true" />
             </div>
-            <p className='font-bold text-[18px] md:text-[30px] text-black tracking-tighter'>Validly</p>
+            <p className='font-bold text-[22px] md:text-[26px] text-black tracking-tighter'>Validly</p>
           </div>
-          <p className="text-neutral-500 text-[15px] leading-relaxed">
-            Validate your SaaS ideas instantly with AI-powered market and competitor analysis.
+          <p className="text-neutral-500 text-[15px] font-medium leading-relaxed text-pretty">
+            Stop guessing. Use real-time market data and advanced AI to verify your product viability before investing months in development.
           </p>
+          <div className="flex gap-4">
+             <Link href="#" className="w-10 h-10 rounded-xl bg-neutral-50 flex items-center justify-center text-neutral-400 hover:text-black hover:bg-neutral-100 transition-all" aria-label="Twitter">
+                <TwitterXIcon className="w-4 h-4" />
+             </Link>
+             <Link href="#" className="w-10 h-10 rounded-xl bg-neutral-50 flex items-center justify-center text-neutral-400 hover:text-black hover:bg-neutral-100 transition-all" aria-label="Github">
+                <GithubIcon className="w-4 h-4" />
+             </Link>
+          </div>
         </div>
 
         {/* Links Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-12 text-[14px]">
           <div className="space-y-6">
-            <h4 className="text-black font-bold uppercase">Product</h4>
-            <ul className="space-y-4 text-neutral-500">
-              <li><Link href="#features" className="hover:text-black transition-colors">Features</Link></li>
-              <li><Link href="#pricing" className="hover:text-black transition-colors">Pricing</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors">Changelog</Link></li>
+            <h4 className="text-black font-bold uppercase tracking-widest text-[11px]">Product</h4>
+            <ul className="space-y-4 text-neutral-500 font-medium">
+              <li><Link href="#features" className="hover:text-black transition-colors tracking-tight">Features</Link></li>
+              <li><Link href="#pricing" className="hover:text-black transition-colors tracking-tight">Pricing</Link></li>
+              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Changelog</Link></li>
             </ul>
           </div>
           <div className="space-y-6">
-            <h4 className="text-black font-bold uppercase">Company</h4>
-            <ul className="space-y-4 text-neutral-500">
-              <li><Link href="#" className="hover:text-black transition-colors">About</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors">Blog</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors">Contact</Link></li>
+            <h4 className="text-black font-bold uppercase tracking-widest text-[11px]">Company</h4>
+            <ul className="space-y-4 text-neutral-500 font-medium">
+              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">About</Link></li>
+              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Blog</Link></li>
+              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Contact</Link></li>
             </ul>
           </div>
           <div className="space-y-6">
-            <h4 className="text-black font-bold uppercase">Legal</h4>
-            <ul className="space-y-4 text-neutral-500">
-              <li><Link href="#" className="hover:text-black transition-colors">Privacy</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors">Terms</Link></li>
+            <h4 className="text-black font-bold uppercase tracking-widest text-[11px]">Legal</h4>
+            <ul className="space-y-4 text-neutral-500 font-medium">
+              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Privacy Policy</Link></li>
+              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="max-w-7xl mx-auto pt-24 mt-12 flex flex-col sm:flex-row justify-between items-center gap-6">
-        <p className="text-neutral-400 text-[14px] font-sans">
+      <div className="max-w-7xl mx-auto pt-16 mt-16 border-t border-neutral-50 flex flex-col sm:flex-row justify-between items-center gap-6">
+        <p className="text-neutral-400 text-[13px] font-medium">
           © {new Date().getFullYear()} Validly Inc. All rights reserved.
         </p>
-        <div className="flex gap-6 text-neutral-400">
-          <Link href="#" className="hover:text-black transition-all" aria-label="Twitter">
-            <TwitterXIcon className="w-5 h-5" />
-          </Link>
-          <Link href="#" className="hover:text-black transition-all" aria-label="Github">
-            <GithubIcon className="w-5 h-5" />
-          </Link>
-        </div>
+        <p className="text-neutral-300 text-[12px] font-medium tracking-tight">
+            Built for entrepreneurs by entrepreneurs.
+        </p>
       </div>
     </footer>
   )
