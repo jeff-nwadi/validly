@@ -237,7 +237,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                   </div>
  
                   <div className="flex justify-end pt-4">
-                    <Button onClick={() => toast.success("Profile saved successfully!")} className="bg-black hover:bg-neutral-800 text-white px-8 rounded-md font-bold uppercase text-xs h-11 w-full sm:w-auto transition-colors">
+                    <Button onClick={() => toast.success("Profile saved successfully!")} className="bg-[#4F46E5] hover:bg-neutral-800 text-white px-8 rounded-md font-bold text-xs h-11 w-full sm:w-auto transition-colors">
                       Save Changes
                     </Button>
                   </div>
@@ -261,7 +261,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div className="flex items-center gap-3">
                       <h3 className="text-[16px] font-medium uppercase text-black/90">{user.plan} Plan</h3>
-                      <Badge className="bg-black text-white hover:bg-black rounded-full px-3">
+                      <Badge className="bg-[#4F46E5] text-white hover:bg-[#4F46E5]/90 rounded-full px-3">
                         Active
                       </Badge>
                     </div>
@@ -311,7 +311,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                         </p>
                         <p className="text-black text-[18px] font-bold">$49</p>
                       </div>
-                      <Button className="bg-black hover:bg-neutral-800 text-white px-6 rounded-md font-bold shadow-lg shadow-black/5 w-full sm:w-auto">
+                      <Button className="bg-[#4F46E5] hover:bg-[#4F46E5]/90 text-white px-6 rounded-md font-bold w-full sm:w-auto">
                         Upgrade Now
                       </Button>
                     </div>
@@ -400,7 +400,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                 </p>
               </div>
 
-              <div className="bg-rose-50 rounded-xl p-8 border border-rose-100 shadow-sm">
+              <div className="bg-rose-50 rounded-xl p-8 border border-rose-100">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="text-center md:text-left">
                     <h3 className="font-semibold text-black mb-1">Delete Account</h3>
@@ -413,7 +413,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
                     <AlertDialogTrigger asChild>
                       <Button
                         variant="destructive"
-                        className="bg-rose-600 hover:bg-rose-700 text-white rounded-md px-6 font-bold uppercase text-xs h-11 w-full md:w-auto shadow-lg shadow-rose-500/10 focus-visible:ring-2 focus-visible:ring-rose-500"
+                        className="bg-rose-600 hover:bg-rose-700 text-white rounded-md px-6 font-bold text-xs h-11 w-full md:w-auto focus-visible:ring-2 focus-visible:ring-rose-500"
                       >
                         <AlertTriangle className="w-4 h-4 mr-2" />
                         Delete Account

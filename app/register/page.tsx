@@ -60,26 +60,28 @@ function RegisterContent() {
     >
       <div className='flex flex-col gap-6 w-full'>
         {/* Toggle Controls */}
-        <div className='grid grid-cols-2 p-1.5 bg-neutral-100 border border-neutral-200 rounded-xl mb-4'>
-           <button className='bg-white border border-neutral-200 text-black py-2.5 rounded-lg font-semibold text-[14px] shadow-sm focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'>
+        <div className='grid grid-cols-2 p-1.5 bg-slate-50 border border-slate-200 rounded-xl mb-4'>
+           <button className='bg-primary text-white py-2.5 rounded-lg font-bold text-[14px] shadow-md shadow-primary/20 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none'>
              Register
            </button>
            <button 
              onClick={() => router.push('/login')} 
-             className='text-neutral-500 hover:text-black hover:bg-neutral-200/50 transition-colors py-2.5 rounded-lg font-medium text-[14px] focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'
+             className='text-neutral-500 hover:text-primary hover:bg-white transition-all py-2.5 rounded-lg font-medium text-[14px] focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none'
            >
              Login
            </button>
         </div>
 
+
         {/* Social Auth */}
         <button 
           onClick={handleGoogleSignIn}
-          className='w-full flex items-center justify-center gap-3 bg-white border border-neutral-200 text-black py-3.5 rounded-xl hover:bg-neutral-50 transition-all group focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'
+          className='w-full flex items-center justify-center gap-3 bg-white border border-slate-200 text-slate-900 py-3.5 rounded-xl hover:bg-slate-50 hover:border-primary/30 transition-all group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none'
         >
           <GoogleIcon className='w-5 h-5 group-hover:scale-110 transition-transform' />
           <span className='font-medium text-[15px]'>Continue with Google</span>
         </button>
+
 
         {/* Divider */}
         <div className='relative flex items-center py-2'>
@@ -98,9 +100,10 @@ function RegisterContent() {
               type="text" 
               autoComplete="name"
               placeholder="Alex Johnson" 
-              className='bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400 focus-visible:ring-2 focus-visible:ring-black'
+              className='bg-white border border-slate-200 text-slate-900 p-4 rounded-xl focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/5 transition-all placeholder:text-slate-300 focus-visible:ring-2 focus-visible:ring-primary'
             />
-            {errors.name && <span className='text-rose-500 text-xs mt-1'>{errors.name.message}</span>}
+            {errors.name && <span className='text-destructive text-xs mt-1 font-medium'>{errors.name.message}</span>}
+
           </div>
 
           <div className='flex flex-col gap-2'>
@@ -112,9 +115,10 @@ function RegisterContent() {
               autoComplete="email"
               spellCheck={false}
               placeholder="alex@example.com" 
-              className='bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400 focus-visible:ring-2 focus-visible:ring-black'
+              className='bg-white border border-slate-200 text-slate-900 p-4 rounded-xl focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/5 transition-all placeholder:text-slate-300 focus-visible:ring-2 focus-visible:ring-primary'
             />
-            {errors.email && <span className='text-rose-500 text-xs mt-1'>{errors.email.message}</span>}
+            {errors.email && <span className='text-destructive text-xs mt-1 font-medium'>{errors.email.message}</span>}
+
           </div>
 
           <div className='flex flex-col gap-2'>
@@ -126,37 +130,41 @@ function RegisterContent() {
                 type={showPassword ? "text" : "password"} 
                 autoComplete="new-password"
                 placeholder="••••••••" 
-                className='w-full bg-white border border-neutral-200 text-black p-4 rounded-xl focus:outline-none focus:border-black/20 focus:ring-4 focus:ring-black/5 transition-all placeholder:text-neutral-400 focus-visible:ring-2 focus-visible:ring-black'
+                className='w-full bg-white border border-slate-200 text-slate-900 p-4 rounded-xl focus:outline-none focus:border-primary/50 focus:ring-4 focus:ring-primary/5 transition-all placeholder:text-slate-300 focus-visible:ring-2 focus-visible:ring-primary'
               />
               <button 
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className='absolute right-4 top-1/2 -translate-y-1/2 p-1 text-neutral-400 hover:text-black hover:bg-neutral-100 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none'
+                className='absolute right-4 top-1/2 -translate-y-1/2 p-1 text-slate-300 hover:text-primary hover:bg-slate-50 rounded-md transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none'
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff className='w-4 h-4' /> : <Eye className='w-4 h-4' />}
               </button>
             </div>
-            {errors.password && <span className='text-rose-500 text-xs mt-1'>{errors.password.message}</span>}
+            {errors.password && <span className='text-destructive text-xs mt-1 font-medium'>{errors.password.message}</span>}
+
             <p id="password-hint" className='text-neutral-400 text-[12px] mt-1'>Must be at least 8 characters.</p>
           </div>
 
           <div aria-live="polite">
             {registrationMutation.isError && (
-              <div className='p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-xl'>
+              <div className='p-3 bg-destructive/10 border border-destructive/20 text-destructive text-[13px] font-medium rounded-xl flex items-center gap-2'>
+                <div className="w-1.5 h-1.5 rounded-full bg-destructive shrink-0" />
                 {registrationMutation.error.message}
               </div>
             )}
+
           </div>
 
           <button 
             type="submit"
             disabled={registrationMutation.isPending}
             aria-busy={registrationMutation.isPending}
-            className='w-full bg-black hover:bg-neutral-800 text-white py-4 rounded-xl font-bold text-[16px] shadow-lg shadow-black/5 transition-all flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black focus-visible:outline-none disabled:opacity-70 disabled:cursor-not-allowed'
+            className='w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-bold text-[16px] shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:outline-none disabled:opacity-70 disabled:cursor-not-allowed btn-glow'
           >
             {registrationMutation.isPending ? <Loader2 className='w-5 h-5 animate-spin' /> : 'Create Account'}
           </button>
+
         </form>
       </div>
     </AuthLayout>
@@ -168,8 +176,9 @@ export default function RegisterPage() {
     <Suspense fallback={
       <AuthLayout title="Loading..." subtitle="Please wait while we prepare your registration.">
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-10 h-10 animate-spin text-black" />
+          <Loader2 className="w-10 h-10 animate-spin text-primary" />
         </div>
+
       </AuthLayout>
     }>
       <RegisterContent />

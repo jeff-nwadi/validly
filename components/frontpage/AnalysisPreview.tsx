@@ -30,7 +30,9 @@ export default function AnalysisPreview() {
   }
 
   return (
-    <section id="features" className='relative flex justify-center items-center px-1 md:px-10 overflow-hidden'>
+    <section id="features" className='relative flex justify-center items-center px-6 md:px-24 bg-white overflow-hidden py-10'>
+
+
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-neutral-50/50 blur-[100px]" />
@@ -46,29 +48,33 @@ export default function AnalysisPreview() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className='mb-12 md:mb-16'>
-          <motion.h2 variants={itemVariants} className='text-black text-[18px] md:text-[24px] font-semibold text-center mb-4 leading-tight tracking-widest'>Data-driven decisions</motion.h2>
-          <motion.p variants={itemVariants} className='text-neutral-500 text-[14px] md:text-[16px] font-normal max-w-md mx-auto text-center leading-relaxed text-balance'>
-            Stop relying on gut feeling. Get a comprehensive breakdown of why your idea will or won't work.
+          <motion.h2 variants={itemVariants} className='text-primary text-[18px] font-bold text-center mb-4 leading-tight tracking-[0.2em]'>Data-driven decisions</motion.h2>
+          <motion.p variants={itemVariants} className='text-slate-500 text-[14px] md:text-[16px] font-normal max-w-md mx-auto text-center leading-relaxed text-balance'>
+            Stop relying on gut feeling. Get a comprehensive breakdown of why your idea will or won&apos;t work.
           </motion.p>
         </div>
 
+
         {/* Main Analysis Card */}
-        <motion.div variants={itemVariants} className='relative p-6 md:p-14 overflow-hidden bg-white/50 backdrop-blur-sm'>
+        <motion.div variants={itemVariants} className='relative p-6 md:p-14 overflow-hidden bg-white '>
+
           
           {/* Header Section */}
           <div className='flex flex-col md:flex-row justify-between items-start gap-8 mb-10 md:mb-12'>
             <div>
-              <p className='text-neutral-400 text-[10px] font-bold uppercase mb-2 md:mb-3 tracking-widest'>Analysis Complete</p>
-              <h3 className='text-black text-[24px] font-bold leading-tight tracking-tight'>CRM for Local Bakeries</h3>
+              <p className='text-slate-400 text-[10px] font-bold mb-2 md:mb-3 tracking-widest'>Analysis Complete</p>
+              <h3 className='text-slate-900 text-[24px] font-bold leading-tight tracking-tight'>CRM for Local Bakeries</h3>
             </div>
+
             
             <div className='flex items-center gap-6 w-full md:w-auto justify-between md:justify-end'>
               <div className='flex flex-col items-start md:items-end gap-2'>
-                <p className='text-neutral-400 text-[10px] font-bold uppercase tracking-widest'>Viability Score</p>
-                <div className='bg-green-50 text-green-600 px-3 py-1 rounded-full text-[11px] font-semibold border border-green-200 flex items-center gap-1.5'>
+                <p className='text-slate-400 text-[10px] font-bold uppercase tracking-widest'>Viability Score</p>
+                <div className='bg-(--success)/10 text-(--success) px-3 py-1 rounded-full text-[11px] font-bold border border-(--success)/20 flex items-center gap-1.5'>
                   Hot <span className='text-[10px]'>🔥</span>
                 </div>
               </div>
+
               
               {/* Circular Score */}
               <div className='relative w-20 h-20 md:w-24 md:h-24 flex items-center justify-center shrink-0'>
@@ -83,13 +89,14 @@ export default function AnalysisPreview() {
                     viewport={{ once: true }}
                     transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
                     cx='50' cy='50' r='42' 
-                    fill='none' stroke='#000000' strokeWidth='8' 
+                    fill='none' stroke='var(--primary)' strokeWidth='8' 
                     strokeDasharray='264' 
                     strokeLinecap='round'
                   />
                 </svg>
-                <span className='absolute text-black text-[24px] font-bold tracking-tighter'>85</span>
+                <span className='absolute text-slate-900 text-[24px] font-bold tracking-tighter'>85</span>
               </div>
+
             </div>
           </div>
 
@@ -100,41 +107,52 @@ export default function AnalysisPreview() {
             <div className='lg:col-span-3 space-y-6'>
               
               {/* Top Competitors */}
-              <div className='bg-white border border-neutral-100 rounded-2xl p-6 shadow-sm group hover:border-black/5 transition-all'>
+              <div className='bg-white rounded-2xl p-6 group hover:ring-1 hover:ring-primary/20 transition-all'>
+
+
                 <div className='flex items-center gap-3 mb-6'>
-                  <div className='text-black w-8 h-8 rounded-lg bg-neutral-50 flex items-center justify-center border border-neutral-100'>
+                  <div className='text-primary w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center border border-primary/10'>
                     <Users className='w-4 h-4' aria-hidden="true" />
                   </div>
-                  <h4 className='text-black text-[16px] font-bold tracking-tight'>Top Competitors</h4>
+                  <h4 className='text-slate-900 text-[16px] font-bold tracking-tight'>Top Competitors</h4>
                 </div>
+
                 
                 <div className='space-y-4'>
-                  <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-neutral-50 border border-neutral-100 rounded-xl gap-4 hover:bg-white hover:border-neutral-200 transition-all cursor-default'>
+                  <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-slate-50 gap-4 hover:bg-white hover:border-primary/20 transition-all cursor-default group/comp'>
                     <div className='flex items-center gap-4'>
-                      <div className='w-10 h-10 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold'>B</div>
-                      <span className='text-black font-semibold text-[15px] tracking-tight'>BakeManage</span>
+                      <div className='w-10 h-10 bg-primary text-white rounded-lg flex items-center justify-center font-bold'>B</div>
+
+                      <span className='text-slate-900 font-semibold text-[15px] tracking-tight group-hover/comp:text-primary transition-colors'>BakeManage</span>
                     </div>
-                    <span className='text-neutral-500 text-[10px] uppercase font-bold tracking-widest px-3 py-1 bg-white rounded-lg border border-neutral-100'>Direct Comp</span>
+                    <span className='text-slate-500 text-[10px] uppercase font-bold tracking-widest px-3 py-1 bg-white rounded-lg border border-slate-100'>Direct Comp</span>
                   </div>
+
                   
-                  <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-neutral-50 border border-neutral-100 rounded-xl gap-4 hover:bg-white hover:border-neutral-200 transition-all cursor-default'>
+                  <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-slate-50 rounded-xl gap-4 hover:bg-white hover:ring-1 hover:ring-primary/20 transition-all cursor-default group/comp'>
+
                     <div className='flex items-center gap-4'>
-                      <div className='w-10 h-10 bg-black text-white rounded-lg flex items-center justify-center font-bold'>S</div>
-                      <span className='text-black font-semibold text-[15px] tracking-tight'>Square for Retail</span>
+                      <div className='w-10 h-10 bg-slate-100 text-slate-400 rounded-lg flex items-center justify-center font-bold'>S</div>
+
+                      <span className='text-slate-900 font-semibold text-[15px] tracking-tight group-hover/comp:text-primary transition-colors'>Square for Retail</span>
                     </div>
-                    <span className='text-neutral-500 text-[10px] uppercase font-bold tracking-widest px-3 py-1 bg-white rounded-lg border border-neutral-100'>Indirect Comp</span>
+                    <span className='text-slate-500 text-[10px] uppercase font-bold tracking-widest px-3 py-1 bg-white rounded-lg border border-slate-100'>Indirect Comp</span>
                   </div>
+
                 </div>
               </div>
 
               {/* Suggested MVP Features */}
-              <div className='bg-white border border-neutral-100 rounded-2xl p-6 shadow-sm group hover:border-black/5 transition-all'>
+              <div className='bg-white rounded-2xl p-6 group hover:ring-1 hover:ring-primary/20 transition-all'>
+
+
                 <div className='flex items-center gap-3 mb-6'>
-                  <div className='text-black w-8 h-8 rounded-lg bg-neutral-50 flex items-center justify-center border border-neutral-100'>
+                  <div className='text-primary w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center border border-primary/10'>
                     <Zap className='w-4 h-4' aria-hidden="true" />
                   </div>
-                  <h4 className='text-black text-[16px] font-bold tracking-tight'>Suggested MVP Features</h4>
+                  <h4 className='text-slate-900 text-[16px] font-bold tracking-tight'>Suggested MVP Features</h4>
                 </div>
+
                 
                 <div className='flex flex-wrap gap-2 md:gap-3'>
                   {[
@@ -143,7 +161,8 @@ export default function AnalysisPreview() {
                     "Automated Invoicing",
                     "Customer Database"
                   ].map((feature, i) => (
-                    <div key={i} className='px-4 py-2 bg-neutral-50 border border-neutral-100 rounded-xl text-neutral-600 text-[14px] font-medium hover:text-black hover:border-black/20 hover:bg-white transition-all cursor-default'>
+                    <div key={i} className='px-4 py-2 bg-neutral-50 rounded-xl text-neutral-600 text-[14px] font-medium hover:text-black hover:ring-1 hover:ring-black/10 hover:bg-white transition-all cursor-default'>
+
                       {feature}
                     </div>
                   ))}
@@ -156,7 +175,9 @@ export default function AnalysisPreview() {
             <div className='lg:col-span-2 flex flex-col space-y-4 md:space-y-6'>
               
               {/* Biggest Risks */}
-              <div className='bg-red-50/50 border border-red-100 rounded-2xl p-6 shadow-sm'>
+              <div className='bg-red-50/50 rounded-2xl p-6'>
+
+
                 <div className='flex items-center gap-3 mb-4 md:mb-6'>
                   <div className='text-red-500 w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-red-100'>
                     <AlertTriangle className='w-4 h-4' aria-hidden="true" />
@@ -179,19 +200,22 @@ export default function AnalysisPreview() {
               </div>
 
               {/* Market Size */}
-              <div className='bg-neutral-900 border border-neutral-800 rounded-2xl p-6 grow flex flex-col shadow-lg shadow-black/5'>
+              <div className='bg-primary/5 border border-primary/10 rounded-2xl p-6 grow flex flex-col'>
                 <div className='flex items-center gap-3 mb-4 md:mb-6'>
-                  <div className='text-white/40 w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10'>
+                  <div className='text-primary w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-primary/10'>
+
                     <TrendingUp className='w-4 h-4' aria-hidden="true" />
                   </div>
-                  <h4 className='text-white/60 text-[16px] font-bold tracking-tight'>Market Size</h4>
+                  <h4 className='text-primary text-[14px] font-bold tracking-tight uppercase'>Market Size</h4>
                 </div>
                 
                 <div className='grow flex flex-col justify-center'>
-                  <p className='text-white text-[48px] font-bold tracking-tighter leading-none mb-1 md:mb-2'>$2.4B</p>
-                  <p className='text-white/40 text-[10px] font-bold uppercase tracking-widest'>Estimated SAM in US & Europe</p>
+                  <p className='text-primary text-[48px] font-bold tracking-tighter leading-none mb-1 md:mb-2'>$2.4B</p>
+                  <p className='text-primary/60 text-[10px] uppercase font-bold tracking-widest'>Estimated SAM in US & Europe</p>
                 </div>
               </div>
+
+
 
             </div>
 

@@ -582,7 +582,7 @@ export const ReportClient: React.FC<ReportSystemProps> = ({
                disabled={isExporting}
                onClick={handleExportPDF} 
                size="lg" 
-               className="gap-2 bg-black hover:bg-neutral-800 text-white rounded-md font-bold uppercase text-xs h-11 transition-all disabled:opacity-50"
+               className="gap-2 bg-[#4F46E5] hover:bg-[#4F46E5]/90 text-white rounded-md font-semibold text-xs h-11 transition-all disabled:opacity-50 cursor-pointer"
             >
               <Download className={cn("w-4 h-4", isExporting && "animate-pulse")} />
               {isExporting ? "Generating..." : "Export PDF"}

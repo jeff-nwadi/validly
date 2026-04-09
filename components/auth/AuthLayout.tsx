@@ -21,12 +21,14 @@ export default function AuthLayout({ children, title, subtitle }: { children: Re
         </div>
         
         {/* Branding */}
-        <Link href="/" className='relative z-10 flex items-center gap-3 hover:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none rounded-lg p-1 -ml-1'>
-          <div className='w-10 h-10 bg-black rounded-[10px] flex items-center justify-center'>
+        <Link href="/" className='relative z-10 flex items-center gap-3 hover:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-lg p-1 -ml-1'>
+          <div className='w-10 h-10 bg-primary rounded-[10px] flex items-center justify-center'>
+
             <Lightbulb className='w-6 h-6 text-white' />
           </div>
-          <span className='font-bold text-2xl text-black'>Validly</span>
+          <span className='font-bold text-2xl text-slate-900'>Validly</span>
         </Link>
+
 
         {/* Insight Caption */}
         <div className='mt-auto relative z-10'>
@@ -40,23 +42,25 @@ export default function AuthLayout({ children, title, subtitle }: { children: Re
         {/* Back to Home Link */}
         <Link 
           href="/" 
-          className='inline-flex self-start items-center gap-2 text-neutral-400 hover:text-black transition-colors mb-12 md:mb-16 text-[14px] focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none rounded-md px-2 py-1 -ml-2'
+          className='inline-flex self-start items-center gap-2 text-neutral-400 hover:text-primary transition-colors mb-12 md:mb-16 text-[14px] focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-md px-2 py-1 -ml-2'
         >
           <ArrowLeft className='w-4 h-4' />
           Back to home
         </Link>
 
+
         <div className='max-w-[420px] w-full mx-auto flex flex-col'>
-          <h1 className='text-black text-[32px] md:text-[40px] font-bold mb-3 text-balance'>{title}</h1>
-          <p className='text-neutral-500 text-[16px] mb-10 text-pretty'>{subtitle}</p>
+          <h1 className='text-black text-[24px] md:text-[32px] font-bold mb-3 text-balance'>{title}</h1>
+          <p className='text-neutral-500 text-[14px] md:text-[16px] mb-10 text-pretty'>{subtitle}</p>
           
           {children}
         </div>
 
         {/* Footer Legal */}
         <p className='mt-auto pt-16 text-center text-neutral-400 text-[13px] leading-relaxed max-w-[320px] mx-auto text-balance'>
-          By clicking continue, you agree to our <Link href="#" className='text-black hover:underline font-medium focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none rounded-sm'>Terms of Service</Link> and <Link href="#" className='text-black hover:underline font-medium focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none rounded-sm'>Privacy Policy</Link>.
+          By clicking continue, you agree to our <Link href="#" className='text-primary hover:underline font-medium focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-sm'>Terms of Service</Link> and <Link href="#" className='text-primary hover:underline font-medium focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-sm'>Privacy Policy</Link>.
         </p>
+
       </div>
     </div>
   )

@@ -37,34 +37,40 @@ const verdictEmojis: Record<string, string> = {
 }
 
 const scoreColors:Record<string, string> = {
-  hot: 'text-emerald-600 bg-emerald-50 border-emerald-100',
-  warm: 'text-amber-600 bg-amber-50 border-amber-100',
-  cold: 'text-rose-600 bg-rose-50 border-rose-100',
+  hot: 'text-[var(--success)] bg-[var(--success)]/10 border-[var(--success)]/20',
+  warm: 'text-[var(--warning)] bg-[var(--warning)]/10 border-[var(--warning)]/20',
+  cold: 'text-destructive bg-destructive/10 border-destructive/20',
 }
 
+
 const dotColors: Record<string, string> = {
-  hot: 'bg-emerald-500',
-  warm: 'bg-amber-500',
-  cold: 'bg-rose-500',
+  hot: 'bg-[var(--success)]',
+  warm: 'bg-[var(--warning)]',
+  cold: 'bg-destructive',
 }
+
 
 export default function ValidationList({ validations, onDelete }: ValidationListProps) {
   if (validations.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-20 text-center bg-white border border-neutral-200 rounded-lg mt-8 shadow-sm">
-        <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mb-6">
-          <Search className="w-8 h-8 text-black" />
+      <div className="flex flex-col items-center justify-center p-20 text-center bg-white border border-neutral-200 rounded-lg mt-8">
+        <div className="w-16 h-16 bg-primary/5 rounded-full flex items-center justify-center mb-6">
+
+          <Search className="w-8 h-8 text-primary" />
         </div>
+
         <h3 className="text-black font-semibold text-[18px] mb-3">No Validations Yet</h3>
         <p className="text-neutral-500 max-w-sm mx-auto mb-8 text-[14px] font-normal leading-relaxed">
           You haven't validated any SaaS ideas yet. Enter your first idea to get an AI-powered viability report.
         </p>
-        <Button asChild className="bg-black hover:bg-neutral-800 text-white px-8 py-6 rounded-md font-semibold flex items-center gap-2">
+        <Button asChild className="bg-primary hover:bg-primary/90 text-white px-8 py-6 rounded-xl font-bold flex items-center gap-2">
           <Link href="/validate">
              <Plus className="w-4 h-4" />
              New Validation
           </Link>
         </Button>
+
+
       </div>
     )
   }
@@ -72,11 +78,13 @@ export default function ValidationList({ validations, onDelete }: ValidationList
   return (
     <div className="mt-8 space-y-4">
       {/* Desktop Table View */}
-      <Card className="hidden md:block bg-white border-neutral-200 overflow-hidden rounded-lg shadow-sm">
+      <Card className="hidden md:block bg-white border-neutral-200 overflow-hidden rounded-lg">
+
         <table className="w-full text-left border-collapse">
            <thead>
-              <tr className="border-b border-neutral-100 text-[10px] font-bold text-neutral-400 uppercase bg-neutral-50">
+              <tr className="border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase bg-slate-50/50">
                  <th className="px-6 py-4">Idea Name</th>
+
                  <th className="px-6 py-4">Date</th>
                  <th className="px-6 py-4">Viability Score</th>
                  <th className="px-6 py-4">Verdict</th>
@@ -90,18 +98,20 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                      <tr key={val.id} className="group hover:bg-neutral-50 transition-colors">
                         <td className="px-6 py-5">
                            <div className="flex items-center gap-4">
-                              <div className="w-9 h-9 bg-neutral-50 border border-neutral-200 rounded-md flex items-center justify-center text-neutral-400 group-hover:text-black transition-colors">
+                              <div className="w-9 h-9 bg-slate-50 border border-slate-200 rounded-md flex items-center justify-center text-slate-400 group-hover:text-primary transition-colors">
                                  <Lightbulb className="w-4 h-4" />
                               </div>
-                              <span className="text-[14px] font-semibold text-black">{val.ideaTitle}</span>
+                              <span className="text-[14px] font-semibold text-slate-900">{val.ideaTitle}</span>
                            </div>
                         </td>
+
                         <td className="px-6 py-5">
-                           <div className="flex items-center gap-2 text-[12px] text-neutral-500 font-medium">
+                           <div className="flex items-center gap-2 text-[12px] text-slate-400 font-medium">
                               <Calendar className="w-3.5 h-3.5" />
                               <span>{format(new Date(val.createdAt), 'MMM d, yyyy')}</span>
                            </div>
                         </td>
+
                        <td className="px-6 py-5">
                           <div className={cn(
                              "inline-flex items-center gap-2 px-3 py-1 rounded-full border text-[11px] font-bold uppercase ",
@@ -144,15 +154,16 @@ export default function ValidationList({ validations, onDelete }: ValidationList
          {validations.map((val) => {
             const verdictType = val.verdict.toLowerCase() as keyof typeof scoreColors
             return (
-               <Card key={val.id} className="bg-white border-neutral-200 overflow-hidden rounded-lg p-5 space-y-4 shadow-sm">
+               <Card key={val.id} className="bg-white border-neutral-200 overflow-hidden rounded-lg p-5 space-y-4">
+
                   <div className="flex items-start justify-between">
                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-neutral-50 border border-neutral-200 rounded-md flex items-center justify-center text-neutral-400">
+                        <div className="w-10 h-10 bg-primary/5 border border-primary/10 rounded-md flex items-center justify-center text-primary">
                            <Lightbulb className="w-5 h-5" />
                         </div>
                         <div className="space-y-0.5">
-                           <h3 className="text-[14px] font-semibold text-black line-clamp-1 tracking-tight">{val.ideaTitle}</h3>
-                           <div className="flex items-center gap-2 text-[10px] text-neutral-400 font-bold uppercase">
+                           <h3 className="text-[14px] font-semibold text-slate-900 line-clamp-1 tracking-tight">{val.ideaTitle}</h3>
+                           <div className="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase">
                               <Calendar className="w-3 h-3" />
                               <span>{format(new Date(val.createdAt), 'MMM d, yyyy')}</span>
                            </div>
@@ -160,6 +171,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                      </div>
                      <span className="text-xl">{verdictEmojis[verdictType] || '🤔'}</span>
                   </div>
+
 
                   <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
                      <div className={cn(
@@ -171,7 +183,7 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                      </div>
                      
                      <div className="flex items-center gap-2">
-                        <Button asChild variant="outline" size="sm" className="h-9 rounded-md bg-white border-neutral-200 text-neutral-500 hover:text-black text-[10px] font-bold uppercase px-4">
+                        <Button asChild variant="outline" size="sm" className="h-9 rounded-md bg-white border-slate-200 text-slate-500 hover:text-primary text-[10px] font-bold uppercase px-4">
                            <Link href={`/report/${val.id}`}>
                               <Eye className="w-3.5 h-3.5 mr-2" />
                               View
@@ -180,12 +192,13 @@ export default function ValidationList({ validations, onDelete }: ValidationList
                         <Button 
                            variant="outline" 
                            size="icon" 
-                           className="h-9 w-9 rounded-md bg-white border-neutral-200 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 transition-all font-bold"
+                           className="h-9 w-9 rounded-md bg-white border-slate-200 text-slate-300 hover:text-destructive hover:bg-destructive/10 transition-all font-bold"
                            onClick={() => onDelete?.(val.id)}
                         >
                            <Trash2 className="w-4 h-4" />
                         </Button>
                      </div>
+
                   </div>
                </Card>
             )

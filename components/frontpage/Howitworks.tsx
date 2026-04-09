@@ -9,20 +9,21 @@ const steps = [
     number: "01",
     title: "Submit Idea",
     description: "Type in your raw concept, target audience, and any initial thoughts. The more details, the better.",
-    icon: <PenTool className="w-5 h-5 text-black" aria-hidden="true" />,
+    icon: <PenTool className="w-5 h-5 text-primary" aria-hidden="true" />,
   },
   {
     number: "02",
     title: "AI Research",
     description: "Our AI agents crawl the web to analyze competitors, market size, and search volume in real-time.",
-    icon: <Bot className="w-5 h-5 text-black" aria-hidden="true" />,
+    icon: <Bot className="w-5 h-5 text-primary" aria-hidden="true" />,
   },
   {
     number: "03",
     title: "Get Report",
     description: "Receive a comprehensive viability score, risk analysis, and suggested MVP features instantly.",
-    icon: <FileText className="w-5 h-5 text-black" aria-hidden="true" />,
+    icon: <FileText className="w-5 h-5 text-primary" aria-hidden="true" />,
   },
+
 ]
 
 export default function Howitworks() {
@@ -50,7 +51,8 @@ export default function Howitworks() {
   }
 
   return (
-    <section id="how-it-works" className='relative flex justify-center items-center px-6 md:px-10 py-14 bg-white text-black overflow-hidden'>
+    <section id="how-it-works" className='relative flex justify-center items-center px-6 md:px-24 py-14 bg-slate-50/50 text-black overflow-hidden'>
+
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 left-[20%] w-[40%] h-[40%] rounded-full bg-neutral-50 blur-[120px]" />
@@ -66,7 +68,7 @@ export default function Howitworks() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <div className='mb-12 md:mb-16'>
-          <motion.h2 variants={itemVariants} className='text-black text-[18px] font-semibold text-center mb-4 leading-tight tracking-widest'>How it works</motion.h2>
+          <motion.h2 variants={itemVariants} className='text-[18px] text-primary font-semibold text-center mb-4 leading-tight tracking-widest'>How it works</motion.h2>
           <motion.p variants={itemVariants} className='text-neutral-500 text-[14px] md:text-[16px] font-normal max-w-md mx-auto text-center leading-relaxed text-balance'>
             From an idea in your head to a comprehensive business report in three simple steps.
           </motion.p>
@@ -86,9 +88,10 @@ export default function Howitworks() {
               
               {/* Content */}
               <div className='flex flex-col space-y-4'>
-                <div className='text-black w-10 h-10 rounded-xl bg-neutral-50 flex items-center justify-center border border-neutral-100 group-hover:border-black/10 transition-all'>
+                <div className='text-primary w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-all'>
                   {step.icon}
                 </div>
+
                 <h3 className='text-black text-[17px] font-semibold tracking-tight'>{step.title}</h3>
                 <p className='text-neutral-500 text-[14px] font-normal leading-relaxed max-w-[320px] text-pretty'>
                   {step.description}

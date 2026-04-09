@@ -78,10 +78,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className='flex h-16 items-center justify-between border-b border-neutral-200 px-4'>
            {(!isCollapsed || isSidebarOpen) && (
               <div className='flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in slide-in-from-left-2 duration-300'>
-                 <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-black'>
+                 <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#4F46E5]'>
                     <Lightbulb className='h-5 w-5 text-white fill-white' />
                  </div>
-                 <span className='text-[18px] font-bold text-black tracking-tighter'>Validly</span>
+                 <span className='text-[18px] font-bold text-[#4F46E5] tracking-tighter'>Validly</span>
               </div>
            )}
            <Button
@@ -116,12 +116,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none',
+                    'group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none',
                     isActive 
-                      ? 'bg-neutral-100/80 text-black shadow-sm font-semibold' 
-                      : 'text-neutral-500 hover:bg-neutral-50 hover:text-black',
+                      ? 'bg-primary/10 text-primary font-semibold' 
+                      : 'text-slate-500 hover:bg-slate-50 hover:text-primary',
+
                     isDesktopCollapsed && 'justify-center px-0'
                   )}
+
                 >
                   <Icon className={cn(
                      'h-5 w-5 shrink-0',
@@ -169,13 +171,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                'flex items-center gap-3 rounded-lg bg-neutral-50 p-3 transition-all duration-300 border border-neutral-200',
                isCollapsed && !isSidebarOpen ? 'justify-center p-2' : ''
             )}>
-              <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-black text-sm font-bold text-white overflow-hidden'>
+              <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary text-sm font-bold text-white overflow-hidden'>
+
                  {localAvatar || session?.user?.image ? (
                     <img src={localAvatar || session?.user?.image || ""} alt={session?.user?.name || "User"} className="w-full h-full object-cover" />
                  ) : (
                     userInitials
                  )}
               </div>
+
               {(!isCollapsed || isSidebarOpen) && (
                  <div className='flex-1 overflow-hidden animate-in fade-in slide-in-from-left-2 duration-300'>
                     <p className='truncate text-[14px] font-semibold text-black leading-tight'>{session?.user?.name || 'Alex Mercer'}</p>

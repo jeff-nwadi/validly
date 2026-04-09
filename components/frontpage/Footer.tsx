@@ -25,15 +25,16 @@ const GithubIcon = ({ className }: { className?: string }) => (
 
 const Footer = () => {
   return (
-    <footer className="bg-white pt-24 pb-12 px-6 md:px-10 border-t border-neutral-100">
+    <footer className="bg-slate-50/50 pt-24 pb-12 px-6 md:px-24 border-t border-slate-100">
+
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-16">
         {/* Branding & Description */}
         <div className="max-w-xs space-y-6">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-black rounded-xl flex items-center justify-center">
+            <div className="w-9 h-9 bg-[#4F46E5] rounded-xl flex items-center justify-center">
               <Lightbulb className="w-5 h-5 text-white fill-white" aria-hidden="true" />
             </div>
-            <p className='font-bold text-[22px] md:text-[26px] text-black tracking-tighter'>Validly</p>
+            <p className='font-bold text-[22px] md:text-[26px] text-[#4F46E5] tracking-tighter'>Validly</p>
           </div>
           <p className="text-neutral-500 text-[15px] font-medium leading-relaxed text-pretty">
             Stop guessing. Use real-time market data and advanced AI to verify your product viability before investing months in development.
@@ -53,31 +54,32 @@ const Footer = () => {
           <div className="space-y-6">
             <h4 className="text-black font-bold uppercase tracking-widest text-[11px]">Product</h4>
             <ul className="space-y-4 text-neutral-500 font-medium">
-              <li><Link href="#features" className="hover:text-black transition-colors tracking-tight">Features</Link></li>
-              <li><Link href="#pricing" className="hover:text-black transition-colors tracking-tight">Pricing</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Changelog</Link></li>
+              <li><Link href="#features" className="hover:text-[#4F46E5] transition-colors tracking-tight">Features</Link></li>
+              <li><Link href="#pricing" className="hover:text-[#4F46E5] transition-colors tracking-tight">Pricing</Link></li>
+              <li><Link href="#" className="hover:text-[#4F46E5] transition-colors tracking-tight">Changelog</Link></li>
             </ul>
           </div>
           <div className="space-y-6">
             <h4 className="text-black font-bold uppercase tracking-widest text-[11px]">Company</h4>
             <ul className="space-y-4 text-neutral-500 font-medium">
-              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">About</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Blog</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Contact</Link></li>
+              <li><Link href="#" className="hover:text-[#4F46E5] transition-colors tracking-tight">About</Link></li>
+              <li><Link href="#" className="hover:text-[#4F46E5] transition-colors tracking-tight">Blog</Link></li>
+              <li><Link href="#" className="hover:text-[#4F46E5] transition-colors tracking-tight">Contact</Link></li>
             </ul>
           </div>
           <div className="space-y-6">
             <h4 className="text-black font-bold uppercase tracking-widest text-[11px]">Legal</h4>
             <ul className="space-y-4 text-neutral-500 font-medium">
-              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Privacy Policy</Link></li>
-              <li><Link href="#" className="hover:text-black transition-colors tracking-tight">Terms of Service</Link></li>
+              <li><Link href="#" className="hover:text-[#4F46E5] transition-colors tracking-tight">Privacy Policy</Link></li>
+              <li><Link href="#" className="hover:text-[#4F46E5] transition-colors tracking-tight">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="max-w-7xl mx-auto pt-16 mt-16 border-t border-neutral-50 flex flex-col sm:flex-row justify-between items-center gap-6">
+      <div className="max-w-7xl mx-auto pt-16 mt-16 border-t border-slate-200/50 flex flex-col sm:flex-row justify-between items-center gap-6">
+
         <p className="text-neutral-400 text-[13px] font-medium">
           © {new Date().getFullYear()} Validly Inc. All rights reserved.
         </p>

@@ -115,7 +115,8 @@ export function VercelV0Chat({ showTitle = true }: { showTitle?: boolean }) {
             )}
 
             <div className="w-full">
-                <div className="relative bg-white rounded-xl border border-neutral-100 p-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-black/5">
+                <div className="relative bg-white rounded-xl border border-neutral-200 p-2 ring-1 ring-black/5">
+
                     <div className="overflow-y-auto">
                         <Textarea
                             ref={textareaRef}
@@ -230,7 +231,8 @@ function ActionButton({ icon, label }: ActionButtonProps) {
     return (
         <button
             type="button"
-            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-neutral-50 rounded-full border border-neutral-200 text-[#71717A] hover:text-black transition-all group shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-neutral-50 rounded-full border border-neutral-200 text-[#71717A] hover:text-black transition-all group"
+
         >
             <div className="group-hover:text-purple-400 transition-colors">
                {icon}

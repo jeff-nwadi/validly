@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     letterSpacing: 2,
     marginBottom: 30,
-    color: '#000000',
+    color: '#4f46e5',
+
   },
   header: {
     marginBottom: 30,
@@ -50,8 +51,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 700,
     marginBottom: 12,
-    borderBottom: '1 solid #eaeaea',
+    borderBottom: '1 solid #eef2ff',
     paddingBottom: 6,
+    color: '#4f46e5',
+
   },
   text: {
     fontSize: 10,
@@ -61,7 +64,8 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 700,
-    color: '#000000',
+    color: '#111827',
+
   },
   row: {
     flexDirection: 'row',
@@ -91,14 +95,18 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginBottom: 24,
     padding: 20,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#f5f3ff',
     borderRadius: 8,
+    border: '1 solid #ddd6fe',
+
   },
   scoreBadge: {
     fontSize: 24,
     fontWeight: 700,
     marginRight: 20,
+    color: '#4f46e5',
   },
+
   scoreTextContainer: {
     flex: 1,
   },
@@ -227,7 +235,8 @@ export const ReportPDF: React.FC<ReportPDFProps> = ({ data }) => {
             <View key={idx} style={styles.card}>
               <View style={styles.row}>
                 <Text style={[styles.bold, { flex: 1 }]}>{risk.category} Risk</Text>
-                <Text style={[styles.text, { fontWeight: 700, color: risk.severity === 'high' ? '#dc2626' : '#d97706' }]}>Severity: {risk.severity.toUpperCase()}</Text>
+                <Text style={[styles.text, { fontWeight: 700, color: risk.severity === 'high' ? '#f43f5e' : '#f59e0b' }]}>Severity: {risk.severity.toUpperCase()}</Text>
+
               </View>
               <Text style={styles.text}>{risk.description}</Text>
               <Text style={[styles.text, { marginTop: 4 }]}><Text style={styles.bold}>Mitigation:</Text> {risk.mitigation}</Text>
